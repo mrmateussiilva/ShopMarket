@@ -18,13 +18,13 @@ cd ShopMarket
 
 ### 2. Configure as variáveis de ambiente (opcional)
 
-Copie o arquivo de exemplo e edite conforme necessário:
+O sistema já vem com um arquivo `docker.env` configurado. Para produção, edite-o:
 
 ```bash
-cp .env.example .env
+# Edite docker.env conforme necessário
 ```
 
-Edite o arquivo `.env` e altere:
+Edite o arquivo `docker.env` e altere:
 - `SECRET_KEY`: Gere uma nova chave secreta para produção
 - `ALLOWED_HOSTS`: Adicione seu domínio
 - `DEBUG`: Mantenha como `False` em produção
@@ -32,7 +32,7 @@ Edite o arquivo `.env` e altere:
 ### 3. Inicie os containers
 
 ```bash
-docker-compose up -d
+docker-compose up -d --build
 ```
 
 Este comando irá:
@@ -46,8 +46,8 @@ Este comando irá:
 
 ### 4. Acesse a aplicação
 
-- **Site**: http://localhost:8000/
-- **Admin**: http://localhost:8000/admin/
+- **Site**: http://localhost:8001/
+- **Admin**: http://localhost:8001/admin/
   - Usuário: `admin`
   - Senha: `admin123`
 

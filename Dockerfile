@@ -14,33 +14,26 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     gcc \
     postgresql-client \
+    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
 # Install UV
 RUN pip install uv
 
-# Copy project files
+# Copy only requirements first for caching
 COPY pyproject.toml ./
-COPY manage.py ./
-COPY shopmarket ./shopmarket
-COPY stores ./stores
-COPY catalog ./catalog
-COPY pricing ./pricing
-COPY cart ./cart
-COPY orders ./orders
-COPY lists ./lists
-COPY cms ./cms
-COPY templates ./templates
-COPY static ./static
 
 # Install dependencies
-RUN uv pip install --system django pillow psycopg2-binary gunicorn
+RUN uv pip install --system .
+
+# Copy project files
+COPY . .
 
 # Create directories for media and static files
 RUN mkdir -p /app/media /app/staticfiles
 
 # Collect static files
-RUN python manage.py collectstatic --noinput || true
+# RUN python manage.py collectstatic --noinput || true
 
 # Expose port
 EXPOSE 8000

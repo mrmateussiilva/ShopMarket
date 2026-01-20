@@ -15,17 +15,16 @@ services:
 
   web:
     build: .
-    command: sh -c "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn --bind 0.0.0.0:8000 --workers 3 shopmarket.wsgi:application"
+    entrypoint: /app/entrypoint.sh
     volumes:
       - ./media:/app/media
       - ./staticfiles:/app/staticfiles
     ports:
-      - "8000:8000"
+      - "8001:8000"
+    env_file:
+      - docker.env
     environment:
-      - DEBUG=False
-      - SECRET_KEY=django-insecure-production-change-this-key-in-production
-      - DATABASE_URL=postgresql://shopmarket:shopmarket123@db:5432/shopmarket
-      - ALLOWED_HOSTS=localhost,127.0.0.1
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     depends_on:
       db:
         condition: service_healthy
