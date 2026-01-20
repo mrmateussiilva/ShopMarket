@@ -15,7 +15,12 @@ services:
 
   web:
     build: .
-    command: sh -c "python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn --bind 0.0.0.0:8000 --workers 3 shopmarket.wsgi:application"
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             python manage.py collectstatic --noinput &&
+             python manage.py shell -c \"from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='admin').exists() or User.objects.create_superuser('admin', 'admin@shopmarket.com', 'admin123')\" &&
+             python manage.py shell -c \"from stores.models import ShopConfig; import os; ShopConfig.objects.count() == 0 and os.system('python manage.py seed')\" &&
+             gunicorn --bind 0.0.0.0:8000 --workers 3 --timeout 120 shopmarket.wsgi:application"
     volumes:
       - ./media:/app/media
       - ./staticfiles:/app/staticfiles
