@@ -26,6 +26,7 @@ class Cart:
                 price = 0.0
             
             self.cart[product_id] = {
+                'product_id': int(product_id),
                 'quantity': 0,
                 'price': price,
                 'name': product.name,
@@ -62,15 +63,21 @@ class Cart:
         self.session.modified = True
 
     def __iter__(self):
-        """Iterate over cart items"""
-        product_ids = self.cart.keys()
+        """Iterate over cart items and clean up stale ones"""
+        product_ids = list(self.cart.keys())
         products = Product.objects.filter(id__in=product_ids)
-        cart = self.cart.copy()
+        product_map = {str(p.id): p for p in products}
         
-        for product in products:
-            cart[str(product.id)]['product'] = product
-        
-        for item in cart.values():
+        # Remove stale items from the session cart
+        stale_ids = [pid for pid in product_ids if pid not in product_map]
+        if stale_ids:
+            for pid in stale_ids:
+                del self.cart[pid]
+            self.save()
+            
+        # Iterate over remaining valid items
+        for pid, item in self.cart.items():
+            item['product'] = product_map[pid]
             item['total_price'] = Decimal(str(item['price'])) * item['quantity']
             yield item
 
