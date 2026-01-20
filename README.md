@@ -94,7 +94,27 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 pip install uv
 ```
 
-### Setup do Projeto
+## 🐳 Deploy com Docker (Recomendado para Produção)
+
+A forma mais rápida de rodar o ShopMarket é usando Docker Compose:
+
+```bash
+# Clone o repositório
+git clone https://github.com/mrmateussiilva/ShopMarket.git
+cd ShopMarket
+
+# Inicie os containers
+docker-compose up -d
+
+# Acesse em http://localhost:8000
+# Admin: admin / admin123
+```
+
+**Veja o guia completo em [DOCKER.md](DOCKER.md)**
+
+---
+
+## 💻 Setup Local (Desenvolvimento)
 
 1. **Clone ou navegue até o diretório do projeto**
 

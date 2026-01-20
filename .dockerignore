@@ -1,7 +1,14 @@
-*.pyc
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
 
 # Django
 *.log
@@ -10,11 +17,9 @@ db.sqlite3-journal
 /media
 /staticfiles
 
-# Virtual Environment
-.venv/
-venv/
-ENV/
-env/
+# Git
+.git/
+.gitignore
 
 # IDE
 .vscode/
@@ -27,15 +32,18 @@ env/
 .DS_Store
 Thumbs.db
 
-# UV
-.uv/
-
-# Environment variables
+# Environment
 .env
 
 # Docker
-docker-compose.override.yml
+Dockerfile
+docker-compose*.yml
+.dockerignore
 
-# Temporary files
+# Documentation
+README.md
 git-history.txt
+
+# UV
+.uv/
 uv.lock
