@@ -1,26 +1,27 @@
 <div class="product-card">
+    {% if price.has_discount %}
+    <div class="product-badge">-{{ price.get_discount_percentage }}%</div>
+    {% endif %}
+
     <a href="{% url 'product_detail' product.slug product.id %}" class="product-link">
-        <div class="product-image">
+        <div class="product-img-wrapper">
             {% if product.images.first %}
             <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
             {% else %}
             <img src="https://via.placeholder.com/200x200?text={{ product.name|urlencode }}" alt="{{ product.name }}">
             {% endif %}
-
-            {% if price.has_discount %}
-            <span class="discount-tag">-{{ price.get_discount_percentage }}%</span>
-            {% endif %}
         </div>
 
         <div class="product-info">
-            <h3 class="product-name">{{ product.name }}</h3>
-            <p class="product-unit">{{ product.unit }}</p>
+            <h3 class="product-name" title="{{ product.name }}">{{ product.name }}</h3>
 
-            <div class="price-box">
+            <div class="product-price-block">
                 {% if price.has_discount %}
-                <span class="old-price">R$ {{ price.regular_price }}</span>
+                <div class="price-old">R$ {{ price.regular_price }}</div>
                 {% endif %}
-                <span class="current-price">R$ {{ price.get_best_price }}</span>
+                <div class="price-main">
+                    <span class="price-prefix">R$</span> {{ price.get_best_price }}
+                </div>
             </div>
         </div>
     </a>
@@ -29,18 +30,12 @@
         {% if price %}
         <form method="post" action="{% url 'cart_add' product.id %}" class="add-to-cart-form">
             {% csrf_token %}
-            <div class="quantity-control">
-                <button type="button" class="btn-qty"
-                    onclick="this.parentNode.querySelector('input').stepDown()">-</button>
-                <input type="number" name="quantity" value="1" min="1" class="qty-input">
-                <button type="button" class="btn-qty"
-                    onclick="this.parentNode.querySelector('input').stepUp()">+</button>
-            </div>
+            <input type="hidden" name="quantity" value="1">
             <input type="hidden" name="next" value="{{ request.path }}">
-            <button type="submit" class="btn-add">Adicionar</button>
+            <button type="submit" class="btn-buy">Comprar</button>
         </form>
         {% else %}
-        <p class="unavailable">Indisponível</p>
+        <button class="btn-buy" disabled style="background: #ccc; cursor: not-allowed;">Indisponível</button>
         {% endif %}
     </div>
 </div>

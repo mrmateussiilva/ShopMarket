@@ -47,6 +47,7 @@ class Product(models.Model):
     )
     description = models.TextField(blank=True, verbose_name="Descrição")
     unit = models.CharField(max_length=20, default="un", verbose_name="Unidade")
+    is_featured = models.BooleanField(default=False, verbose_name="Destaque")
     is_active = models.BooleanField(default=True, verbose_name="Ativo")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Criado em")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Atualizado em")

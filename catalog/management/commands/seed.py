@@ -89,13 +89,17 @@ class Command(BaseCommand):
             ('Papel Higiênico 12un', 'PAP01', 'limpeza', 'un', 'Papel higiênico folha dupla', 18.90, 16.90),
         ]
         
-        for name, code, cat_slug, unit, desc, reg, sale in products_data:
+        for i, (name, code, cat_slug, unit, desc, reg, sale) in enumerate(products_data):
+            # Set some products as featured (every 5th)
+            is_featured = i % 5 == 0
+            
             product = Product.objects.create(
                 name=name,
                 code=code,
                 category=categories[cat_slug],
                 unit=unit,
                 description=desc,
+                is_featured=is_featured,
                 is_active=True
             )
             

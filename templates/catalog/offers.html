@@ -1,23 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ category.name }} - {{ shop.name }}{% endblock %}
+{% block title %}Ofertas da Semana - {{ shop.name }}{% endblock %}
 
 {% block content %}
 <div class="container catalog-layout">
     <nav class="breadcrumbs">
         <a href="{% url 'home' %}">Home</a>
-        {% if category.parent %}
-        <a href="{% url 'category_list' category.parent.slug %}">{{ category.parent.name }}</a>
-        {% endif %}
-        <span>{{ category.name }}</span>
+        <span>Ofertas</span>
     </nav>
 
     <div class="page-header">
-        <h1 class="section-title">{{ category.name }}</h1>
-        {% if category.description %}
-        <p class="category-description" style="color: var(--text-muted); margin-bottom: 20px;">{{ category.description
-            }}</p>
-        {% endif %}
+        <h1 class="section-title">Ofertas da Semana</h1>
+        <p>{{ page_obj.paginator.count }} produtos em promoção</p>
     </div>
 
     <div class="filter-bar">
@@ -30,15 +24,8 @@
                     <option value="maior_preco" {% if sort=='maior_preco' %}selected{% endif %}>Maior Preço</option>
                     <option value="maior_desconto" {% if sort=='maior_desconto' %}selected{% endif %}>Maior Desconto
                     </option>
-                    <option value="mais_novos" {% if sort=='mais_novos' %}selected{% endif %}>Novidades</option>
                 </select>
             </form>
-        </div>
-
-        <div class="filter-group">
-            <span class="filter-label" style="font-size: 0.85rem; color: var(--text-muted);">
-                Mostrando {{ page_obj.start_index }}-{{ page_obj.end_index }} de {{ page_obj.paginator.count }} produtos
-            </span>
         </div>
     </div>
 
@@ -46,8 +33,8 @@
         {% for product in page_obj %}
         {% include 'components/product_card.html' with product=product price=product.price %}
         {% empty %}
-        <div class="no-results" style="grid-column: 1/-1; text-align: center; padding: 50px;">
-            <p style="margin-bottom: 20px;">Nenhum produto encontrado nesta categoria.</p>
+        <div class="no-results">
+            <p>Nenhuma oferta encontrada no momento.</p>
             <a href="{% url 'home' %}" class="btn-buy"
                 style="display:inline-block; width:auto; padding: 10px 30px;">Voltar para Home</a>
         </div>

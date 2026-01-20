@@ -1,72 +1,90 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ product.name }} - ShopMarket{% endblock %}
+{% block title %}{{ product.name }} - {{ shop.name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="breadcrumb">
+<div class="container catalog-layout">
+    <nav class="breadcrumbs">
         <a href="{% url 'home' %}">Home</a>
-        <span>/</span>
         <a href="{% url 'category_list' product.category.slug %}">{{ product.category.name }}</a>
-        <span>/</span>
         <span>{{ product.name }}</span>
-    </div>
+    </nav>
 
-    <div class="product-detail">
-        <div class="product-images">
-            {% if product.images.all %}
-            <div class="main-image">
-                <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
-            </div>
-            {% if product.images.count > 1 %}
-            <div class="image-thumbnails">
-                {% for image in product.images.all %}
-                <img src="{{ image.image.url }}" alt="{{ product.name }}">
-                {% endfor %}
-            </div>
-            {% endif %}
+    <div class="product-pdp">
+        <div class="pdp-gallery">
+            {% if product.images.first %}
+            <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
             {% else %}
-            <div class="no-image-large">Sem imagem</div>
+            <img src="https://via.placeholder.com/600x600?text={{ product.name|urlencode }}" alt="{{ product.name }}">
             {% endif %}
         </div>
 
-        <div class="product-info">
+        <div class="pdp-info">
             <h1>{{ product.name }}</h1>
-            <p class="product-code">Código: {{ product.code }}</p>
-            <p class="product-unit">Unidade: {{ product.unit }}</p>
+            <div class="pdp-code">Código: {{ product.code }} | Unidade: {{ product.unit }}</div>
 
-            {% if price %}
-            <div class="price-section-large">
-                {% if price.has_discount %}
-                <div class="old-price-large">De: R$ {{ price.regular_price }}</div>
-                <div class="discount-badge-large">-{{ price.get_discount_percentage }}%</div>
+            {% if product.price %}
+            <div class="pdp-price-box">
+                {% if product.price.has_discount %}
+                <div class="price-old">De: R$ {{ product.price.regular_price }}</div>
                 {% endif %}
-
-                <div class="current-price-large">R$ {{ price.get_best_price }}</div>
-
-                {% if price.club_price %}
-                <div class="club-badge-large">💎 Preço Clube</div>
+                <div class="price-main" style="margin-top: 5px;">
+                    <span style="font-size: 1rem; color: var(--text-muted); font-weight: normal;">Por:</span>
+                    R$ {{ product.price.get_best_price }}
+                </div>
+                {% if product.price.has_discount %}
+                <div style="color: var(--primary); font-weight: 700; margin-top: 10px; font-size: 0.9rem;">
+                    Economize R$ {{ product.price.regular_price|add:product.price.get_best_price }}
+                </div>
                 {% endif %}
             </div>
 
-            <form method="post" action="{% url 'cart_add' product.id %}" class="add-to-cart-form">
-                {% csrf_token %}
-                <label>Quantidade:</label>
-                <input type="number" name="quantity" value="1" min="1" max="99">
-                <input type="hidden" name="next" value="{{ request.path }}">
-                <button type="submit" class="btn btn-primary btn-large">Adicionar ao Carrinho</button>
-            </form>
+            <div class="pdp-actions">
+                <form method="post" action="{% url 'cart_add' product.id %}" class="add-to-cart-form">
+                    {% csrf_token %}
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 10px;">Quantidade:</label>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <input type="number" name="quantity" value="1" min="1" max="99"
+                                style="width: 80px; padding: 12px; border: 1px solid var(--border); border-radius: 4px; text-align: center; font-size: 1.1rem; font-weight: 700;">
+                        </div>
+                    </div>
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit" class="btn-buy" style="padding: 18px; font-size: 1.2rem;">Comprar</button>
+                </form>
+
+                <form method="post" action="{% url 'list_add_product' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-outline" style="width: 100%; margin-top: 10px;">❤️ Adicionar à
+                        lista</button>
+                </form>
+            </div>
             {% else %}
-            <p class="unavailable-large">Produto indisponível nesta loja</p>
+            <p style="padding: 20px; background: #fee; color: #c00; border-radius: 4px; font-weight: 700;">Produto
+                indisponível</p>
             {% endif %}
 
             {% if product.description %}
-            <div class="product-description">
-                <h3>Descrição</h3>
-                <p>{{ product.description }}</p>
+            <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--border);">
+                <h3 style="margin-bottom: 15px; color: var(--secondary);">Sobre este produto</h3>
+                <div style="color: var(--text-muted); line-height: 1.8;">{{ product.description|linebreaks }}</div>
             </div>
             {% endif %}
         </div>
     </div>
+
+    <!-- Related Products -->
+    {% if related_products %}
+    <section class="vitrine" style="margin-top: 80px;">
+        <div class="section-header">
+            <h2 class="section-title">Aqui tem mais opções</h2>
+        </div>
+        <div class="products-grid">
+            {% for rel_product in related_products %}
+            {% include 'components/product_card.html' with product=rel_product price=rel_product.price %}
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
 </div>
 {% endblock %}

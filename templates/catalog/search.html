@@ -1,26 +1,31 @@
 {% extends 'base.html' %}
 
-{% block title %}Resultados para "{{ query }}" - {{ shop.name }}{% endblock %}
+{% block title %}Busca: "{{ query }}" - {{ shop.name }}{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container catalog-layout">
+    <nav class="breadcrumbs">
+        <a href="{% url 'home' %}">Home</a>
+        <span>Busca por "{{ query }}"</span>
+    </nav>
+
     <div class="page-header">
-        <h1>Busca: "{{ query }}"</h1>
-        <p>{{ page_obj.paginator.count }} produtos encontrados</p>
+        <h1 class="section-title">Resultados da Busca</h1>
+        <p>{{ page_obj.paginator.count }} produtos encontrados para "{{ query }}"</p>
     </div>
 
-    <div class="catalog-controls">
-        <div class="sorting">
+    <div class="filter-bar">
+        <div class="filter-group">
+            <span class="filter-label">Ordenar por:</span>
             <form method="get">
                 <input type="hidden" name="q" value="{{ query }}">
-                <label for="sort">Ordenar por:</label>
-                <select name="sort" id="sort" onchange="this.form.submit()">
-                    <option value="relevancia" {% if sort == 'relevancia' %}selected{% endif %}>Relevância</option>
-                    <option value="menor_preco" {% if sort == 'menor_preco' %}selected{% endif %}>Menor Preço</option>
-                    <option value="maior_preco" {% if sort == 'maior_preco' %}selected{% endif %}>Maior Preço</option>
-                    <option value="maior_desconto" {% if sort == 'maior_desconto' %}selected{% endif %}>Maior Desconto
+                <select name="sort" onchange="this.form.submit()">
+                    <option value="relevancia" {% if sort=='relevancia' %}selected{% endif %}>Relevância</option>
+                    <option value="menor_preco" {% if sort=='menor_preco' %}selected{% endif %}>Menor Preço</option>
+                    <option value="maior_preco" {% if sort=='maior_preco' %}selected{% endif %}>Maior Preço</option>
+                    <option value="maior_desconto" {% if sort=='maior_desconto' %}selected{% endif %}>Maior Desconto
                     </option>
-                    <option value="mais_novos" {% if sort == 'mais_novos' %}selected{% endif %}>Novidades</option>
+                    <option value="mais_novos" {% if sort=='mais_novos' %}selected{% endif %}>Novidades</option>
                 </select>
             </form>
         </div>
@@ -30,23 +35,27 @@
         {% for product in page_obj %}
         {% include 'components/product_card.html' with product=product price=product.price %}
         {% empty %}
-        <div class="no-results">
-            <p>Nenhum produto encontrado para sua busca.</p>
-            <a href="{% url 'home' %}" class="btn">Voltar para Home</a>
+        <div class="no-results" style="grid-column: 1/-1; text-align: center; padding: 50px;">
+            <p style="margin-bottom: 20px;">Nenhum produto encontrado para "{{ query }}".</p>
+            <a href="{% url 'home' %}" class="btn-buy"
+                style="display:inline-block; width:auto; padding: 10px 30px;">Voltar para Home</a>
         </div>
         {% endfor %}
     </div>
 
     {% if page_obj.has_other_pages %}
-    <div class="pagination">
+    <div class="pagination"
+        style="display: flex; justify-content: center; gap: 20px; margin-top: 40px; align-items: center;">
         {% if page_obj.has_previous %}
-        <a href="?q={{ query }}&sort={{ sort }}&page={{ page_obj.previous_page_number }}">&laquo; Anterior</a>
+        <a href="?q={{ query }}&sort={{ sort }}&page={{ page_obj.previous_page_number }}" class="btn-outline">&laquo;
+            Anterior</a>
         {% endif %}
 
         <span class="current-page">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
 
         {% if page_obj.has_next %}
-        <a href="?q={{ query }}&sort={{ sort }}&page={{ page_obj.next_page_number }}">Próxima &raquo;</a>
+        <a href="?q={{ query }}&sort={{ sort }}&page={{ page_obj.next_page_number }}" class="btn-outline">Próxima
+            &raquo;</a>
         {% endif %}
     </div>
     {% endif %}

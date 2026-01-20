@@ -1,19 +1,19 @@
 <header>
-    <div class="container">
-        <div class="header-main">
+    <div class="header-top">
+        <div class="container">
             <div class="logo">
                 <a href="{% url 'home' %}">
                     {% if shop.logo %}
                     <img src="{{ shop.logo.url }}" alt="{{ shop.name }}">
                     {% else %}
-                    <h1>🛒 {{ shop.name }}</h1>
+                    <h1>{{ shop.name }}</h1>
                     {% endif %}
                 </a>
             </div>
 
             <div class="search-bar">
                 <form action="{% url 'search' %}" method="get">
-                    <input type="text" name="q" placeholder="O que você está procurando?" value="{{ query }}">
+                    <input type="text" name="q" placeholder="Pesquisar produtos..." value="{{ query }}">
                     <button type="submit">🔍</button>
                 </form>
             </div>
@@ -21,36 +21,51 @@
             <div class="header-actions">
                 {% if user.is_authenticated %}
                 <div class="user-menu">
-                    <span class="user-name">Olá, {{ user.username }}</span>
-                    <div class="user-dropdown">
-                        <a href="{% url 'order_list' %}">Meus Pedidos</a>
-                        <a href="{% url 'list_view' %}">Minhas Listas</a>
-                        <a href="{% url 'logout' %}">Sair</a>
+                    <div class="icon-link">
+                        <div class="icon-wrapper">👤</div>
+                        <div>
+                            <small>Olá, {{ user.username }}</small><br>
+                            <strong>Minha Conta</strong>
+                        </div>
                     </div>
                 </div>
                 {% else %}
-                <a href="{% url 'login' %}" class="btn-login">Entrar / Cadastrar</a>
-                {% endif %}
-
-                <a href="{% url 'cart_detail' %}" class="cart-icon">
-                    <div class="icon-wrapper">
-                        🛒
-                        {% if cart %}
-                        <span class="cart-count">{{ cart|length }}</span>
-                        {% endif %}
-                    </div>
-                    <span class="cart-text">Carrinho</span>
+                <a href="{% url 'login' %}" class="icon-link">
+                    <div class="icon-wrapper">👤</div>
+                    <div>
+                        <small>Bem-vindo</small><br>
+                        <strong>Entrar / Cadastrar</strong>
                 </a>
             </div>
-        </div>
+            {% endif %}
 
-        <nav class="categories-nav">
-            <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                {% for category in categories %}
-                <li><a href="{% url 'category_list' category.slug %}">{{ category.name }}</a></li>
-                {% endfor %}
-            </ul>
-        </nav>
+            <a href="{% url 'cart_detail' %}" class="icon-link">
+                <div class="icon-wrapper">
+                    🛒
+                    {% if cart %}
+                    <span class="cart-count">{{ cart|length }}</span>
+                    {% endif %}
+                </div>
+                <div>
+                    <small>Meu</small><br>
+                    <strong>Carrinho</strong>
+                </div>
+            </a>
+        </div>
+    </div>
+    </div>
+
+    <div class="header-bottom">
+        <div class="container">
+            <nav class="categories-nav">
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'offers' %}" style="color: var(--accent);">Ofertas</a></li>
+                    {% for category in categories %}
+                    <li><a href="{% url 'category_list' category.slug %}">{{ category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
     </div>
 </header>

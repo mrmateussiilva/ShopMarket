@@ -1,16 +1,36 @@
 <footer>
     <div class="container">
-        <div class="footer-grid">
-            <div class="footer-info">
-                <h3>{{ shop.name }}</h3>
-                <p>{{ shop.about }}</p>
+        <div class="footer-main">
+            <div class="footer-col">
+                <h4>{{ shop.name }}</h4>
+                <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 20px;">{{ shop.about }}</p>
                 <div class="social-links">
-                    {% if shop.facebook_url %}<a href="{{ shop.facebook_url }}">Facebook</a>{% endif %}
-                    {% if shop.instagram_url %}<a href="{{ shop.instagram_url }}">Instagram</a>{% endif %}
+                    {% if shop.facebook_url %}<a href="{{ shop.facebook_url }}" class="social-icon">🔵</a>{% endif %}
+                    {% if shop.instagram_url %}<a href="{{ shop.instagram_url }}" class="social-icon">📸</a>{% endif %}
                 </div>
             </div>
 
-            <div class="footer-contact">
+            <div class="footer-col">
+                <h4>Institucional</h4>
+                <ul>
+                    <li><a href="#">Sobre nós</a></li>
+                    <li><a href="#">Trabalhe Conosco</a></li>
+                    <li><a href="#">Privacidade</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Ajuda</h4>
+                <ul>
+                    <li><a href="#">Como comprar</a></li>
+                    <li><a href="#">Entregas</a></li>
+                    <li><a href="#">Pagamentos</a></li>
+                    <li><a href="#">Trocas e Devoluções</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
                 <h4>Contato</h4>
                 <p>📞 {{ shop.phone }}</p>
                 {% if shop.whatsapp %}
@@ -18,17 +38,14 @@
                         }}</a></p>
                 {% endif %}
                 <p>✉️ {{ shop.email }}</p>
-            </div>
-
-            <div class="footer-address">
-                <h4>Localização</h4>
-                <p>📍 {{ shop.address }}</p>
-                <h4>Horário</h4>
-                <p>⏰ {{ shop.business_hours }}</p>
+                <p style="margin-top: 15px; font-size: 0.85rem; color: var(--accent);">
+                    {{ shop.address }}<br>
+                    <strong>{{ shop.business_hours }}</strong>
+                </p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 {{ shop.name }}. Todos os direitos reservados.</p>
+            <p>&copy; {% now "Y" %} {{ shop.name }}. Todos os direitos reservados. ShopMarket E-commerce.</p>
         </div>
     </div>
 </footer>

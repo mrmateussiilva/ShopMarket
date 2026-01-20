@@ -1,61 +1,95 @@
 {% extends 'base.html' %}
 
-{% block title %}Checkout - ShopMarket{% endblock %}
+{% block title %}Finalizar Compra - {{ shop.name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1>Finalizar Compra</h1>
+<div class="container catalog-layout">
+    <h1 class="section-title">Finalizar Compra</h1>
 
-    <div class="checkout-container">
-        <div class="checkout-form">
-            <form method="post">
+    <div style="display: grid; grid-template-columns: 2fr 1.2fr; gap: 40px; margin-top: 30px;">
+        <div class="checkout-form-wrapper">
+            <form method="post" style="display: flex; flex-direction: column; gap: 30px;">
                 {% csrf_token %}
 
-                <div class="form-section">
-                    <h3>Método de Entrega</h3>
-                    <label>
-                        <input type="radio" name="delivery_method" value="delivery" required>
-                        Entrega em Casa
-                    </label>
-                    <label>
-                        <input type="radio" name="delivery_method" value="pickup" required>
-                        Retirada na Loja
-                    </label>
+                <!-- Método de Entrega -->
+                <div
+                    style="background: white; padding: 25px; border-radius: var(--border-radius); border: 1px solid var(--border);">
+                    <h3
+                        style="margin-bottom: 20px; color: var(--secondary); font-size: 1.1rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 10px;">
+                        1. Método de Recebimento</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <label
+                            style="display: block; padding: 20px; border: 2px solid var(--bg-light); border-radius: 8px; cursor: pointer; text-align: center;">
+                            <input type="radio" name="delivery_method" value="delivery" required
+                                style="margin-bottom: 10px;"><br>
+                            <strong>Entrega em Casa</strong>
+                        </label>
+                        <label
+                            style="display: block; padding: 20px; border: 2px solid var(--bg-light); border-radius: 8px; cursor: pointer; text-align: center;">
+                            <input type="radio" name="delivery_method" value="pickup" required
+                                style="margin-bottom: 10px;"><br>
+                            <strong>Retirada na Loja</strong>
+                        </label>
+                    </div>
                 </div>
 
-                <div class="form-section">
-                    <h3>Endereço de Entrega</h3>
-                    <textarea name="delivery_address" rows="3" placeholder="Digite seu endereço completo"></textarea>
+                <!-- Endereço -->
+                <div
+                    style="background: white; padding: 25px; border-radius: var(--border-radius); border: 1px solid var(--border);">
+                    <h3
+                        style="margin-bottom: 20px; color: var(--secondary); font-size: 1.1rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 10px;">
+                        2. Endereço de Entrega</h3>
+                    <textarea name="delivery_address" rows="3"
+                        placeholder="Rua, número, complemento, bairro e cidade..."
+                        style="width: 100%; padding: 15px; border: 1px solid var(--border); border-radius: 4px; font-family: inherit; font-size: 1rem;"></textarea>
                 </div>
 
-                <div class="form-section">
-                    <h3>Método de Pagamento</h3>
-                    <label>
-                        <input type="radio" name="payment_method" value="online" required>
-                        Pagamento Online
-                    </label>
-                    <label>
-                        <input type="radio" name="payment_method" value="on_delivery" required>
-                        Pagamento na Entrega
-                    </label>
-                    <label>
-                        <input type="radio" name="payment_method" value="in_store" required>
-                        Pagamento na Loja
-                    </label>
+                <!-- Pagamento -->
+                <div
+                    style="background: white; padding: 25px; border-radius: var(--border-radius); border: 1px solid var(--border);">
+                    <h3
+                        style="margin-bottom: 20px; color: var(--secondary); font-size: 1.1rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 10px;">
+                        3. Forma de Pagamento</h3>
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <label
+                            style="display: flex; align-items: center; gap: 10px; padding: 15px; background: var(--bg-light); border-radius: 4px; cursor: pointer;">
+                            <input type="radio" name="payment_method" value="online" required>
+                            <span>Pagamento Online (Cartão de Crédito / PIX)</span>
+                        </label>
+                        <label
+                            style="display: flex; align-items: center; gap: 10px; padding: 15px; background: var(--bg-light); border-radius: 4px; cursor: pointer;">
+                            <input type="radio" name="payment_method" value="on_delivery" required>
+                            <span>Pagamento na Entrega (Maquininha ou Dinheiro)</span>
+                        </label>
+                    </div>
                 </div>
 
-                <div class="form-section">
-                    <h3>Observações</h3>
-                    <textarea name="delivery_notes" rows="3"
-                        placeholder="Observações sobre a entrega (opcional)"></textarea>
+                <div
+                    style="background: white; padding: 25px; border-radius: var(--border-radius); border: 1px solid var(--border);">
+                    <h3
+                        style="margin-bottom: 20px; color: var(--secondary); font-size: 1.1rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 10px;">
+                        4. Observações</h3>
+                    <textarea name="delivery_notes" rows="2"
+                        placeholder="Algum detalhe para nosso entregador? (Opcional)"
+                        style="width: 100%; padding: 15px; border: 1px solid var(--border); border-radius: 4px; font-family: inherit; font-size: 1rem;"></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-large">Confirmar Pedido</button>
+                <button type="submit" class="btn-buy" style="padding: 20px; font-size: 1.3rem;">Confirmar e Finalizar
+                    Pedido</button>
             </form>
         </div>
 
-        <div class="checkout-summary">
-            {% include 'components/cart_summary.html' %}
+        <div class="checkout-summary-wrapper" style="position: sticky; top: 120px;">
+            <div
+                style="background: white; padding: 25px; border-radius: var(--border-radius); border: 1px solid var(--border);">
+                <h3 style="margin-bottom: 20px; color: var(--secondary);">Resumo da Compra</h3>
+                {% include 'components/cart_summary.html' %}
+
+                <div
+                    style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border); font-size: 0.85rem; color: var(--text-muted);">
+                    Ao clicar em finalizar, você concorda com nossos termos de venda e política de privacidade.
+                </div>
+            </div>
         </div>
     </div>
 </div>
