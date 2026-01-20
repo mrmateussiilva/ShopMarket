@@ -1,0 +1,45 @@
+<div class="cart-summary">
+    <h3>Resumo do Carrinho</h3>
+
+    {% if cart %}
+    <div class="cart-items">
+        {% for item in cart %}
+        <div class="cart-item">
+            <span class="item-name">{{ item.name }}</span>
+            <span class="item-quantity">{{ item.quantity }}x</span>
+            <span class="item-price">R$ {{ item.total_price }}</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="cart-totals">
+        <div class="total-row">
+            <span>Total de Produtos:</span>
+            <span>R$ {{ cart.get_total_price }}</span>
+        </div>
+
+        {% if cart.get_discount > 0 %}
+        <div class="total-row discount">
+            <span>Desconto:</span>
+            <span>-R$ {{ cart.get_discount }}</span>
+        </div>
+        {% endif %}
+
+        <div class="total-row subtotal">
+            <strong>Subtotal:</strong>
+            <strong>R$ {{ cart.get_subtotal }}</strong>
+        </div>
+    </div>
+
+    <div class="cart-actions">
+        <a href="{% url 'cart_detail' %}" class="btn btn-secondary">Ver Carrinho</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'checkout' %}" class="btn btn-primary">Finalizar Compra</a>
+        {% else %}
+        <a href="{% url 'login' %}?next={% url 'checkout' %}" class="btn btn-primary">Entrar para Comprar</a>
+        {% endif %}
+    </div>
+    {% else %}
+    <p class="empty-cart">Seu carrinho está vazio</p>
+    {% endif %}
+</div>

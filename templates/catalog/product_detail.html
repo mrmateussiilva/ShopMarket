@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} - ShopMarket{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="breadcrumb">
+        <a href="{% url 'home' %}">Home</a>
+        <span>/</span>
+        <a href="{% url 'category_list' product.category.slug %}">{{ product.category.name }}</a>
+        <span>/</span>
+        <span>{{ product.name }}</span>
+    </div>
+
+    <div class="product-detail">
+        <div class="product-images">
+            {% if product.images.all %}
+            <div class="main-image">
+                <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
+            </div>
+            {% if product.images.count > 1 %}
+            <div class="image-thumbnails">
+                {% for image in product.images.all %}
+                <img src="{{ image.image.url }}" alt="{{ product.name }}">
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% else %}
+            <div class="no-image-large">Sem imagem</div>
+            {% endif %}
+        </div>
+
+        <div class="product-info">
+            <h1>{{ product.name }}</h1>
+            <p class="product-code">Código: {{ product.code }}</p>
+            <p class="product-unit">Unidade: {{ product.unit }}</p>
+
+            {% if price %}
+            <div class="price-section-large">
+                {% if price.has_discount %}
+                <div class="old-price-large">De: R$ {{ price.regular_price }}</div>
+                <div class="discount-badge-large">-{{ price.get_discount_percentage }}%</div>
+                {% endif %}
+
+                <div class="current-price-large">R$ {{ price.get_best_price }}</div>
+
+                {% if price.club_price %}
+                <div class="club-badge-large">💎 Preço Clube</div>
+                {% endif %}
+            </div>
+
+            <form method="post" action="{% url 'cart_add' product.id %}" class="add-to-cart-form">
+                {% csrf_token %}
+                <label>Quantidade:</label>
+                <input type="number" name="quantity" value="1" min="1" max="99">
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button type="submit" class="btn btn-primary btn-large">Adicionar ao Carrinho</button>
+            </form>
+            {% else %}
+            <p class="unavailable-large">Produto indisponível nesta loja</p>
+            {% endif %}
+
+            {% if product.description %}
+            <div class="product-description">
+                <h3>Descrição</h3>
+                <p>{{ product.description }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

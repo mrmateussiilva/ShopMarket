@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category.name }} - ShopMarket{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="breadcrumb">
+        <a href="{% url 'home' %}">Home</a>
+        {% if category.parent %}
+        <span>/</span>
+        <a href="{% url 'category_list' category.parent.slug %}">{{ category.parent.name }}</a>
+        {% endif %}
+        <span>/</span>
+        <span>{{ category.name }}</span>
+    </div>
+
+    <h1>{{ category.name }}</h1>
+
+    {% if category.description %}
+    <p>{{ category.description }}</p>
+    {% endif %}
+
+    <div class="category-controls">
+        <div class="sort-options">
+            <label>Ordenar por:</label>
+            <a href="?sort=name" class="{% if sort == 'name' %}active{% endif %}">Nome</a>
+            <a href="?sort=price_asc" class="{% if sort == 'price_asc' %}active{% endif %}">Menor Preço</a>
+            <a href="?sort=price_desc" class="{% if sort == 'price_desc' %}active{% endif %}">Maior Preço</a>
+        </div>
+    </div>
+
+    <div class="products-grid">
+        {% for product in page_obj %}
+        {% include 'components/product_card.html' with product=product price=product.price %}
+        {% empty %}
+        <p>Nenhum produto encontrado nesta categoria.</p>
+        {% endfor %}
+    </div>
+
+    {% if page_obj.has_other_pages %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}&sort={{ sort }}">&laquo; Anterior</a>
+        {% endif %}
+
+        <span class="current-page">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&sort={{ sort }}">Próxima &raquo;</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

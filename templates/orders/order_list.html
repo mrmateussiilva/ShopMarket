@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Meus Pedidos - ShopMarket{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Meus Pedidos</h1>
+
+    {% if orders %}
+    <div class="orders-list">
+        {% for order in orders %}
+        <div class="order-card">
+            <div class="order-header">
+                <h3>Pedido #{{ order.id }}</h3>
+                <span class="order-status status-{{ order.status }}">{{ order.get_status_display }}</span>
+            </div>
+
+            <div class="order-info">
+                <p><strong>Loja:</strong> {{ order.store.name }}</p>
+                <p><strong>Data:</strong> {{ order.created_at|date:"d/m/Y H:i" }}</p>
+                <p><strong>Entrega:</strong> {{ order.get_delivery_method_display }}</p>
+                <p><strong>Pagamento:</strong> {{ order.get_payment_method_display }}</p>
+                <p><strong>Total:</strong> R$ {{ order.subtotal }}</p>
+            </div>
+
+            <div class="order-actions">
+                <a href="{% url 'order_detail' order.id %}" class="btn btn-secondary">Ver Detalhes</a>
+                <a href="{% url 'repeat_order' order.id %}" class="btn btn-primary">Repetir Pedido</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-message">
+        <p>Você ainda não fez nenhum pedido.</p>
+        <a href="{% url 'home' %}" class="btn btn-primary">Começar a Comprar</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

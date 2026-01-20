@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Carrinho - ShopMarket{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Meu Carrinho</h1>
+
+    {% if cart %}
+    <form method="post" action="{% url 'cart_update' %}" class="cart-form">
+        {% csrf_token %}
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Total</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                <tr>
+                    <td>
+                        <strong>{{ item.name }}</strong><br>
+                        <small>Código: {{ item.code }}</small>
+                    </td>
+                    <td>R$ {{ item.price }}</td>
+                    <td>
+                        <input type="number" name="quantity_{{ item.product.id }}" value="{{ item.quantity }}" min="1"
+                            max="99">
+                    </td>
+                    <td>R$ {{ item.total_price }}</td>
+                    <td>
+                        <a href="{% url 'cart_remove' item.product.id %}" class="btn-remove">Remover</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="cart-actions-bottom">
+            <button type="submit" class="btn btn-secondary">Atualizar Carrinho</button>
+            <a href="{% url 'cart_clear' %}" class="btn btn-danger"
+                onclick="return confirm('Tem certeza que deseja limpar o carrinho?')">Limpar Carrinho</a>
+        </div>
+    </form>
+
+    <div class="cart-summary-section">
+        {% include 'components/cart_summary.html' %}
+    </div>
+    {% else %}
+    <div class="empty-cart-message">
+        <p>Seu carrinho está vazio!</p>
+        <a href="{% url 'home' %}" class="btn btn-primary">Continuar Comprando</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

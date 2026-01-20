@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Selecione uma Loja - ShopMarket{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="store-selection">
+        <h1>Selecione uma Loja</h1>
+        <p>Escolha a loja mais próxima de você para ver produtos e preços</p>
+
+        <form method="post" class="store-form">
+            {% csrf_token %}
+            <div class="stores-grid">
+                {% for store in stores %}
+                <label class="store-option">
+                    <input type="radio" name="store_id" value="{{ store.id }}" required>
+                    <div class="store-card">
+                        <h3>{{ store.name }}</h3>
+                        <p>{{ store.address }}</p>
+                        {% if store.phone %}
+                        <p>📞 {{ store.phone }}</p>
+                        {% endif %}
+                    </div>
+                </label>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Continuar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

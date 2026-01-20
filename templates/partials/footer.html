@@ -1,0 +1,31 @@
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ShopMarket</h3>
+                <p>Seu supermercado online</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'order_list' %}">Meus Pedidos</a></li>
+                    <li><a href="{% url 'list_view' %}">Minhas Listas</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contato</h4>
+                <p>Email: contato@shopmarket.com</p>
+                <p>Tel: (11) 1234-5678</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 ShopMarket. Todos os direitos reservados.</p>
+        </div>
+    </div>
+</footer>

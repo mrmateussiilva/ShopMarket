@@ -1,0 +1,36 @@
+<div class="product-card">
+    {% if product.images.first %}
+    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
+    {% else %}
+    <div class="no-image">Sem imagem</div>
+    {% endif %}
+
+    <h3>{{ product.name }}</h3>
+    <p class="product-unit">{{ product.unit }}</p>
+
+    {% if price %}
+    <div class="price-section">
+        {% if price.has_discount %}
+        <span class="old-price">R$ {{ price.regular_price }}</span>
+        <span class="discount-badge">-{{ price.get_discount_percentage }}%</span>
+        {% endif %}
+
+        <span class="current-price">R$ {{ price.get_best_price }}</span>
+
+        {% if price.club_price %}
+        <span class="club-badge">Clube</span>
+        {% endif %}
+    </div>
+
+    <form method="post" action="{% url 'cart_add' product.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="quantity" value="1">
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <button type="submit" class="btn-add-cart">Adicionar ao Carrinho</button>
+    </form>
+    {% else %}
+    <p class="unavailable">Indisponível nesta loja</p>
+    {% endif %}
+
+    <a href="{% url 'product_detail' product.slug product.id %}" class="btn-view-details">Ver Detalhes</a>
+</div>

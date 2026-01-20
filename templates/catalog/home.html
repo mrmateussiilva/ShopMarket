@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - ShopMarket{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if banners %}
+    <div class="banners">
+        {% for banner in banners %}
+        <div class="banner">
+            {% if banner.link %}
+            <a href="{{ banner.link }}">
+                <img src="{{ banner.image.url }}" alt="{{ banner.title }}">
+            </a>
+            {% else %}
+            <img src="{{ banner.image.url }}" alt="{{ banner.title }}">
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <section class="featured-products">
+        <h2>Produtos em Destaque</h2>
+
+        <div class="products-grid">
+            {% for product in featured_products %}
+            {% include 'components/product_card.html' with product=product price=product.price %}
+            {% empty %}
+            <p>Nenhum produto disponível no momento.</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

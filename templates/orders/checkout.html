@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout - ShopMarket{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Finalizar Compra</h1>
+
+    <div class="checkout-container">
+        <div class="checkout-form">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="form-section">
+                    <h3>Método de Entrega</h3>
+                    <label>
+                        <input type="radio" name="delivery_method" value="delivery" required>
+                        Entrega em Casa
+                    </label>
+                    <label>
+                        <input type="radio" name="delivery_method" value="pickup" required>
+                        Retirada na Loja
+                    </label>
+                </div>
+
+                <div class="form-section">
+                    <h3>Endereço de Entrega</h3>
+                    <textarea name="delivery_address" rows="3" placeholder="Digite seu endereço completo"></textarea>
+                </div>
+
+                <div class="form-section">
+                    <h3>Método de Pagamento</h3>
+                    <label>
+                        <input type="radio" name="payment_method" value="online" required>
+                        Pagamento Online
+                    </label>
+                    <label>
+                        <input type="radio" name="payment_method" value="on_delivery" required>
+                        Pagamento na Entrega
+                    </label>
+                    <label>
+                        <input type="radio" name="payment_method" value="in_store" required>
+                        Pagamento na Loja
+                    </label>
+                </div>
+
+                <div class="form-section">
+                    <h3>Observações</h3>
+                    <textarea name="delivery_notes" rows="3"
+                        placeholder="Observações sobre a entrega (opcional)"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-large">Confirmar Pedido</button>
+            </form>
+        </div>
+
+        <div class="checkout-summary">
+            {% include 'components/cart_summary.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

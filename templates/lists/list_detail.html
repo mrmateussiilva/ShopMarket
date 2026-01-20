@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ list.name }} - ShopMarket{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ list.name }}</h1>
+
+    <div class="list-actions">
+        <a href="{% url 'list_view' %}" class="btn btn-secondary">Voltar</a>
+        <a href="{% url 'list_delete' list.id %}" class="btn btn-danger"
+            onclick="return confirm('Tem certeza que deseja excluir esta lista?')">Excluir Lista</a>
+    </div>
+
+    {% if list.products.all %}
+    <div class="products-grid">
+        {% for product in list.products.all %}
+        <div class="product-card">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.code }}</p>
+            <a href="{% url 'product_detail' product.slug product.id %}" class="btn btn-secondary">Ver Produto</a>
+            <a href="{% url 'list_remove_product' list.id product.id %}" class="btn btn-danger">Remover</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>Esta lista está vazia.</p>
+    {% endif %}
+</div>
+{% endblock %}

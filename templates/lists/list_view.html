@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Minhas Listas - ShopMarket{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Minhas Listas</h1>
+
+    <a href="{% url 'list_create' %}" class="btn btn-primary">Criar Nova Lista</a>
+
+    {% if lists %}
+    <div class="lists-grid">
+        {% for list in lists %}
+        <div class="list-card">
+            <h3>{{ list.name }}</h3>
+            <p>{{ list.products.count }} produto(s)</p>
+            <p class="list-date">Criada em: {{ list.created_at|date:"d/m/Y" }}</p>
+            <a href="{% url 'list_detail' list.id %}" class="btn btn-secondary">Ver Lista</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>Você ainda não criou nenhuma lista.</p>
+    {% endif %}
+</div>
+{% endblock %}
