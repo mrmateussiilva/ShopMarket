@@ -1,14 +1,11 @@
+{% load static %}
 <header>
     <!-- Row 1: Yellow with Logo and Search -->
     <div class="header-top">
         <div class="container">
             <div class="logo">
                 <a href="{% url 'home' %}">
-                    {% if shop.logo %}
-                    <img src="{{ shop.logo.url }}" alt="{{ shop.name }}">
-                    {% else %}
-                    <h1>Lima Supermercado</h1>
-                    {% endif %}
+                    <img src="{% static 'img/logo.png' %}" alt="Lima Supermercado">
                 </a>
             </div>
 
