@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}ShopMarket{% endblock %}</title>
     <link rel="stylesheet" href="/static/css/style.css">
+    {% block extra_css %}{% endblock %}
 </head>
+
 <body>
     {% include 'partials/header.html' %}
-    
+
     <main>
         {% if messages %}
         <div class="messages">
@@ -19,11 +22,13 @@
             {% endfor %}
         </div>
         {% endif %}
-        
+
         {% block content %}
         {% endblock %}
     </main>
-    
+
     {% include 'partials/footer.html' %}
+    {% block extra_js %}{% endblock %}
 </body>
+
 </html>
