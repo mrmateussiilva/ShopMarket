@@ -3,7 +3,7 @@ from django.db import models
 
 class Banner(models.Model):
     title = models.CharField(max_length=200, verbose_name="Título")
-    image = models.ImageField(upload_to='banners/', verbose_name="Imagem")
+    image = models.ImageField(upload_to='banners/', blank=True, null=True, verbose_name="Imagem")
     link = models.URLField(blank=True, verbose_name="Link")
     order = models.IntegerField(default=0, verbose_name="Ordem")
     is_active = models.BooleanField(default=True, verbose_name="Ativo")

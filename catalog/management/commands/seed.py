@@ -23,16 +23,21 @@ class Command(BaseCommand):
         shop.email = 'contato@shopmarket.com'
         shop.save()
         
+        # Delete old data
+        self.stdout.write('Cleaning old data...')
+        ProductPrice.objects.all().delete()
+        Product.objects.all().delete()
+        Category.objects.all().delete()
+        Banner.objects.all().delete()
+        
         # Create Banners
         self.stdout.write('Creating Banners...')
-        Banner.objects.all().delete()
         Banner.objects.create(title='Ofertas da Semana', order=1, is_active=True)
         Banner.objects.create(title='Produtos Frescos', order=2, is_active=True)
         Banner.objects.create(title='Entrega no Mesmo Dia', order=3, is_active=True)
         
         # Create categories
         self.stdout.write('Creating categories...')
-        Category.objects.all().delete()
         categories_data = [
             ('Hortifrúti', 'hortifruti', 1),
             ('Padaria', 'padaria', 2),
@@ -51,7 +56,6 @@ class Command(BaseCommand):
         
         # Create products
         self.stdout.write('Creating products...')
-        Product.objects.all().delete()
         products_data = [
             # Hortifruti
             ('Banana Prata', 'BAN01', 'hortifruti', 'kg', 'Banana prata selecionada', 5.99, 4.99),

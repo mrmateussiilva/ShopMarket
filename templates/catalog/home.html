@@ -11,11 +11,11 @@
             <div class="banner-slide">
                 {% if banner.link %}
                 <a href="{{ banner.link }}">
-                    <img src="{{ banner.image.url|default:'https://via.placeholder.com/1200x400?text=Oferta+ShopMarket' }}"
+                    <img src="{% if banner.image %}{{ banner.image.url }}{% else %}https://via.placeholder.com/1200x400?text=Oferta+ShopMarket{% endif %}"
                         alt="{{ banner.title }}">
                 </a>
                 {% else %}
-                <img src="{{ banner.image.url|default:'https://via.placeholder.com/1200x400?text=Oferta+ShopMarket' }}"
+                <img src="{% if banner.image %}{{ banner.image.url }}{% else %}https://via.placeholder.com/1200x400?text=Oferta+ShopMarket{% endif %}"
                     alt="{{ banner.title }}">
                 {% endif %}
             </div>
