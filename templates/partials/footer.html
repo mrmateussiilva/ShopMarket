@@ -2,50 +2,59 @@
     <div class="container">
         <div class="footer-main">
             <div class="footer-col">
-                <h4>{{ shop.name }}</h4>
-                <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 20px;">{{ shop.about }}</p>
+                <h4 style="color: var(--yellow);">Lima Supermercado</h4>
+                <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px;">{{ shop.about|default:"Seu
+                    supermercado online de confiança! Entrega rápida e produtos fresquinhos todos os dias." }}</p>
                 <div class="social-links">
-                    {% if shop.facebook_url %}<a href="{{ shop.facebook_url }}" class="social-icon">🔵</a>{% endif %}
-                    {% if shop.instagram_url %}<a href="{{ shop.instagram_url }}" class="social-icon">📸</a>{% endif %}
+                    {% if shop.facebook_url %}
+                    <a href="{{ shop.facebook_url }}" class="social-icon">🔵</a>
+                    {% endif %}
+                    {% if shop.instagram_url %}
+                    <a href="{{ shop.instagram_url }}" class="social-icon">📸</a>
+                    {% endif %}
                 </div>
             </div>
 
             <div class="footer-col">
                 <h4>Institucional</h4>
                 <ul>
-                    <li><a href="#">Sobre nós</a></li>
+                    <li><a href="#">Sobre o Lima</a></li>
+                    <li><a href="#">Nossas Lojas</a></li>
                     <li><a href="#">Trabalhe Conosco</a></li>
                     <li><a href="#">Privacidade</a></li>
-                    <li><a href="#">Termos de Uso</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
                 <h4>Ajuda</h4>
                 <ul>
-                    <li><a href="#">Como comprar</a></li>
+                    <li><a href="#">Como Comprar</a></li>
                     <li><a href="#">Entregas</a></li>
                     <li><a href="#">Pagamentos</a></li>
-                    <li><a href="#">Trocas e Devoluções</a></li>
+                    <li><a href="#">Dúvidas Frequentes</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h4>Contato</h4>
-                <p>📞 {{ shop.phone }}</p>
-                {% if shop.whatsapp %}
-                <p>💬 <a href="https://wa.me/{{ shop.whatsapp|cut:' '|cut:'-'|cut:'('|cut:')' }}">{{ shop.whatsapp
-                        }}</a></p>
-                {% endif %}
-                <p>✉️ {{ shop.email }}</p>
-                <p style="margin-top: 15px; font-size: 0.85rem; color: var(--accent);">
-                    {{ shop.address }}<br>
-                    <strong>{{ shop.business_hours }}</strong>
+                <h4>Atendimento</h4>
+                <div style="margin-bottom: 15px;">
+                    <p style="font-weight: 800; font-size: 1.1rem; color: var(--yellow);">📞 {{ shop.phone|default:"(11)
+                        3456-7890" }}</p>
+                    {% if shop.whatsapp %}
+                    <p style="font-weight: 800; font-size: 1.1rem; color: var(--green-light); margin-top: 5px;">
+                        💬 <a href="https://wa.me/{{ shop.whatsapp|cut:' '|cut:'-'|cut:'('|cut:')' }}"
+                            style="color: inherit;">WhatsApp: {{ shop.whatsapp }}</a>
+                    </p>
+                    {% endif %}
+                </div>
+                <p style="font-size: 0.9rem; margin-top: 15px;">
+                    📍 {{ shop.address|default:"Rua do Lima, 123 - Centro" }}<br>
+                    <strong>⏰ {{ shop.business_hours|default:"Seg-Sáb: 08h às 21h | Dom: 08h às 14h" }}</strong>
                 </p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; {% now "Y" %} {{ shop.name }}. Todos os direitos reservados. ShopMarket E-commerce.</p>
+            <p>&copy; {% now "Y" %} Lima Supermercado. Todos os direitos reservados. ShopMarket Platform.</p>
         </div>
     </div>
 </footer>

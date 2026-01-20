@@ -8,12 +8,15 @@
         {% if banners %}
         {% with banner=banners.first %}
         <a href="{{ banner.link|default:'#' }}">
-            <img src="{% if banner.image %}{{ banner.image.url }}{% else %}https://via.placeholder.com/1920x450?text=Oferta+Especial+{{ shop.name|urlencode }}{% endif %}"
+            <img src="{% if banner.image %}{{ banner.image.url }}{% else %}https://via.placeholder.com/1920x350/F6E22D/0B5D1E?text=Ofertas+do+Lima+Supermercado{% endif %}"
                 alt="{{ banner.title }}">
         </a>
         {% endwith %}
         {% else %}
-        <img src="https://via.placeholder.com/1920x450?text=Bem-vindo+ao+{{ shop.name|urlencode }}" alt="Banner">
+        <div
+            style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--yellow);">
+            <h1 style="color: var(--green-dark); font-size: 3rem; font-weight: 950;">BEM-VINDO AO LIMA! 🍋</h1>
+        </div>
         {% endif %}
     </div>
 </div>
@@ -23,81 +26,68 @@
     {% if sale_products %}
     <section class="vitrine">
         <div class="section-header">
-            <h2 class="section-title">Ofertas da Semana</h2>
-            <a href="{% url 'offers' %}" class="view-all">Ver tudo &raquo;</a>
+            <h2 class="section-title"><span>🔥</span> Ofertas da Semana</h2>
+            <a href="{% url 'offers' %}" class="view-all">Ver todas as ofertas &raquo;</a>
         </div>
         <div class="products-grid">
-            {% for product in sale_products %}
+            {% for product in sale_products|slice:":8" %}
             {% include 'components/product_card.html' with product=product price=product.price %}
             {% endfor %}
         </div>
     </section>
     {% endif %}
 
-    <!-- Produtos Exclusivos -->
+    <!-- Produtos em Destaque -->
     {% if exclusive_products %}
     <section class="vitrine">
         <div class="section-header">
-            <h2 class="section-title">Produtos Exclusivos</h2>
+            <h2 class="section-title"><span>✨</span> Produtos em Destaque</h2>
         </div>
         <div class="products-grid">
-            {% for product in exclusive_products %}
+            {% for product in exclusive_products|slice:":8" %}
             {% include 'components/product_card.html' with product=product price=product.price %}
             {% endfor %}
         </div>
     </section>
     {% endif %}
 
-    <!-- Compre por Categoria -->
+    <!-- Categorias do Lima -->
     <section class="categories-mini">
-        <div class="container">
-            <div class="categories-mini-grid">
-                {% for category in categories_grid %}
-                <a href="{% url 'category_list' category.slug %}" class="category-mini-item">
-                    <div class="category-mini-icon">📦</div>
-                    <div class="category-mini-name">{{ category.name }}</div>
-                </a>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
-
-    <!-- Novidades -->
-    {% if new_products %}
-    <section class="vitrine">
         <div class="section-header">
-            <h2 class="section-title">Novidades</h2>
+            <h2 class="section-title"><span>📦</span> Compre por Categoria</h2>
         </div>
-        <div class="products-grid">
-            {% for product in new_products %}
-            {% include 'components/product_card.html' with product=product price=product.price %}
+        <div class="categories-mini-grid">
+            {% for category in categories_grid %}
+            <a href="{% url 'category_list' category.slug %}" class="category-mini-item">
+                <span class="category-mini-icon">🛒</span>
+                <span class="category-mini-name">{{ category.name }}</span>
+            </a>
             {% endfor %}
         </div>
     </section>
-    {% endif %}
 
     <!-- Como Funciona -->
     <section class="info-section">
         <div class="info-grid">
             <div class="info-card">
-                <div class="info-icon">🛒</div>
-                <h4 class="info-title">Como comprar</h4>
-                <p class="info-desc">Escolha seus produtos e adicione ao carrinho com facilidade.</p>
+                <span class="info-icon">🏪</span>
+                <h4 class="info-title">1. Comprar</h4>
+                <p class="info-desc">Navegue e adicione produtos fresquinhos ao seu carrinho.</p>
             </div>
             <div class="info-card">
-                <div class="info-icon">💳</div>
-                <h4 class="info-title">Pagamento</h4>
-                <p class="info-desc">Aceitamos diversos cartões e PIX com total segurança.</p>
+                <span class="info-icon">💳</span>
+                <h4 class="info-title">2. Pagar</h4>
+                <p class="info-desc">Pague com segurança via PIX ou cartão de crédito.</p>
             </div>
             <div class="info-card">
-                <div class="info-icon">🚚</div>
-                <h4 class="info-title">Entrega</h4>
-                <p class="info-desc">Receba suas compras em casa com rapidez e cuidado.</p>
+                <span class="info-icon">🚚</span>
+                <h4 class="info-title">3. Entregar</h4>
+                <p class="info-desc">Nossa equipe separa e entrega com todo cuidado na sua casa.</p>
             </div>
             <div class="info-card">
-                <div class="info-icon">📱</div>
-                <h4 class="info-title">Acompanhe pedido</h4>
-                <p class="info-desc">Saiba exatamente onde está sua compra em tempo real.</p>
+                <span class="info-icon">📬</span>
+                <h4 class="info-title">4. Acompanhar</h4>
+                <p class="info-desc">Receba notificações em tempo real sobre o seu pedido.</p>
             </div>
         </div>
     </section>

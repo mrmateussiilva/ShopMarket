@@ -8,19 +8,20 @@
             {% if product.images.first %}
             <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
             {% else %}
-            <img src="https://via.placeholder.com/200x200?text={{ product.name|urlencode }}" alt="{{ product.name }}">
+            <img src="https://via.placeholder.com/240x240?text={{ product.name|urlencode }}" alt="{{ product.name }}">
             {% endif %}
         </div>
 
         <div class="product-info">
             <h3 class="product-name" title="{{ product.name }}">{{ product.name }}</h3>
+            <span class="product-unit">{{ product.unit|default:"un" }}</span>
 
             <div class="product-price-block">
                 {% if price.has_discount %}
-                <div class="price-old">R$ {{ price.regular_price }}</div>
+                <span class="price-old">R$ {{ price.regular_price }}</span>
                 {% endif %}
                 <div class="price-main">
-                    <span class="price-prefix">R$</span> {{ price.get_best_price }}
+                    <span class="price-prefix">R$</span>{{ price.get_best_price }}
                 </div>
             </div>
         </div>
@@ -32,10 +33,11 @@
             {% csrf_token %}
             <input type="hidden" name="quantity" value="1">
             <input type="hidden" name="next" value="{{ request.path }}">
-            <button type="submit" class="btn-buy">Comprar</button>
+            <button type="submit" class="btn-buy">COMPRAR</button>
         </form>
         {% else %}
-        <button class="btn-buy" disabled style="background: #ccc; cursor: not-allowed;">Indisponível</button>
+        <button class="btn-buy" disabled
+            style="background: var(--text-muted); cursor: not-allowed; opacity: 0.6;">Indisponível</button>
         {% endif %}
     </div>
 </div>
