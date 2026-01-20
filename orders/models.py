@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from stores.models import Store
 
 
 class Order(models.Model):
@@ -12,7 +11,7 @@ class Order(models.Model):
     PAYMENT_CHOICES = [
         ('online', 'Online'),
         ('on_delivery', 'Na Entrega'),
-        ('in_store', 'Na Loja'),
+        ('in_store', 'Na Retirada'),
     ]
     
     STATUS_CHOICES = [
@@ -29,12 +28,6 @@ class Order(models.Model):
         on_delete=models.PROTECT,
         related_name='orders',
         verbose_name="Usuário"
-    )
-    store = models.ForeignKey(
-        Store,
-        on_delete=models.PROTECT,
-        related_name='orders',
-        verbose_name="Loja"
     )
     delivery_method = models.CharField(
         max_length=20,
@@ -84,7 +77,7 @@ class Order(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"Pedido #{self.id} - {self.user.username} - {self.store.name}"
+        return f"Pedido #{self.id} - {self.user.username}"
 
 
 class OrderItem(models.Model):

@@ -1,21 +1,15 @@
 from django.db import models
 from decimal import Decimal
 from catalog.models import Product
-from stores.models import Store
 
 
 class ProductPrice(models.Model):
-    product = models.ForeignKey(
+    """Preço do produto (loja única)"""
+    product = models.OneToOneField(
         Product,
         on_delete=models.CASCADE,
-        related_name='prices',
+        related_name='price',
         verbose_name="Produto"
-    )
-    store = models.ForeignKey(
-        Store,
-        on_delete=models.CASCADE,
-        related_name='prices',
-        verbose_name="Loja"
     )
     regular_price = models.DecimalField(
         max_digits=10,
@@ -43,11 +37,10 @@ class ProductPrice(models.Model):
     class Meta:
         verbose_name = "Preço do Produto"
         verbose_name_plural = "Preços dos Produtos"
-        unique_together = ['product', 'store']
         ordering = ['product__name']
 
     def __str__(self):
-        return f"{self.product.name} - {self.store.name} - R$ {self.get_best_price()}"
+        return f"{self.product.name} - R$ {self.get_best_price()}"
 
     def get_best_price(self):
         """Retorna o melhor preço disponível"""

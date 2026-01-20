@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Order, OrderItem
 from cart.cart import Cart
-from stores.models import Store
 
 
 @login_required
@@ -22,10 +21,8 @@ def checkout(request):
         delivery_notes = request.POST.get('delivery_notes', '')
         
         # Create order
-        store = Store.objects.get(id=request.session.get('store_id'))
         order = Order.objects.create(
             user=request.user,
-            store=store,
             delivery_method=delivery_method,
             payment_method=payment_method,
             delivery_address=delivery_address,

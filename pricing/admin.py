@@ -4,7 +4,7 @@ from .models import ProductPrice
 
 @admin.register(ProductPrice)
 class ProductPriceAdmin(admin.ModelAdmin):
-    list_display = ['product', 'store', 'regular_price', 'sale_price', 'club_price', 'is_active']
-    list_filter = ['is_active', 'store']
-    search_fields = ['product__name', 'store__name']
-    autocomplete_fields = ['product', 'store']
+    list_display = ['product', 'regular_price', 'sale_price', 'club_price', 'is_active']
+    list_filter = ['is_active']
+    search_fields = ['product__name', 'product__code']
+    autocomplete_fields = ['product']

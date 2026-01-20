@@ -12,22 +12,17 @@ class Cart:
         if not cart:
             cart = self.session['cart'] = {}
         self.cart = cart
-        self.store_id = request.session.get('store_id')
 
     def add(self, product, quantity=1):
         """Add a product to the cart"""
         product_id = str(product.id)
         
         if product_id not in self.cart:
-            # Get price for current store
+            # Get price for product (OneToOne relationship)
             try:
-                price_obj = ProductPrice.objects.get(
-                    product=product,
-                    store_id=self.store_id,
-                    is_active=True
-                )
+                price_obj = product.price
                 price = float(price_obj.get_best_price())
-            except ProductPrice.DoesNotExist:
+            except (ProductPrice.DoesNotExist, AttributeError):
                 price = 0.0
             
             self.cart[product_id] = {
@@ -91,7 +86,7 @@ class Cart:
         )
 
     def get_discount(self):
-        """Calculate total discount (placeholder for future implementation)"""
+        """Calculate total discount"""
         return Decimal('0.00')
 
     def get_subtotal(self):

@@ -10,15 +10,15 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'store', 'status', 'delivery_method', 'payment_method', 'subtotal', 'created_at']
-    list_filter = ['status', 'delivery_method', 'payment_method', 'store']
+    list_display = ['id', 'user', 'status', 'delivery_method', 'payment_method', 'subtotal', 'created_at']
+    list_filter = ['status', 'delivery_method', 'payment_method']
     search_fields = ['user__username', 'user__email']
     readonly_fields = ['products_total', 'discount_total', 'subtotal', 'created_at', 'updated_at']
     inlines = [OrderItemInline]
     
     fieldsets = (
         ('Informações do Pedido', {
-            'fields': ('user', 'store', 'status')
+            'fields': ('user', 'status')
         }),
         ('Entrega e Pagamento', {
             'fields': ('delivery_method', 'payment_method', 'delivery_address', 'delivery_notes')
