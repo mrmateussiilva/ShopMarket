@@ -46,6 +46,8 @@ Este comando irá:
 
 ### 4. Acesse a aplicação
 
+A aplicação estará disponível na porta definida em `PORT` (padrão `8001`):
+
 - **Site**: http://localhost:8001/
 - **Admin**: http://localhost:8001/admin/
   - Usuário: `admin`
@@ -135,6 +137,7 @@ O Docker Compose cria os seguintes volumes:
 
 | Variável | Descrição | Padrão |
 |----------|-----------|--------|
+| `PORT` | Porta exposta no host | `8001` |
 | `DEBUG` | Modo debug | `False` |
 | `SECRET_KEY` | Chave secreta Django | (gerada) |
 | `ALLOWED_HOSTS` | Hosts permitidos | `localhost,127.0.0.1` |

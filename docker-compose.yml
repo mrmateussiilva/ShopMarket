@@ -20,7 +20,7 @@ services:
       - ./media:/app/media
       - ./staticfiles:/app/staticfiles
     ports:
-      - "8001:8000"
+      - "${PORT}:8000"
     env_file:
       - docker.env
     environment:
