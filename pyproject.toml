@@ -1,0 +1,9 @@
+[project]
+name = "shopmarket"
+version = "0.1.0"
+description = "ShopMarket - Supermarket E-commerce MVP"
+requires-python = ">=3.11"
+dependencies = [
+    "django>=5.0,<6.0",
+    "pillow>=10.0.0",
+]
