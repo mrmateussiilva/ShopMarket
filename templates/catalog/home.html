@@ -1,35 +1,76 @@
 {% extends 'base.html' %}
 
-{% block title %}Home - ShopMarket{% endblock %}
+{% block title %}Supermercado Online - {{ shop.name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    {% if banners %}
-    <div class="banners">
-        {% for banner in banners %}
-        <div class="banner">
-            {% if banner.link %}
-            <a href="{{ banner.link }}">
-                <img src="{{ banner.image.url }}" alt="{{ banner.title }}">
-            </a>
-            {% else %}
-            <img src="{{ banner.image.url }}" alt="{{ banner.title }}">
-            {% endif %}
+<div class="home-hero">
+    <div class="container">
+        {% if banners %}
+        <div class="banners-carousel">
+            {% for banner in banners %}
+            <div class="banner-slide">
+                {% if banner.link %}
+                <a href="{{ banner.link }}">
+                    <img src="{{ banner.image.url|default:'https://via.placeholder.com/1200x400?text=Oferta+ShopMarket' }}"
+                        alt="{{ banner.title }}">
+                </a>
+                {% else %}
+                <img src="{{ banner.image.url|default:'https://via.placeholder.com/1200x400?text=Oferta+ShopMarket' }}"
+                    alt="{{ banner.title }}">
+                {% endif %}
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+        {% else %}
+        <div class="banner-placeholder">
+            <img src="https://via.placeholder.com/1200x400?text=Bem-vindo+ao+{{ shop.name|urlencode }}" alt="Banner">
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
+</div>
 
-    <section class="featured-products">
-        <h2>Produtos em Destaque</h2>
-
-        <div class="products-grid">
-            {% for product in featured_products %}
-            {% include 'components/product_card.html' with product=product price=product.price %}
-            {% empty %}
-            <p>Nenhum produto disponível no momento.</p>
+<div class="container">
+    <section class="home-categories">
+        <h2 class="section-title">Compre por Categoria</h2>
+        <div class="categories-grid">
+            {% for category in categories %}
+            <a href="{% url 'category_list' category.slug %}" class="category-item">
+                <div class="category-icon">📦</div>
+                <span>{{ category.name }}</span>
+            </a>
             {% endfor %}
         </div>
     </section>
+
+    {% if sale_products %}
+    <section class="products-section offers-section">
+        <h2 class="section-title">🔥 Ofertas Imperdíveis</h2>
+        <div class="products-grid">
+            {% for product in sale_products %}
+            {% include 'components/product_card.html' with product=product price=product.price %}
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="products-section featured-section">
+        <h2 class="section-title">⭐ Destaques para você</h2>
+        <div class="products-grid">
+            {% for product in featured_products %}
+            {% include 'components/product_card.html' with product=product price=product.price %}
+            {% endfor %}
+        </div>
+    </section>
+
+    {% if new_products %}
+    <section class="products-section news-section">
+        <h2 class="section-title">🆕 Novidades</h2>
+        <div class="products-grid">
+            {% for product in new_products %}
+            {% include 'components/product_card.html' with product=product price=product.price %}
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
 </div>
 {% endblock %}

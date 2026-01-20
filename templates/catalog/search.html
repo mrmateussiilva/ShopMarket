@@ -1,27 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ category.name }} - {{ shop.name }}{% endblock %}
+{% block title %}Resultados para "{{ query }}" - {{ shop.name }}{% endblock %}
 
 {% block content %}
 <div class="container">
-    <nav class="breadcrumbs">
-        <a href="{% url 'home' %}">Home</a>
-        {% if category.parent %}
-        <a href="{% url 'category_list' category.parent.slug %}">{{ category.parent.name }}</a>
-        {% endif %}
-        <span>{{ category.name }}</span>
-    </nav>
-
     <div class="page-header">
-        <h1>{{ category.name }}</h1>
-        {% if category.description %}
-        <p class="category-description">{{ category.description }}</p>
-        {% endif %}
+        <h1>Busca: "{{ query }}"</h1>
+        <p>{{ page_obj.paginator.count }} produtos encontrados</p>
     </div>
 
     <div class="catalog-controls">
         <div class="sorting">
             <form method="get">
+                <input type="hidden" name="q" value="{{ query }}">
                 <label for="sort">Ordenar por:</label>
                 <select name="sort" id="sort" onchange="this.form.submit()">
                     <option value="relevancia" {% if sort=='relevancia' %}selected{% endif %}>Relevância</option>
@@ -39,20 +30,23 @@
         {% for product in page_obj %}
         {% include 'components/product_card.html' with product=product price=product.price %}
         {% empty %}
-        <p>Nenhum produto encontrado nesta categoria.</p>
+        <div class="no-results">
+            <p>Nenhum produto encontrado para sua busca.</p>
+            <a href="{% url 'home' %}" class="btn">Voltar para Home</a>
+        </div>
         {% endfor %}
     </div>
 
     {% if page_obj.has_other_pages %}
     <div class="pagination">
         {% if page_obj.has_previous %}
-        <a href="?sort={{ sort }}&page={{ page_obj.previous_page_number }}">&laquo; Anterior</a>
+        <a href="?q={{ query }}&sort={{ sort }}&page={{ page_obj.previous_page_number }}">&laquo; Anterior</a>
         {% endif %}
 
         <span class="current-page">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
 
         {% if page_obj.has_next %}
-        <a href="?sort={{ sort }}&page={{ page_obj.next_page_number }}">Próxima &raquo;</a>
+        <a href="?q={{ query }}&sort={{ sort }}&page={{ page_obj.next_page_number }}">Próxima &raquo;</a>
         {% endif %}
     </div>
     {% endif %}

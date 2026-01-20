@@ -1,31 +1,34 @@
 <footer>
     <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>ShopMarket</h3>
-                <p>Seu supermercado online</p>
+        <div class="footer-grid">
+            <div class="footer-info">
+                <h3>{{ shop.name }}</h3>
+                <p>{{ shop.about }}</p>
+                <div class="social-links">
+                    {% if shop.facebook_url %}<a href="{{ shop.facebook_url }}">Facebook</a>{% endif %}
+                    {% if shop.instagram_url %}<a href="{{ shop.instagram_url }}">Instagram</a>{% endif %}
+                </div>
             </div>
 
-            <div class="footer-section">
-                <h4>Links</h4>
-                <ul>
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'order_list' %}">Meus Pedidos</a></li>
-                    <li><a href="{% url 'list_view' %}">Minhas Listas</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-
-            <div class="footer-section">
+            <div class="footer-contact">
                 <h4>Contato</h4>
-                <p>Email: contato@shopmarket.com</p>
-                <p>Tel: (11) 1234-5678</p>
+                <p>📞 {{ shop.phone }}</p>
+                {% if shop.whatsapp %}
+                <p>💬 <a href="https://wa.me/{{ shop.whatsapp|cut:' '|cut:'-'|cut:'('|cut:')' }}">{{ shop.whatsapp
+                        }}</a></p>
+                {% endif %}
+                <p>✉️ {{ shop.email }}</p>
+            </div>
+
+            <div class="footer-address">
+                <h4>Localização</h4>
+                <p>📍 {{ shop.address }}</p>
+                <h4>Horário</h4>
+                <p>⏰ {{ shop.business_hours }}</p>
             </div>
         </div>
-
         <div class="footer-bottom">
-            <p>&copy; 2026 ShopMarket. Todos os direitos reservados.</p>
+            <p>&copy; 2025 {{ shop.name }}. Todos os direitos reservados.</p>
         </div>
     </div>
 </footer>

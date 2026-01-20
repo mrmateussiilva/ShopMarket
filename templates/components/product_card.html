@@ -1,36 +1,46 @@
 <div class="product-card">
-    {% if product.images.first %}
-    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
-    {% else %}
-    <div class="no-image">Sem imagem</div>
-    {% endif %}
+    <a href="{% url 'product_detail' product.slug product.id %}" class="product-link">
+        <div class="product-image">
+            {% if product.images.first %}
+            <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
+            {% else %}
+            <img src="https://via.placeholder.com/200x200?text={{ product.name|urlencode }}" alt="{{ product.name }}">
+            {% endif %}
 
-    <h3>{{ product.name }}</h3>
-    <p class="product-unit">{{ product.unit }}</p>
+            {% if price.has_discount %}
+            <span class="discount-tag">-{{ price.get_discount_percentage }}%</span>
+            {% endif %}
+        </div>
 
-    {% if price %}
-    <div class="price-section">
-        {% if price.has_discount %}
-        <span class="old-price">R$ {{ price.regular_price }}</span>
-        <span class="discount-badge">-{{ price.get_discount_percentage }}%</span>
-        {% endif %}
+        <div class="product-info">
+            <h3 class="product-name">{{ product.name }}</h3>
+            <p class="product-unit">{{ product.unit }}</p>
 
-        <span class="current-price">R$ {{ price.get_best_price }}</span>
+            <div class="price-box">
+                {% if price.has_discount %}
+                <span class="old-price">R$ {{ price.regular_price }}</span>
+                {% endif %}
+                <span class="current-price">R$ {{ price.get_best_price }}</span>
+            </div>
+        </div>
+    </a>
 
-        {% if price.club_price %}
-        <span class="club-badge">Clube</span>
+    <div class="product-actions">
+        {% if price %}
+        <form method="post" action="{% url 'cart_add' product.id %}" class="add-to-cart-form">
+            {% csrf_token %}
+            <div class="quantity-control">
+                <button type="button" class="btn-qty"
+                    onclick="this.parentNode.querySelector('input').stepDown()">-</button>
+                <input type="number" name="quantity" value="1" min="1" class="qty-input">
+                <button type="button" class="btn-qty"
+                    onclick="this.parentNode.querySelector('input').stepUp()">+</button>
+            </div>
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <button type="submit" class="btn-add">Adicionar</button>
+        </form>
+        {% else %}
+        <p class="unavailable">Indisponível</p>
         {% endif %}
     </div>
-
-    <form method="post" action="{% url 'cart_add' product.id %}">
-        {% csrf_token %}
-        <input type="hidden" name="quantity" value="1">
-        <input type="hidden" name="next" value="{{ request.path }}">
-        <button type="submit" class="btn-add-cart">Adicionar ao Carrinho</button>
-    </form>
-    {% else %}
-    <p class="unavailable">Indisponível nesta loja</p>
-    {% endif %}
-
-    <a href="{% url 'product_detail' product.slug product.id %}" class="btn-view-details">Ver Detalhes</a>
 </div>

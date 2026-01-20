@@ -46,10 +46,16 @@ def checkout(request):
         # Clear cart
         cart.clear()
         
-        messages.success(request, f'Pedido #{order.id} realizado com sucesso!')
-        return redirect('order_detail', order_id=order.id)
+        return redirect('order_success', order_id=order.id)
     
     return render(request, 'orders/checkout.html')
+
+
+@login_required
+def order_success(request, order_id):
+    """Order success page"""
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    return render(request, 'orders/order_success.html', {'order': order})
 
 
 @login_required
