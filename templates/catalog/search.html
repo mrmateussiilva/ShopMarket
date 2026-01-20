@@ -15,12 +15,12 @@
                 <input type="hidden" name="q" value="{{ query }}">
                 <label for="sort">Ordenar por:</label>
                 <select name="sort" id="sort" onchange="this.form.submit()">
-                    <option value="relevancia" {% if sort=='relevancia' %}selected{% endif %}>Relevância</option>
-                    <option value="menor_preco" {% if sort=='menor_preco' %}selected{% endif %}>Menor Preço</option>
-                    <option value="maior_preco" {% if sort=='maior_preco' %}selected{% endif %}>Maior Preço</option>
-                    <option value="maior_desconto" {% if sort=='maior_desconto' %}selected{% endif %}>Maior Desconto
+                    <option value="relevancia" {% if sort == 'relevancia' %}selected{% endif %}>Relevância</option>
+                    <option value="menor_preco" {% if sort == 'menor_preco' %}selected{% endif %}>Menor Preço</option>
+                    <option value="maior_preco" {% if sort == 'maior_preco' %}selected{% endif %}>Maior Preço</option>
+                    <option value="maior_desconto" {% if sort == 'maior_desconto' %}selected{% endif %}>Maior Desconto
                     </option>
-                    <option value="mais_novos" {% if sort=='mais_novos' %}selected{% endif %}>Novidades</option>
+                    <option value="mais_novos" {% if sort == 'mais_novos' %}selected{% endif %}>Novidades</option>
                 </select>
             </form>
         </div>
