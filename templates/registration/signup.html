@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}Criar Conta - Lima Supermercado{% endblock %}
+
+{% block extra_css %}
+<style>
+    .btn-auth {
+        background-color: var(--green) !important;
+        color: white !important;
+        font-weight: 800 !important;
+        border-radius: var(--radius) !important;
+        height: 50px;
+    }
+
+    .btn-auth:hover {
+        background-color: var(--green-dark) !important;
+    }
+
+    .auth-footer a {
+        color: var(--green) !important;
+        font-weight: 700;
+    }
+
+    .auth-form input:focus {
+        border-color: var(--green) !important;
+        box-shadow: 0 0 0 3px rgba(30, 127, 52, 0.1) !important;
+    }
+
+    .auth-error-alert {
+        background-color: #fef2f2;
+        border: 1px solid #fee2e2;
+        color: #991b1b;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 15px;
+    }
+
+    .form-row>.form-group {
+        flex: 1;
+    }
+
+    .auth-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .auth-form label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .auth-form input {
+        width: 100%;
+        height: 48px;
+        padding: 0 15px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        outline: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card" style="max-width: 600px; margin: 0 auto;">
+        <div class="auth-header">
+            <h1 style="color: var(--green-dark); font-weight: 950; font-size: 2rem;">Criar Conta</h1>
+            <p>Cadastre-se para aproveitar as ofertas do Lima Supermercado.</p>
+        </div>
+
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+
+            {% if form.errors %}
+            <div class="auth-error-alert" role="alert">
+                <strong>Por favor, corrija os erros abaixo:</strong>
+                <ul style="margin-top: 10px; margin-bottom: 0;">
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <li>{{ field.label }}: {{ error }}</li>
+                    {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.first_name.id_for_label }}">Nome</label>
+                    {{ form.first_name }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.last_name.id_for_label }}">Sobrenome</label>
+                    {{ form.last_name }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Usuário</label>
+                {{ form.username }}
+                {% if form.username.help_text %}
+                <small style="color: #666;">{{ form.username.help_text }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">E-mail</label>
+                {{ form.email }}
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.phone.id_for_label }}">Telefone</label>
+                    {{ form.phone }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.zip_code.id_for_label }}">CEP</label>
+                    {{ form.zip_code }}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;">
+                    <label for="{{ form.street.id_for_label }}">Rua</label>
+                    {{ form.street }}
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label for="{{ form.neighborhood.id_for_label }}">Bairro</label>
+                    {{ form.neighborhood }}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.password1.id_for_label }}">Senha</label>
+                    {{ form.password1 }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.password2.id_for_label }}">Confirmar Senha</label>
+                    {{ form.password2 }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn-auth"
+                style="width: 100%; border: none; cursor: pointer; transition: 0.2s; margin-top: 10px;">CRIAR MINHA
+                CONTA</button>
+        </form>
+
+        <div class="auth-footer"
+            style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 0.95rem;">
+            Já tem uma conta? <a href="{% url 'login' %}">Acesse agora</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
