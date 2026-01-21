@@ -3,24 +3,27 @@
 {% block title %}Supermercado Online - {{ shop.name }}{% endblock %}
 
 {% block content %}
+{% if banners %}
 <div class="hero-wrapper">
     <div class="container">
         <div class="hero-banner">
-            {% if banners %}
             {% with banner=banners.first %}
-            <a href="{{ banner.link|default:'#' }}" style="width: 100%;">
-                <img src="{% if banner.image %}{{ banner.image.url }}{% else %}https://via.placeholder.com/1280x320/F3F4F6/0B5D1E?text=Ofertas+do+Lima+Supermercado{% endif %}"
+            <a href="{{ banner.link|default:'#' }}" class="hero-link">
+                <div class="hero-content">
+                    <h1 class="hero-title">Ofertas da Semana</h1>
+                    <p class="hero-subtitle">Economize no seu supermercado online com produtos fresquinhos todos os
+                        dias.</p>
+                    <span class="btn-hero">Ver Ofertas</span>
+                </div>
+                <img src="{% if banner.image %}{{ banner.image.url }}{% else %}https://via.placeholder.com/1280x340/0B5D1E/FFFFFF?text=LIMA+SUPERMERCADO{% endif %}"
                     alt="{{ banner.title }}">
+                <div class="hero-overlay"></div>
             </a>
             {% endwith %}
-            {% else %}
-            <div class="hero-placeholder">
-                <h1 style="color: var(--brand-green); font-size: 2rem; font-weight: 800;">BEM-VINDO AO LIMA! 🍋</h1>
-            </div>
-            {% endif %}
         </div>
     </div>
 </div>
+{% endif %}
 
 <div class="container">
     <!-- Ofertas da Semana -->
