@@ -1,37 +1,61 @@
 {% load static %}
 <header>
-    <!-- Top Bar (Yellow, Height 36px) -->
+    <!-- Top Bar (Professional & Informative) -->
     <div class="header-top-bar">
-        <div class="container">
-            <span>🚀 Entrega no mesmo dia para pedidos até as 14h</span>
-            <div class="top-bar-links">
-                <span>💬 WhatsApp: (11) 99281-1554</span>
+        <div class="container flex-justify">
+            <div class="top-bar-left">
+                <span>🚀 <strong>Entrega Grátis</strong> em sua primeira compra</span>
+                <span class="separator">|</span>
+                <span>📅 Entrega no mesmo dia para pedidos até as 14h</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="#">Nossas Lojas</a>
+                <a href="#">Trabalhe Conosco</a>
+                <a href="#">Atendimento</a>
+                <a href="#" class="btn-loyalty">💳 Peça seu Cartão</a>
             </div>
         </div>
     </div>
 
-    <!-- Main Header (White) -->
+    <!-- Main Header -->
     <div class="header-main">
-        <div class="container">
+        <div class="container header-grid">
+            <!-- Logo -->
             <div class="logo">
                 <a href="{% url 'home' %}">
                     <img src="{% static 'img/logo.png' %}" alt="Lima Supermercado">
                 </a>
             </div>
 
+            <!-- Delivery Location -->
+            <div class="header-location">
+                <button class="btn-location">
+                    <span class="icon">📍</span>
+                    <div class="location-text">
+                        <small>Entregar em:</small>
+                        <strong>Informe seu CEP</strong>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Search Bar (Wide & Prominent) -->
             <div class="search-bar">
                 <form action="{% url 'search' %}" method="get">
-                    <input type="text" name="q" placeholder="O que você está procurando hoje?" value="{{ query }}">
-                    <button type="submit">🔍</button>
+                    <div class="search-input-group">
+                        <input type="text" name="q" placeholder="Busque por produtos, marcas ou categorias..."
+                            value="{{ query }}">
+                        <button type="submit" class="btn-search">🔍</button>
+                    </div>
                 </form>
             </div>
 
+            <!-- User and Cart Actions -->
             <div class="header-actions">
                 {% if user.is_authenticated %}
                 <a href="#" class="icon-link">
                     <div class="icon-wrapper">👤</div>
                     <div class="action-text">
-                        <small>Olá, {{ user.username }}</small><br>
+                        <small>Olá, {{ user.username }}</small>
                         <strong>Minha Conta</strong>
                     </div>
                 </a>
@@ -39,43 +63,88 @@
                 <a href="{% url 'login' %}" class="icon-link">
                     <div class="icon-wrapper">👤</div>
                     <div class="action-text">
-                        <small>Bem-vindo</small><br>
+                        <small>Bem-vindo</small>
                         <strong>Entrar / Cadastrar</strong>
                     </div>
                 </a>
                 {% endif %}
 
-                <a href="{% url 'cart_detail' %}" class="icon-link">
-                    <div class="icon-wrapper">
-                        🛒
+                <a href="javascript:void(0)" class="btn-cart-header" onclick="toggleCart()">
+                    <div class="cart-icon-container">
+                        <span class="icon">🛒</span>
                         {% if cart %}
                         <span class="cart-count">{{ cart|length }}</span>
                         {% endif %}
                     </div>
-                    <div class="action-text">
-                        <small>Meu</small><br>
-                        <strong>Carrinho</strong>
+                    <div class="cart-info">
+                        <strong>Meu Carrinho</strong>
+                        <span class="cart-total">{% if cart %}{{ cart.get_total_price_display }}{% else %}R$ 0,00{%
+                            endif %}</span>
                     </div>
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Navbar Menu (Dark Green) -->
-    <div class="header-nav">
+    <!-- Navbar Menu (Icon-based & Sticky) -->
+    <div class="header-nav sticky-nav">
         <div class="container">
             <nav class="categories-nav">
                 <ul>
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'offers' %}" class="highlight">Ofertas 🔥</a></li>
-                    <li><a href="#">Hortifrúti</a></li>
-                    <li><a href="#">Padaria</a></li>
-                    <li><a href="#">Bebidas</a></li>
-                    <li><a href="#">Laticínios</a></li>
-                    <li><a href="#">Limpeza</a></li>
-                    <li><a href="#">Carnes</a></li>
-                    <li><a href="#">Congelados</a></li>
-                    <li><a href="#">Mercearia</a></li>
+                    <li>
+                        <a href="{% url 'offers' %}" class="nav-item highlight">
+                            <span class="nav-icon">🔥</span>
+                            <span class="nav-text">Ofertas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item">
+                            <span class="nav-icon">🍎</span>
+                            <span class="nav-text">Hortifrúti</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item">
+                            <span class="nav-icon">🥖</span>
+                            <span class="nav-text">Padaria</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item">
+                            <span class="nav-icon">🥩</span>
+                            <span class="nav-text">Carnes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item">
+                            <span class="nav-icon">🧀</span>
+                            <span class="nav-text">Laticínios</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item">
+                            <span class="nav-icon">🥤</span>
+                            <span class="nav-text">Bebidas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item">
+                            <span class="nav-icon">🛒</span>
+                            <span class="nav-text">Mercearia</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item">
+                            <span class="nav-icon">🧹</span>
+                            <span class="nav-text">Limpeza</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item">
+                            <span class="nav-icon">❄️</span>
+                            <span class="nav-text">Congelados</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>

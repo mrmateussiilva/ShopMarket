@@ -6,9 +6,10 @@
     <a href="{% url 'product_detail' product.slug product.id %}" class="product-link">
         <div class="product-img-wrapper">
             {% if product.images.first %}
-            <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
+            <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" loading="lazy">
             {% else %}
-            <img src="https://via.placeholder.com/240x240?text={{ product.name|urlencode }}" alt="{{ product.name }}">
+            <img src="https://via.placeholder.com/240x240?text={{ product.name|urlencode }}" alt="{{ product.name }}"
+                loading="lazy">
             {% endif %}
         </div>
 
@@ -31,9 +32,17 @@
         {% if price %}
         <form method="post" action="{% url 'cart_add' product.id %}" class="add-to-cart-form">
             {% csrf_token %}
-            <input type="hidden" name="quantity" value="1">
             <input type="hidden" name="next" value="{{ request.path }}">
-            <button type="submit" class="btn-buy">COMPRAR</button>
+
+            <div class="quantity-controls">
+                <button type="button" class="btn-qty btn-qty-minus" onclick="decrementQty(this)">-</button>
+                <input type="number" name="quantity" value="1" min="1" class="input-qty">
+                <button type="button" class="btn-qty btn-qty-plus" onclick="incrementQty(this)">+</button>
+            </div>
+
+            <button type="submit" class="btn-buy">
+                <span class="icon">🛒</span> Adicionar
+            </button>
         </form>
         {% else %}
         <button class="btn-buy" disabled
@@ -41,3 +50,18 @@
         {% endif %}
     </div>
 </div>
+
+<script>
+    if (typeof incrementQty === 'undefined') {
+        function incrementQty(btn) {
+            const input = btn.parentElement.querySelector('input');
+            input.value = parseInt(input.value) + 1;
+        }
+        function decrementQty(btn) {
+            const input = btn.parentElement.querySelector('input');
+            if (parseInt(input.value) > 1) {
+                input.value = parseInt(input.value) - 1;
+            }
+        }
+    }
+</script>
