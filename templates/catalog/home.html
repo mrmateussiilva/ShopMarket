@@ -4,20 +4,21 @@
 
 {% block content %}
 <div class="hero-wrapper">
-    <div class="hero-banner">
-        {% if banners %}
-        {% with banner=banners.first %}
-        <a href="{{ banner.link|default:'#' }}">
-            <img src="{% if banner.image %}{{ banner.image.url }}{% else %}https://via.placeholder.com/1920x350/F6E22D/0B5D1E?text=Ofertas+do+Lima+Supermercado{% endif %}"
-                alt="{{ banner.title }}">
-        </a>
-        {% endwith %}
-        {% else %}
-        <div
-            style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--yellow);">
-            <h1 style="color: var(--green-dark); font-size: 3rem; font-weight: 950;">BEM-VINDO AO LIMA! 🍋</h1>
+    <div class="container">
+        <div class="hero-banner">
+            {% if banners %}
+            {% with banner=banners.first %}
+            <a href="{{ banner.link|default:'#' }}" style="width: 100%;">
+                <img src="{% if banner.image %}{{ banner.image.url }}{% else %}https://via.placeholder.com/1280x320/F3F4F6/0B5D1E?text=Ofertas+do+Lima+Supermercado{% endif %}"
+                    alt="{{ banner.title }}">
+            </a>
+            {% endwith %}
+            {% else %}
+            <div class="hero-placeholder">
+                <h1 style="color: var(--brand-green); font-size: 2rem; font-weight: 800;">BEM-VINDO AO LIMA! 🍋</h1>
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
     </div>
 </div>
 
@@ -37,6 +38,23 @@
     </section>
     {% endif %}
 
+    <!-- Categorias do Lima -->
+    <section class="categories-mini">
+        <div class="section-header" style="padding: 0 16px;">
+            <h2 class="section-title"><span>📦</span> Compre por Categoria</h2>
+        </div>
+        <div class="container">
+            <div class="categories-mini-grid">
+                {% for category in categories_grid %}
+                <a href="{% url 'category_list' category.slug %}" class="category-mini-item">
+                    <span class="category-mini-icon">🛒</span>
+                    <span class="category-mini-name">{{ category.name }}</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
     <!-- Produtos em Destaque -->
     {% if exclusive_products %}
     <section class="vitrine">
@@ -50,21 +68,6 @@
         </div>
     </section>
     {% endif %}
-
-    <!-- Categorias do Lima -->
-    <section class="categories-mini">
-        <div class="section-header">
-            <h2 class="section-title"><span>📦</span> Compre por Categoria</h2>
-        </div>
-        <div class="categories-mini-grid">
-            {% for category in categories_grid %}
-            <a href="{% url 'category_list' category.slug %}" class="category-mini-item">
-                <span class="category-mini-icon">🛒</span>
-                <span class="category-mini-name">{{ category.name }}</span>
-            </a>
-            {% endfor %}
-        </div>
-    </section>
 
     <!-- Como Funciona -->
     <section class="info-section">
@@ -82,12 +85,12 @@
             <div class="info-card">
                 <span class="info-icon">🚚</span>
                 <h4 class="info-title">3. Entregar</h4>
-                <p class="info-desc">Nossa equipe separa e entrega com todo cuidado na sua casa.</p>
+                <p class="info-desc">Nossa equipe entrega com todo cuidado na sua casa.</p>
             </div>
             <div class="info-card">
                 <span class="info-icon">📬</span>
                 <h4 class="info-title">4. Acompanhar</h4>
-                <p class="info-desc">Receba notificações em tempo real sobre o seu pedido.</p>
+                <p class="info-desc">Receba notificações em tempo real sobre seu pedido.</p>
             </div>
         </div>
     </section>

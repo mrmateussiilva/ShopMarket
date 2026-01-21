@@ -1,7 +1,17 @@
 {% load static %}
 <header>
-    <!-- Row 1: Yellow with Logo and Search -->
-    <div class="header-top">
+    <!-- Top Bar (Yellow, Height 36px) -->
+    <div class="header-top-bar">
+        <div class="container">
+            <span>🚀 Entrega no mesmo dia para pedidos até as 14h</span>
+            <div class="top-bar-links">
+                <span>💬 WhatsApp: (11) 99281-1554</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header (White) -->
+    <div class="header-main">
         <div class="container">
             <div class="logo">
                 <a href="{% url 'home' %}">
@@ -11,7 +21,7 @@
 
             <div class="search-bar">
                 <form action="{% url 'search' %}" method="get">
-                    <input type="text" name="q" placeholder="O que você procura hoje?" value="{{ query }}">
+                    <input type="text" name="q" placeholder="O que você está procurando hoje?" value="{{ query }}">
                     <button type="submit">🔍</button>
                 </form>
             </div>
@@ -20,7 +30,7 @@
                 {% if user.is_authenticated %}
                 <a href="#" class="icon-link">
                     <div class="icon-wrapper">👤</div>
-                    <div>
+                    <div class="action-text">
                         <small>Olá, {{ user.username }}</small><br>
                         <strong>Minha Conta</strong>
                     </div>
@@ -28,7 +38,7 @@
                 {% else %}
                 <a href="{% url 'login' %}" class="icon-link">
                     <div class="icon-wrapper">👤</div>
-                    <div>
+                    <div class="action-text">
                         <small>Bem-vindo</small><br>
                         <strong>Entrar / Cadastrar</strong>
                     </div>
@@ -42,7 +52,7 @@
                         <span class="cart-count">{{ cart|length }}</span>
                         {% endif %}
                     </div>
-                    <div>
+                    <div class="action-text">
                         <small>Meu</small><br>
                         <strong>Carrinho</strong>
                     </div>
@@ -51,8 +61,8 @@
         </div>
     </div>
 
-    <!-- Row 2: Dark Green with Categories -->
-    <div class="header-bottom">
+    <!-- Navbar Menu (Dark Green) -->
+    <div class="header-nav">
         <div class="container">
             <nav class="categories-nav">
                 <ul>

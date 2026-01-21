@@ -2,10 +2,10 @@
     <div class="container">
         <div class="footer-main">
             <div class="footer-col">
-                <h4 style="color: var(--yellow);">Lima Supermercado</h4>
-                <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px;">{{ shop.about|default:"Seu
+                <h4 style="color: var(--brand-yellow); margin-bottom: 20px;">Lima Supermercado</h4>
+                <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 24px;">{{ shop.about|default:"Seu
                     supermercado online de confiança! Entrega rápida e produtos fresquinhos todos os dias." }}</p>
-                <div class="social-links">
+                <div class="social-links" style="display: flex; gap: 12px;">
                     {% if shop.facebook_url %}
                     <a href="{{ shop.facebook_url }}" class="social-icon">🔵</a>
                     {% endif %}
@@ -37,17 +37,13 @@
 
             <div class="footer-col">
                 <h4>Atendimento</h4>
-                <div style="margin-bottom: 15px;">
-                    <p style="font-weight: 800; font-size: 1.1rem; color: var(--yellow);">📞 {{ shop.phone|default:"(11)
-                        3456-7890" }}</p>
-                    {% if shop.whatsapp %}
-                    <p style="font-weight: 800; font-size: 1.1rem; color: var(--green-light); margin-top: 5px;">
-                        💬 <a href="https://wa.me/{{ shop.whatsapp|cut:' '|cut:'-'|cut:'('|cut:')' }}"
-                            style="color: inherit;">WhatsApp: {{ shop.whatsapp }}</a>
+                <div style="margin-bottom: 20px;">
+                    <p style="font-weight: 700; font-size: 1.1rem; color: var(--brand-yellow);">📞 (11) 3711-7356</p>
+                    <p style="font-weight: 700; font-size: 1.1rem; color: #4CAF50; margin-top: 4px;">
+                        💬 (11) 99281-1554
                     </p>
-                    {% endif %}
                 </div>
-                <p style="font-size: 0.9rem; margin-top: 15px;">
+                <p style="font-size: 0.85rem; line-height: 1.6;">
                     📍 {{ shop.address|default:"Rua do Lima, 123 - Centro" }}<br>
                     <strong>⏰ {{ shop.business_hours|default:"Seg-Sáb: 08h às 21h | Dom: 08h às 14h" }}</strong>
                 </p>
