@@ -30,7 +30,7 @@ services:
       - ./media:/app/media
       - ./staticfiles:/app/staticfiles
     ports:
-      - "${PORT}:8000"
+      - "${PORT:-8002}:8000"
     env_file:
       - docker.env
     depends_on:
