@@ -11,6 +11,7 @@
         <div class="swiper-wrapper">
             {% if banners %}
             {% for banner in banners %}
+            {% if banner.image %}
             <div class="swiper-slide">
                 <img src="{{ banner.image.url }}" alt="{{ banner.title }}">
                 <div class="hero-overlay"
@@ -22,6 +23,7 @@
                     <a href="{{ banner.link|default:'/ofertas/' }}" class="btn-hero">Ver Ofertas</a>
                 </div>
             </div>
+            {% endif %}
             {% endfor %}
             {% else %}
             <div class="swiper-slide">
