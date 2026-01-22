@@ -27,7 +27,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-vcpxx5)s@^x-+c-(5_c=0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,shopmarket.finderbit.com.br').split(',')
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://shopmarket.finderbit.com.br',
+]
 
 
 # Application definition
