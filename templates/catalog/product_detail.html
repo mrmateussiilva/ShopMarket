@@ -28,13 +28,16 @@
                 {% if product.price.has_discount %}
                 <div class="price-old">De: R$ {{ product.price.regular_price }}</div>
                 {% endif %}
-                <div class="price-main" style="margin-top: 5px;">
-                    <span style="font-size: 1rem; color: var(--text-muted); font-weight: normal;">Por:</span>
-                    R$ {{ product.price.get_best_price }}
+                <div class="price-main">
+                    {% if product.price.has_discount %}
+                    <span
+                        style="font-size: 1rem; color: var(--text-muted); font-weight: normal; align-self: center; margin-right: 8px;">Por:</span>
+                    {% endif %}
+                    <span class="price-prefix">R$</span>{{ product.price.get_best_price }}
                 </div>
                 {% if product.price.has_discount %}
-                <div style="color: var(--primary); font-weight: 700; margin-top: 10px; font-size: 0.9rem;">
-                    Economize R$ {{ product.price.regular_price|add:product.price.get_best_price }}
+                <div class="pdp-savings">
+                    Economia de R$ {{ product.price.regular_price|add:product.price.get_best_price }}
                 </div>
                 {% endif %}
             </div>
@@ -42,39 +45,53 @@
             <div class="pdp-actions">
                 <form method="post" action="{% url 'cart_add' product.id %}" class="add-to-cart-form">
                     {% csrf_token %}
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; font-weight: 600; margin-bottom: 10px;">Quantidade:</label>
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="number" name="quantity" value="1" min="1" max="99"
-                                style="width: 80px; padding: 12px; border: 1px solid var(--border); border-radius: 4px; text-align: center; font-size: 1.1rem; font-weight: 700;">
-                        </div>
+                    <label
+                        style="display: block; font-weight: 700; margin-bottom: 12px; font-size: 0.9rem; color: var(--text);">Selecione
+                        a quantidade:</label>
+                    <div class="quantity-controls" style="width: 140px; margin-bottom: 20px;">
+                        <button type="button" class="btn-qty btn-qty-minus" onclick="decrementQty(this)"
+                            aria-label="Remover"><span>-</span></button>
+                        <input type="number" name="quantity" value="1" min="1" max="99" class="input-qty"
+                            aria-label="Quantidade">
+                        <button type="button" class="btn-qty btn-qty-plus" onclick="incrementQty(this)"
+                            aria-label="Adicionar"><span>+</span></button>
                     </div>
+
                     <input type="hidden" name="next" value="{{ request.path }}">
-                    <button type="submit" class="btn-buy" style="padding: 18px; font-size: 1.2rem;">Comprar</button>
+                    <button type="submit" class="btn-buy" style="padding: 18px; font-size: 1.2rem; width: 100%;">
+                        <span class="icon">🛒</span> Adicionar ao Carrinho
+                    </button>
                 </form>
 
                 {% if user.is_authenticated %}
                 <form method="post" action="{% url 'list_add_product_quick' product.id %}">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
-                    <button type="submit" class="btn-outline" style="width: 100%; margin-top: 10px;">❤️ Adicionar à
-                        lista</button>
+                    <button type="submit" class="btn-outline"
+                        style="width: 100%; margin-top: 5px; padding: 15px; border-radius: 8px; font-weight: 600;">
+                        ❤️ Salvar na Minha Lista
+                    </button>
                 </form>
                 {% else %}
                 <a href="{% url 'login' %}?next={{ request.path }}" class="btn-outline"
-                    style="display: block; width: 100%; margin-top: 10px; text-decoration: none; text-align: center;">❤️
-                    Adicionar à lista</a>
+                    style="display: block; width: 100%; margin-top: 5px; padding: 15px; border-radius: 8px; font-weight: 600; text-decoration: none; text-align: center;">
+                    ❤️ Salvar na Minha Lista
+                </a>
                 {% endif %}
             </div>
             {% else %}
-            <p style="padding: 20px; background: #fee; color: #c00; border-radius: 4px; font-weight: 700;">Produto
-                indisponível</p>
+            <div style="padding: 30px; background: #FFF5F5; border-left: 4px solid var(--danger); border-radius: 8px;">
+                <p style="color: var(--danger); font-weight: 700; margin: 0; font-size: 1.1rem;">Produto temporariamente
+                    indisponível</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin: 8px 0 0;">Avise-me quando chegar este
+                    item.</p>
+            </div>
             {% endif %}
 
             {% if product.description %}
-            <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--border);">
-                <h3 style="margin-bottom: 15px; color: var(--secondary);">Sobre este produto</h3>
-                <div style="color: var(--text-muted); line-height: 1.8;">{{ product.description|linebreaks }}</div>
+            <div class="pdp-description">
+                <h3>Descrição do Produto</h3>
+                <div class="pdp-description-content">{{ product.description|linebreaks }}</div>
             </div>
             {% endif %}
         </div>
