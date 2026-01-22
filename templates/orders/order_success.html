@@ -38,10 +38,8 @@
                 Troco solicitado para: <strong>R$ {{ order.cash_change }}</strong>
             </p>
             {% endif %}
-            <p>O pagamento de <strong>R$ {{ order.subtotal }}</strong> será feito na {{
-                order.get_delivery_method_display|lower }}.</p>
+            <p>O pagamento de <strong>R$ {{ order.subtotal }}</strong> será feito na {{ order.get_delivery_method_display|lower }}.</p>
         </div>
     </div>
-</div>
 </div>
 {% endblock %}
