@@ -3,103 +3,129 @@
 {% block title %}{{ product.name }} - {{ shop.name }}{% endblock %}
 
 {% block content %}
-<div class="container catalog-layout">
-    <nav class="breadcrumbs">
+<div class="container" style="padding-top: 24px;">
+    <!-- Breadcrumb discreta -->
+    <nav class="breadcrumbs" style="margin-bottom: 24px;">
         <a href="{% url 'home' %}">Home</a>
         <a href="{% url 'category_list' product.category.slug %}">{{ product.category.name }}</a>
         <span>{{ product.name }}</span>
     </nav>
 
-    <div class="product-pdp">
-        <div class="pdp-gallery">
-            {% if product.images.first %}
-            <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
-            {% else %}
-            <img src="https://via.placeholder.com/600x600?text={{ product.name|urlencode }}" alt="{{ product.name }}">
-            {% endif %}
-        </div>
-
-        <div class="pdp-info">
-            <h1>{{ product.name }}</h1>
-            <div class="pdp-code">Código: {{ product.code }} | Unidade: {{ product.unit }}</div>
-
-            {% if product.price %}
-            <div class="pdp-price-box">
-                {% if product.price.has_discount %}
-                <div class="price-old">De: R$ {{ product.price.regular_price }}</div>
-                {% endif %}
-                <div class="price-main">
-                    {% if product.price.has_discount %}
-                    <span
-                        style="font-size: 1rem; color: var(--text-muted); font-weight: normal; align-self: center; margin-right: 8px;">Por:</span>
-                    {% endif %}
-                    <span class="price-prefix">R$</span>{{ product.price.get_best_price }}
-                </div>
-                {% if product.price.has_discount %}
-                <div class="pdp-savings">
-                    Economia de R$ {{ product.price.regular_price|add:product.price.get_best_price }}
-                </div>
+    <div class="pdp-wrapper">
+        <div class="product-pdp">
+            <!-- Coluna Esquerda: Imagem (40%) -->
+            <div class="pdp-gallery">
+                {% if product.images.first %}
+                <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                <img src="https://via.placeholder.com/600x600?text={{ product.name|urlencode }}"
+                    alt="{{ product.name }}">
                 {% endif %}
             </div>
 
-            <div class="pdp-actions">
-                <form method="post" action="{% url 'cart_add' product.id %}" class="add-to-cart-form">
-                    {% csrf_token %}
-                    <label
-                        style="display: block; font-weight: 700; margin-bottom: 12px; font-size: 0.9rem; color: var(--text);">Selecione
-                        a quantidade:</label>
-                    <div class="quantity-controls" style="width: 140px; margin-bottom: 20px;">
-                        <button type="button" class="btn-qty btn-qty-minus" onclick="decrementQty(this)"
-                            aria-label="Remover"><span>-</span></button>
-                        <input type="number" name="quantity" value="1" min="1" max="99" class="input-qty"
-                            aria-label="Quantidade">
-                        <button type="button" class="btn-qty btn-qty-plus" onclick="incrementQty(this)"
-                            aria-label="Adicionar"><span>+</span></button>
+            <!-- Coluna Direita: Informações (60%) -->
+            <div class="pdp-info">
+                <h1>{{ product.name }}</h1>
+                <div class="pdp-meta">
+                    <span>Código: <strong>{{ product.code }}</strong></span>
+                    <span>Unidade: <strong>{{ product.unit }}</strong></span>
+                </div>
+
+                <div class="pdp-price-section">
+                    {% if product.price %}
+                    <div class="pdp-price-box">
+                        {% if product.price.has_discount %}
+                        <div class="price-old">De: R$ {{ product.price.regular_price }}</div>
+                        {% endif %}
+
+                        <div class="price-main">
+                            <span class="price-prefix">R$</span> {{ product.price.get_best_price }}
+                        </div>
+
+                        {% if product.price.has_discount %}
+                        <div class="pdp-savings">
+                            Economize R$ {{ product.price.regular_price|add:product.price.get_best_price }}
+                        </div>
+                        {% endif %}
                     </div>
 
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <button type="submit" class="btn-buy" style="padding: 18px; font-size: 1.2rem; width: 100%;">
-                        <span class="icon">🛒</span> Adicionar ao Carrinho
-                    </button>
-                </form>
+                    <form method="post" action="{% url 'cart_add' product.id %}" class="pdp-actions-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+
+                        <div class="pdp-actions-container">
+                            <div class="pdp-qty-wrapper">
+                                <label>Qtd</label>
+                                <div class="quantity-controls" style="width: 130px; height: 60px;">
+                                    <button type="button" class="btn-qty btn-qty-minus" onclick="decrementQty(this)"
+                                        style="width: 45px; height: 100%;"><span>-</span></button>
+                                    <input type="number" name="quantity" value="1" min="1" max="99" class="input-qty"
+                                        style="height: 100%;">
+                                    <button type="button" class="btn-qty btn-qty-plus" onclick="incrementQty(this)"
+                                        style="width: 45px; height: 100%;"><span>+</span></button>
+                                </div>
+                            </div>
+
+                            <div class="pdp-cta-wrapper">
+                                <button type="submit" class="pdp-btn-buy">
+                                    <span class="icon">🛒</span> ADICIONAR AO CARRINHO
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Micro-copy de confiança -->
+                    <div class="pdp-trust-signals">
+                        <div class="trust-item">
+                            <span>🚚</span>
+                            <div><strong>Entrega no mesmo dia</strong><br>Pedidos até 14h</div>
+                        </div>
+                        <div class="trust-item">
+                            <span>💳</span>
+                            <div><strong>Pagamento na entrega</strong><br>ou retirada</div>
+                        </div>
+                        <div class="trust-item">
+                            <span>🏬</span>
+                            <div><strong>Supermercado Local</strong><br>Produtos frescos</div>
+                        </div>
+                    </div>
+
+                    {% else %}
+                    <div style="padding: 24px; background: #FFF5F5; border: 1px solid #FED7D7; border-radius: 8px;">
+                        <p style="color: var(--danger); font-weight: 700; margin: 0; font-size: 1.1rem;">Produto
+                            Indisponível</p>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Este item não está
+                            disponível no momento.</p>
+                    </div>
+                    {% endif %}
+                </div>
 
                 {% if user.is_authenticated %}
-                <form method="post" action="{% url 'list_add_product_quick' product.id %}">
+                <form method="post" action="{% url 'list_add_product_quick' product.id %}" style="margin-top: 10px;">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
-                    <button type="submit" class="btn-outline"
-                        style="width: 100%; margin-top: 5px; padding: 15px; border-radius: 8px; font-weight: 600;">
-                        ❤️ Salvar na Minha Lista
+                    <button type="submit"
+                        style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; padding: 0;">
+                        ❤️ <u>Salvar na minha lista de compras</u>
                     </button>
                 </form>
-                {% else %}
-                <a href="{% url 'login' %}?next={{ request.path }}" class="btn-outline"
-                    style="display: block; width: 100%; margin-top: 5px; padding: 15px; border-radius: 8px; font-weight: 600; text-decoration: none; text-align: center;">
-                    ❤️ Salvar na Minha Lista
-                </a>
+                {% endif %}
+
+                {% if product.description %}
+                <div class="pdp-description-section">
+                    <h3>Descrição</h3>
+                    <div class="pdp-description-content">
+                        {{ product.description|linebreaks }}
+                    </div>
+                </div>
                 {% endif %}
             </div>
-            {% else %}
-            <div style="padding: 30px; background: #FFF5F5; border-left: 4px solid var(--danger); border-radius: 8px;">
-                <p style="color: var(--danger); font-weight: 700; margin: 0; font-size: 1.1rem;">Produto temporariamente
-                    indisponível</p>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin: 8px 0 0;">Avise-me quando chegar este
-                    item.</p>
-            </div>
-            {% endif %}
-
-            {% if product.description %}
-            <div class="pdp-description">
-                <h3>Descrição do Produto</h3>
-                <div class="pdp-description-content">{{ product.description|linebreaks }}</div>
-            </div>
-            {% endif %}
         </div>
     </div>
 
     <!-- Related Products -->
     {% if related_products %}
-    <section class="vitrine" style="margin-top: 80px;">
+    <section class="vitrine" style="margin-top: 60px; padding-bottom: 60px;">
         <div class="section-header">
             <h2 class="section-title">Aqui tem mais opções</h2>
         </div>
