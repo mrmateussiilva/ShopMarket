@@ -34,11 +34,12 @@
                         </div>
                         <div style="display: flex; align-items: center; gap: 5px;">
                             <input type="number" name="quantity_{{ item.product.id }}" value="{{ item.quantity }}"
-                                min="1" max="99"
+                                min="1" max="99" class="input-qty-ajax" data-product-id="{{ item.product.id }}"
                                 style="width: 60px; padding: 8px; border: 1px solid var(--border); border-radius: 4px; text-align: center;">
                         </div>
                         <div style="text-align: right;">
-                            <div style="font-weight: 800; font-size: 1.1rem; color: var(--secondary);">R$ {{
+                            <div id="item-total-{{ item.product.id }}"
+                                style="font-weight: 800; font-size: 1.1rem; color: var(--secondary);">R$ {{
                                 item.total_price }}</div>
                             <a href="{% url 'cart_remove' item.product.id %}"
                                 style="color: var(--primary); font-size: 0.8rem; font-weight: 600;">Remover</a>
@@ -81,4 +82,21 @@
     </div>
     {% endif %}
 </div>
+
+{% block extra_js %}
+<script>
+    document.querySelectorAll('.input-qty-ajax').forEach(input => {
+        input.addEventListener('change', function () {
+            const productId = this.dataset.productId;
+            const newQty = this.value;
+
+            // Sincroniza com o mini cart (se aberto)
+            const miniInput = document.getElementById(`qty-mini-${productId}`);
+            if (miniInput) miniInput.value = newQty;
+
+            performCartUpdate(productId, newQty);
+        });
+    });
+</script>
+{% endblock %}
 {% endblock %}

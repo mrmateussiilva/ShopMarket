@@ -1865,3 +1865,48 @@ footer {
         text-align: left;
     }
 }
+/* Miniature Quantity Controls for Flyout */
+.quantity-controls.miniature {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    height: 32px;
+    overflow: hidden;
+    background: #fff;
+    width: fit-content;
+    margin-bottom: 8px;
+}
+
+.quantity-controls.miniature .btn-qty {
+    width: 28px;
+    height: 100%;
+    background: #f8f9fa;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    color: var(--brand-green);
+}
+
+.quantity-controls.miniature .btn-qty:hover {
+    background: #e9ecef;
+}
+
+.quantity-controls.miniature .input-qty-mini {
+    width: 35px;
+    height: 100%;
+    border: none !important;
+    border-left: 1px solid var(--border) !important;
+    border-right: 1px solid var(--border) !important;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+    background: #fff;
+    padding: 0;
+    margin: 0;
+}

@@ -3,7 +3,7 @@
     <div style="border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 15px;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
             <span style="color: var(--text-muted);">Produtos ({{ cart|length }}):</span>
-            <span style="font-weight: 600;">R$ {{ cart.get_total_price }}</span>
+            <span class="cart-total-value" style="font-weight: 600;">R$ {{ cart.get_total_price }}</span>
         </div>
 
         {% if cart.get_discount > 0 %}
@@ -21,7 +21,8 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <span style="font-size: 1.1rem; font-weight: 700; color: var(--secondary);">Total:</span>
-        <span style="font-size: 1.5rem; font-weight: 800; color: var(--secondary);">R$ {{ cart.get_total_price }}</span>
+        <span class="cart-total-value" style="font-size: 1.5rem; font-weight: 800; color: var(--secondary);">R$ {{
+            cart.get_total_price }}</span>
     </div>
 
     <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 10px; text-align: right;">

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.http import JsonResponse
 from catalog.models import Product
 from .cart import Cart
 
@@ -55,3 +56,30 @@ def cart_clear(request):
     cart.clear()
     messages.success(request, 'Carrinho limpo!')
     return redirect('cart_detail')
+
+
+def cart_update_ajax(request):
+    """Update cart quantities via AJAX and return JSON"""
+    if request.method == 'POST':
+        cart = Cart(request)
+        product_id = request.POST.get('product_id')
+        quantity = int(request.POST.get('quantity', 1))
+        
+        if product_id:
+            cart.update_quantity(product_id, quantity)
+            
+            # Find the item total for the specific product
+            item_total = "0,00"
+            for item in cart:
+                if str(item['product'].id) == str(product_id):
+                    item_total = f"{item['total_price']:.2f}".replace('.', ',')
+                    break
+            
+            return JsonResponse({
+                'success': True,
+                'item_total': item_total,
+                'cart_total': f"{cart.get_total_price():.2f}".replace('.', ','),
+                'cart_count': len(cart),
+            })
+            
+    return JsonResponse({'success': False}, status=400)
