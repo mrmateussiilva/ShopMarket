@@ -17,6 +17,9 @@
             <p><strong>Loja:</strong> {{ order.store.name }}</p>
             <p><strong>Método de Entrega:</strong> {{ order.get_delivery_method_display }}</p>
             <p><strong>Método de Pagamento:</strong> {{ order.get_payment_method_display }}</p>
+            {% if order.payment_method == 'money' and order.cash_change %}
+            <p><strong>Troco para:</strong> R$ {{ order.cash_change }}</p>
+            {% endif %}
 
             {% if order.delivery_address %}
             <p><strong>Endereço de Entrega:</strong><br>{{ order.delivery_address }}</p>

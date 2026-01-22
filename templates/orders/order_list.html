@@ -19,7 +19,11 @@
                 <p><strong>Loja:</strong> {{ order.store.name }}</p>
                 <p><strong>Data:</strong> {{ order.created_at|date:"d/m/Y H:i" }}</p>
                 <p><strong>Entrega:</strong> {{ order.get_delivery_method_display }}</p>
-                <p><strong>Pagamento:</strong> {{ order.get_payment_method_display }}</p>
+                <p><strong>Pagamento:</strong> {{ order.get_payment_method_display }}
+                    {% if order.payment_method == 'money' and order.cash_change %}
+                    <br><small class="text-muted">(Troco para R$ {{ order.cash_change }})</small>
+                    {% endif %}
+                </p>
                 <p><strong>Total:</strong> R$ {{ order.subtotal }}</p>
             </div>
 

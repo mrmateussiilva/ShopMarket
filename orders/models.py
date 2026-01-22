@@ -9,9 +9,9 @@ class Order(models.Model):
     ]
     
     PAYMENT_CHOICES = [
-        ('online', 'Online'),
-        ('on_delivery', 'Na Entrega'),
-        ('in_store', 'Na Retirada'),
+        ('pix', 'PIX'),
+        ('card', 'Cartão'),
+        ('money', 'Dinheiro'),
     ]
     
     STATUS_CHOICES = [
@@ -38,6 +38,14 @@ class Order(models.Model):
         max_length=20,
         choices=PAYMENT_CHOICES,
         verbose_name="Método de Pagamento"
+    )
+    
+    cash_change = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name="Troco para"
     )
     status = models.CharField(
         max_length=20,

@@ -6,8 +6,8 @@
 <div class="container">
     <div class="success-page">
         <div class="success-icon">✅</div>
-        <h1>Pedido realizado com sucesso!</h1>
-        <p>Obrigado por comprar no {{ shop.name }}. Seu pedido foi recebido e está sendo processado.</p>
+        <h1>Pedido registrado com sucesso!</h1>
+        <p>Aguarde, estamos separando seu pedido.</p>
 
         <div class="order-info-summary">
             <p><strong>Número do Pedido:</strong> #{{ order.id }}</p>
@@ -29,12 +29,19 @@
             <p>Seu pedido estará disponível para retirada em nosso endereço: <br><strong>{{ shop.address }}</strong></p>
             {% endif %}
 
-            {% if order.payment_method != 'online' %}
             <h3>Pagamento</h3>
-            <p>O pagamento de <strong>R$ {{ order.subtotal }}</strong> deverá ser feito no momento da {{
-                order.get_delivery_method_display|lower }}.</p>
+            <p>
+                Forma de pagamento escolhida: <strong>{{ order.get_payment_method_display }}</strong>
+            </p>
+            {% if order.payment_method == 'money' and order.cash_change %}
+            <p>
+                Troco solicitado para: <strong>R$ {{ order.cash_change }}</strong>
+            </p>
             {% endif %}
+            <p>O pagamento de <strong>R$ {{ order.subtotal }}</strong> será feito na {{
+                order.get_delivery_method_display|lower }}.</p>
         </div>
     </div>
+</div>
 </div>
 {% endblock %}

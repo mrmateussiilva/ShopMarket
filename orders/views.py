@@ -19,6 +19,25 @@ def checkout(request):
         payment_method = request.POST.get('payment_method')
         delivery_address = request.POST.get('delivery_address', '')
         delivery_notes = request.POST.get('delivery_notes', '')
+        cash_change = request.POST.get('cash_change')
+        
+        cart_total = cart.get_total_price()
+        
+        # Validation for Cash payment
+        change_amount = None
+        if payment_method == 'money':
+            try:
+                if cash_change:
+                    change_amount = float(cash_change.replace(',', '.'))
+                    if change_amount < float(cart_total):
+                        messages.error(request, f'O valor do troco (R$ {change_amount:.2f}) deve ser maior ou igual ao total do pedido (R$ {cart_total:.2f}).')
+                        return redirect('checkout')
+                else:
+                    messages.error(request, 'Informe o valor para troco.')
+                    return redirect('checkout')
+            except ValueError:
+                messages.error(request, 'Valor de troco inválido.')
+                return redirect('checkout')
         
         # Create order
         order = Order.objects.create(
@@ -30,6 +49,7 @@ def checkout(request):
             products_total=cart.get_total_price(),
             discount_total=cart.get_discount(),
             subtotal=cart.get_subtotal(),
+            cash_change=change_amount
         )
         
         # Create order items
