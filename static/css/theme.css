@@ -429,30 +429,205 @@ header {
 }
 
 /* --- PRODUCTS --- */
+/* --- PRODUCTS --- */
 .product-card {
+    background: var(--white);
     border: 1px solid var(--border);
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 100%;
 }
 
 .product-card:hover {
+    transform: translateY(-8px);
     box-shadow: var(--shadow-lg);
     border-color: var(--brand-green);
 }
 
-.price-main {
-    color: var(--brand-green);
+.product-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--brand-orange);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.product-badge {
-    background: var(--brand-orange);
+.product-img-wrapper {
+    width: 100%;
+    padding-top: 100%;
+    /* Square aspect ratio */
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+}
+
+.product-img-wrapper img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-img-wrapper img {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.product-info {
+    padding: 16px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text);
+    margin-bottom: 4px;
+    height: 2.6em;
+    /* Support 2 lines */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.product-unit {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-bottom: 12px;
+}
+
+.product-price-block {
+    margin-top: auto;
+    padding-top: 8px;
+}
+
+.price-old {
+    font-size: 0.8rem;
+    text-decoration: line-through;
+    color: var(--text-muted);
+    display: block;
+    line-height: 1;
+}
+
+.price-main {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--brand-green);
+    margin-top: 2px;
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+}
+
+.price-prefix {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+/* --- PRODUCT ACTIONS --- */
+.product-actions {
+    padding: 0 16px 16px;
+}
+
+.add-to-cart-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: #F9FAFB;
+}
+
+.btn-qty {
+    background: transparent;
+    border: none;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--brand-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.btn-qty:hover {
+    background: #E5E7EB;
+}
+
+.input-qty {
+    width: 100%;
+    border: none;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    background: transparent;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    appearance: none;
+    /* Remove arrows */
+}
+
+.input-qty::-webkit-inner-spin-button,
+.input-qty::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .btn-buy {
-    transition: background 0.3s, transform 0.2s;
+    background: var(--brand-green);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(11, 93, 30, 0.2);
 }
 
-.btn-buy:active {
-    transform: scale(0.96);
+.btn-buy:hover {
+    background: var(--brand-green-2);
+    box-shadow: 0 4px 8px rgba(11, 93, 30, 0.3);
+}
+
+.btn-buy .icon {
+    font-size: 1.1rem;
 }
 
 /* --- SECONDARY BANNERS --- */

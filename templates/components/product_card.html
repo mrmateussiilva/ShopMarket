@@ -19,9 +19,13 @@
 
             <div class="product-price-block">
                 {% if price.has_discount %}
-                <span class="price-old">R$ {{ price.regular_price }}</span>
+                <span class="price-old">De: R$ {{ price.regular_price }}</span>
                 {% endif %}
                 <div class="price-main">
+                    {% if price.has_discount %}
+                    <span
+                        style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal; align-self: center; margin-right: 4px;">Por:</span>
+                    {% endif %}
                     <span class="price-prefix">R$</span>{{ price.get_best_price }}
                 </div>
             </div>
@@ -35,9 +39,11 @@
             <input type="hidden" name="next" value="{{ request.path }}">
 
             <div class="quantity-controls">
-                <button type="button" class="btn-qty btn-qty-minus" onclick="decrementQty(this)">-</button>
-                <input type="number" name="quantity" value="1" min="1" class="input-qty">
-                <button type="button" class="btn-qty btn-qty-plus" onclick="incrementQty(this)">+</button>
+                <button type="button" class="btn-qty btn-qty-minus" onclick="decrementQty(this)"
+                    aria-label="Remover"><span>-</span></button>
+                <input type="number" name="quantity" value="1" min="1" class="input-qty" aria-label="Quantidade">
+                <button type="button" class="btn-qty btn-qty-plus" onclick="incrementQty(this)"
+                    aria-label="Adicionar"><span>+</span></button>
             </div>
 
             <button type="submit" class="btn-buy">
