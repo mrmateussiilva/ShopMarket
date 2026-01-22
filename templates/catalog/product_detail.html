@@ -53,11 +53,18 @@
                     <button type="submit" class="btn-buy" style="padding: 18px; font-size: 1.2rem;">Comprar</button>
                 </form>
 
-                <form method="post" action="{% url 'list_add_product' product.id %}">
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'list_add_product_quick' product.id %}">
                     {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
                     <button type="submit" class="btn-outline" style="width: 100%; margin-top: 10px;">❤️ Adicionar à
                         lista</button>
                 </form>
+                {% else %}
+                <a href="{% url 'login' %}?next={{ request.path }}" class="btn-outline"
+                    style="display: block; width: 100%; margin-top: 10px; text-decoration: none; text-align: center;">❤️
+                    Adicionar à lista</a>
+                {% endif %}
             </div>
             {% else %}
             <p style="padding: 20px; background: #fee; color: #c00; border-radius: 4px; font-weight: 700;">Produto

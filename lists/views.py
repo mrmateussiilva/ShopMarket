@@ -65,4 +65,22 @@ def list_delete(request, list_id):
     name = list_obj.name
     list_obj.delete()
     messages.success(request, f'Lista "{name}" excluída!')
-    return redirect('list_view')
+@login_required
+def list_add_product_quick(request, product_id):
+    """Add product to the first available list or create one if none exists"""
+    product = get_object_or_404(Product, id=product_id)
+    
+    # Try to find the first list
+    list_obj = List.objects.filter(user=request.user).first()
+    
+    if not list_obj:
+        # Create a default list
+        list_obj = List.objects.create(user=request.user, name='Minha Lista')
+        messages.info(request, 'Criamos a sua "Minha Lista" automaticamente.')
+    
+    list_obj.products.add(product)
+    messages.success(request, f'{product.name} adicionado à sua lista!')
+    
+    # Redirect back to where we came from
+    next_url = request.POST.get('next', request.META.get('HTTP_REFERER', '/'))
+    return redirect(next_url)
