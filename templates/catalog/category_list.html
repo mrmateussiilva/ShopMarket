@@ -15,8 +15,7 @@
     <div class="page-header">
         <h1 class="section-title">{{ category.name }}</h1>
         {% if category.description %}
-        <p class="category-description" style="color: var(--text-muted); margin-bottom: 20px;">{{ category.description
-            }}</p>
+        <p class="category-description" style="color: var(--text-muted); margin-bottom: 20px;">{{ category.description }}</p>
         {% endif %}
     </div>
 
@@ -25,12 +24,12 @@
             <span class="filter-label">Ordenar por:</span>
             <form method="get">
                 <select name="sort" onchange="this.form.submit()">
-                    <option value="relevancia" {% if sort == 'relevancia' %}selected{% endif %}>Relevância</option>
-                    <option value="menor_preco" {% if sort == 'menor_preco' %}selected{% endif %}>Menor Preço</option>
-                    <option value="maior_preco" {% if sort == 'maior_preco' %}selected{% endif %}>Maior Preço</option>
-                    <option value="maior_desconto" {% if sort == 'maior_desconto' %}selected{% endif %}>Maior Desconto
+                    <option value="relevancia" {% if sort=='relevancia' %}selected{% endif %}>Relevância</option>
+                    <option value="menor_preco" {% if sort=='menor_preco' %}selected{% endif %}>Menor Preço</option>
+                    <option value="maior_preco" {% if sort=='maior_preco' %}selected{% endif %}>Maior Preço</option>
+                    <option value="maior_desconto" {% if sort=='maior_desconto' %}selected{% endif %}>Maior Desconto
                     </option>
-                    <option value="mais_novos" {% if sort == 'mais_novos' %}selected{% endif %}>Novidades</option>
+                    <option value="mais_novos" {% if sort=='mais_novos' %}selected{% endif %}>Novidades</option>
                 </select>
             </form>
         </div>

@@ -3,8 +3,7 @@
         <div class="footer-main">
             <div class="footer-col">
                 <h4 style="color: var(--brand-yellow); margin-bottom: 20px;">Lima Supermercado</h4>
-                <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 24px;">{{ shop.about|default:"Seu
-                    supermercado online de confiança! Entrega rápida e produtos fresquinhos todos os dias." }}</p>
+                <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 24px;">{{ shop.about|default:"Seu supermercado online de confiança! Entrega rápida e produtos fresquinhos todos os dias." }}</p>
                 <div class="social-links" style="display: flex; gap: 12px;">
                     {% if shop.facebook_url %}
                     <a href="{{ shop.facebook_url }}" class="social-icon">🔵</a>
