@@ -79,38 +79,22 @@
             <h3 class="section-title">📦 Compre por Categoria</h3>
         </div>
         <div class="category-grid">
-            <a href="#" class="category-card">
-                <span class="icon">🍎</span>
-                <span>Hortifrúti</span>
+            {% for cat in categories_grid %}
+            <a href="{% url 'category_list' cat.slug %}" class="category-card">
+                <span class="icon">
+                    {% if cat.slug == 'hortifruti' %}🍎
+                    {% elif cat.slug == 'padaria' %}🥖
+                    {% elif cat.slug == 'bebidas' %}🥤
+                    {% elif cat.slug == 'laticinios' %}🧀
+                    {% elif cat.slug == 'limpeza' %}🧹
+                    {% elif cat.slug == 'carnes' %}🥩
+                    {% elif cat.slug == 'congelados' %}❄️
+                    {% elif cat.slug == 'mercearia' %}🛒
+                    {% else %}📦{% endif %}
+                </span>
+                <span>{{ cat.name }}</span>
             </a>
-            <a href="#" class="category-card">
-                <span class="icon">🥩</span>
-                <span>Carnes</span>
-            </a>
-            <a href="#" class="category-card">
-                <span class="icon">🥖</span>
-                <span>Padaria</span>
-            </a>
-            <a href="#" class="category-card">
-                <span class="icon">🧀</span>
-                <span>Laticínios</span>
-            </a>
-            <a href="#" class="category-card">
-                <span class="icon">🥤</span>
-                <span>Bebidas</span>
-            </a>
-            <a href="#" class="category-card">
-                <span class="icon">🛒</span>
-                <span>Mercearia</span>
-            </a>
-            <a href="#" class="category-card">
-                <span class="icon">🧹</span>
-                <span>Limpeza</span>
-            </a>
-            <a href="#" class="category-card">
-                <span class="icon">❄️</span>
-                <span>Congelados</span>
-            </a>
+            {% endfor %}
         </div>
     </section>
 
@@ -137,22 +121,22 @@
 
     <!-- Secondary Banners -->
     <section class="secondary-banners">
-        <div class="banner-item">
+        <a href="{% url 'category_list' 'bebidas' %}" class="banner-item">
             <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=2070&auto=format&fit=crop"
                 alt="Vinhos">
             <div class="banner-text">
                 <h4>Festival de Vinhos</h4>
                 <p>Confira nossa seleção exclusiva</p>
             </div>
-        </div>
-        <div class="banner-item">
+        </a>
+        <a href="{% url 'category_list' 'padaria' %}" class="banner-item">
             <img src="https://images.unsplash.com/photo-1556228578-8c7c2f22ba55?q=80&w=2070&auto=format&fit=crop"
                 alt="Padaria">
             <div class="banner-text">
                 <h4>Padaria Artesanal</h4>
                 <p>Pães quentinhos toda hora</p>
             </div>
-        </div>
+        </a>
     </section>
 
     <!-- Recipes / Blog Section -->

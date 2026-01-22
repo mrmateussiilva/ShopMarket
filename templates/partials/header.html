@@ -78,7 +78,9 @@
                     </div>
                     <div class="cart-info">
                         <strong>Meu Carrinho</strong>
-                        <span class="cart-total">{% if cart %}{{ cart.get_total_price_display }}{% else %}R$ 0,00{% endif %}</span>
+                        <span class="cart-total">
+                            {% if cart %}{{ cart.get_total_price_display }}{% else %}R$ 0,00{% endif %}
+                        </span>
                     </div>
                 </a>
             </div>
@@ -96,54 +98,24 @@
                             <span class="nav-text">Ofertas</span>
                         </a>
                     </li>
+                    {% for cat in main_categories %}
                     <li>
-                        <a href="#" class="nav-item">
-                            <span class="nav-icon">🍎</span>
-                            <span class="nav-text">Hortifrúti</span>
+                        <a href="{% url 'category_list' cat.slug %}" class="nav-item">
+                            <span class="nav-icon">
+                                {% if cat.slug == 'hortifruti' %}🍎
+                                {% elif cat.slug == 'padaria' %}🥖
+                                {% elif cat.slug == 'bebidas' %}🥤
+                                {% elif cat.slug == 'laticinios' %}🧀
+                                {% elif cat.slug == 'limpeza' %}🧹
+                                {% elif cat.slug == 'carnes' %}🥩
+                                {% elif cat.slug == 'congelados' %}❄️
+                                {% elif cat.slug == 'mercearia' %}🛒
+                                {% else %}📦{% endif %}
+                            </span>
+                            <span class="nav-text">{{ cat.name }}</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="nav-item">
-                            <span class="nav-icon">🥖</span>
-                            <span class="nav-text">Padaria</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-item">
-                            <span class="nav-icon">🥩</span>
-                            <span class="nav-text">Carnes</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-item">
-                            <span class="nav-icon">🧀</span>
-                            <span class="nav-text">Laticínios</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-item">
-                            <span class="nav-icon">🥤</span>
-                            <span class="nav-text">Bebidas</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-item">
-                            <span class="nav-icon">🛒</span>
-                            <span class="nav-text">Mercearia</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-item">
-                            <span class="nav-icon">🧹</span>
-                            <span class="nav-text">Limpeza</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-item">
-                            <span class="nav-icon">❄️</span>
-                            <span class="nav-text">Congelados</span>
-                        </a>
-                    </li>
+                    {% endfor %}
                 </ul>
             </nav>
         </div>

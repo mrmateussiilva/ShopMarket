@@ -7,6 +7,9 @@
     <!-- Breadcrumb discreta -->
     <nav class="breadcrumbs" style="margin-bottom: 24px;">
         <a href="{% url 'home' %}">Home</a>
+        {% if product.category.parent %}
+        <a href="{% url 'category_list' product.category.parent.slug %}">{{ product.category.parent.name }}</a>
+        {% endif %}
         <a href="{% url 'category_list' product.category.slug %}">{{ product.category.name }}</a>
         <span>{{ product.name }}</span>
     </nav>
