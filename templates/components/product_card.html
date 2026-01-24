@@ -5,7 +5,9 @@
 
     <a href="{% url 'product_detail' product.slug product.id %}" class="product-link">
         <div class="product-img-wrapper">
-            {% if product.images.first %}
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+            {% elif product.images.first %}
             <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" loading="lazy">
             {% else %}
             <img src="https://via.placeholder.com/240x240?text={{ product.name|urlencode }}" alt="{{ product.name }}"

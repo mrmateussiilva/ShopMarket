@@ -16,14 +16,30 @@
 
     <div class="pdp-wrapper">
         <div class="product-pdp">
-            <!-- Coluna Esquerda: Imagem (40%) -->
-            <div class="pdp-gallery">
-                {% if product.images.first %}
-                <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
-                {% else %}
-                <img src="https://via.placeholder.com/600x600?text={{ product.name|urlencode }}"
-                    alt="{{ product.name }}">
-                {% endif %}
+            <div class="product-gallery">
+                <div class="main-image">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" id="mainImage">
+                    {% elif product.images.first %}
+                    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" id="mainImage">
+                    {% else %}
+                    <img src="https://via.placeholder.com/500x500?text={{ product.name|urlencode }}"
+                        alt="{{ product.name }}" id="mainImage">
+                    {% endif %}
+                </div>
+                <div class="thumbnails">
+                    {% if product.image %}
+                    <div class="thumb active" onclick="changeImage(this, '{{ product.image.url }}')">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    </div>
+                    {% endif %}
+                    {% for img in product.images.all %}
+                    <div class="thumb {% if not product.image and forloop.first %}active{% endif %}"
+                        onclick="changeImage(this, '{{ img.image.url }}')">
+                        <img src="{{ img.image.url }}" alt="{{ product.name }}">
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
 
             <!-- Coluna Direita: Informações (60%) -->
