@@ -77,9 +77,10 @@ class Cart:
             
         # Iterate over remaining valid items
         for pid, item in self.cart.items():
-            item['product'] = product_map[pid]
-            item['total_price'] = Decimal(str(item['price'])) * item['quantity']
-            yield item
+            cart_item = item.copy()
+            cart_item['product'] = product_map[pid]
+            cart_item['total_price'] = Decimal(str(cart_item['price'])) * cart_item['quantity']
+            yield cart_item
 
     def __len__(self):
         """Count total items in cart"""

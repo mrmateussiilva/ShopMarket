@@ -13,6 +13,9 @@
 </head>
 
 <body>
+    <form id="csrf-token-form" method="post" style="display: none;">
+        {% csrf_token %}
+    </form>
     {% include 'partials/header.html' %}
     {% include 'partials/cart_flyout.html' %}
 

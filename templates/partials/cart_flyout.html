@@ -122,6 +122,7 @@
         fetch('{% url "cart_update_ajax" %}', {
             method: 'POST',
             body: formData,
+            credentials: 'same-origin',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
                 'X-CSRFToken': csrftoken
@@ -147,6 +148,12 @@
                     document.querySelectorAll('.cart-total-value').forEach(el => {
                         el.innerText = `R$ ${data.cart_total}`;
                     });
+
+                    // Atualiza total no header
+                    const headerTotal = document.querySelector('.cart-total');
+                    if (headerTotal) {
+                        headerTotal.innerText = `R$ ${data.cart_total}`;
+                    }
 
                     // Contagem no header
                     document.querySelectorAll('.cart-count').forEach(el => {
