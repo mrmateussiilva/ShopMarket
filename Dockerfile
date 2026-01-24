@@ -29,14 +29,17 @@ RUN uv pip install --system .
 # Copy project files
 COPY . .
 
+# Set permissions for entrypoint
+RUN chmod +x /app/entrypoint.sh
+
 # Create directories for media and static files
 RUN mkdir -p /app/media /app/staticfiles
-
-# Collect static files
-# RUN python manage.py collectstatic --noinput || true
 
 # Expose port
 EXPOSE 8000
 
-# Run gunicorn
+# Set entrypoint
+ENTRYPOINT ["/app/entrypoint.sh"]
+
+# Default command (can be overridden by docker-compose)
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "shopmarket.wsgi:application"]
