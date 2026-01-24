@@ -1,11 +1,11 @@
-{% extends 'base.html" %}
+{% extends 'base.html' %}
 
 {% block title %}Ofertas da Semana - {{ shop.name }}{% endblock %}
 
 {% block content %}
 <div class="container catalog-layout">
     <nav class="breadcrumbs">
-        <a href="{% url 'home" %}">Home</a>
+        <a href="{% url 'home' %}">Home</a>
         <span>Ofertas</span>
     </nav>
 
@@ -35,7 +35,7 @@
         {% empty %}
         <div class="no-results">
             <p>Nenhuma oferta encontrada no momento.</p>
-            <a href="{% url 'home" %}" class="btn-buy"
+            <a href="{% url 'home' %}" class="btn-buy"
                 style="display:inline-block; width:auto; padding: 10px 30px;">Voltar para Home</a>
         </div>
         {% endfor %}
