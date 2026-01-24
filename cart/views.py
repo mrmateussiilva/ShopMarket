@@ -29,6 +29,7 @@ def cart_add(request, product_id):
             'flyout_html': flyout_html,
             'cart_total': f"{cart.get_total_price():.2f}".replace('.', ','),
             'cart_count': len(cart),
+            'product_name': product.name,
         })
     messages.success(request, f'{product.name} adicionado ao carrinho!')
     

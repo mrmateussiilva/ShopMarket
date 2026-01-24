@@ -55,6 +55,38 @@
             }
         }
 
+        function showToast(message, type = 'success') {
+            let container = document.querySelector('.toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.className = 'toast-container';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <span>${type === 'success' ? '✅' : 'ℹ️'}</span>
+                </div>
+                <div class="toast-message">${message}</div>
+            `;
+
+            container.appendChild(toast);
+
+            // Trigger reflow
+            toast.offsetHeight;
+
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+
         function bindAddToCartForms() {
             const forms = document.querySelectorAll('form.add-to-cart-form, form.pdp-actions-form');
             forms.forEach(form => {
@@ -81,14 +113,15 @@
                         })
                         .then(data => {
                             if (!data.success) return;
+
+                            // Show Notification
+                            const productName = data.product_name ? `${data.product_name} ` : '';
+                            showToast(`${productName}adicionado ao carrinho!`);
+
                             updateHeaderCart(data.cart_count, data.cart_total);
                             const flyoutInner = document.getElementById('cart-flyout-inner');
                             if (flyoutInner && data.flyout_html) {
                                 flyoutInner.innerHTML = data.flyout_html;
-                            }
-                            const flyout = document.getElementById('cart-flyout');
-                            if (flyout && !flyout.classList.contains('active') && typeof toggleCart === 'function') {
-                                toggleCart();
                             }
                             const submitButton = form.querySelector('button[type="submit"]');
                             if (submitButton) {
