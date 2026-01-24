@@ -37,6 +37,81 @@
     {% include 'partials/footer.html' %}
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        function updateHeaderCart(count, total) {
+            const cartIcon = document.querySelector('.cart-icon-container');
+            if (cartIcon) {
+                let countEl = cartIcon.querySelector('.cart-count');
+                if (!countEl) {
+                    countEl = document.createElement('span');
+                    countEl.className = 'cart-count';
+                    cartIcon.appendChild(countEl);
+                }
+                countEl.innerText = count;
+            }
+            const headerTotal = document.querySelector('.cart-total');
+            if (headerTotal) {
+                headerTotal.innerText = `R$ ${total}`;
+            }
+        }
+
+        function bindAddToCartForms() {
+            const forms = document.querySelectorAll('form.add-to-cart-form, form.pdp-actions-form');
+            forms.forEach(form => {
+                if (form.dataset.ajaxBound === 'true') return;
+                form.dataset.ajaxBound = 'true';
+                form.addEventListener('submit', event => {
+                    event.preventDefault();
+                    const formData = new FormData(form);
+                    const csrfToken = formData.get('csrfmiddlewaretoken');
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        credentials: 'same-origin',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': csrfToken,
+                        },
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (!data.success) return;
+                            updateHeaderCart(data.cart_count, data.cart_total);
+                            const flyoutInner = document.getElementById('cart-flyout-inner');
+                            if (flyoutInner && data.flyout_html) {
+                                flyoutInner.innerHTML = data.flyout_html;
+                            }
+                            const flyout = document.getElementById('cart-flyout');
+                            if (flyout && !flyout.classList.contains('active') && typeof toggleCart === 'function') {
+                                toggleCart();
+                            }
+                            const submitButton = form.querySelector('button[type="submit"]');
+                            if (submitButton) {
+                                submitButton.classList.add('btn-added');
+                                setTimeout(() => submitButton.classList.remove('btn-added'), 800);
+                            }
+                            document.querySelectorAll('.cart-total-value').forEach(el => {
+                                el.innerText = `R$ ${data.cart_total}`;
+                            });
+                            document.querySelectorAll('.cart-count').forEach(el => {
+                                el.innerText = data.cart_count;
+                            });
+                            document.querySelectorAll('.cart-summary-count').forEach(el => {
+                                el.innerText = data.cart_count;
+                            });
+                        })
+                        .catch(error => console.error('Error adding to cart:', error));
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', bindAddToCartForms);
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 

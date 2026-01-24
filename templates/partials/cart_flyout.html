@@ -6,67 +6,9 @@
             <button class="btn-close-cart" onclick="toggleCart()">✕</button>
         </div>
 
-        <div class="cart-flyout-body">
-            {% if cart %}
-            <div class="cart-items-list">
-                {% for item in cart %}
-                {% with product=item.product %}
-                <div class="cart-item">
-                    <div class="cart-item-img">
-                        {% if product.images.first %}
-                        <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
-                        {% else %}
-                        <img src="https://via.placeholder.com/60x60?text={{ product.name|urlencode }}"
-                            alt="{{ product.name }}">
-                        {% endif %}
-                    </div>
-                    <div class="cart-item-details">
-                        <h4 class="cart-item-name">{{ product.name }}</h4>
-                        <div class="cart-item-price-qty">
-                            <div class="quantity-controls miniature">
-                                <button type="button" class="btn-qty"
-                                    onclick="updateQtyMini('{{ product.id }}', -1)">-</button>
-                                <input type="number" id="qty-mini-{{ product.id }}" value="{{ item.quantity }}" readonly
-                                    class="input-qty-mini">
-                                <button type="button" class="btn-qty"
-                                    onclick="updateQtyMini('{{ product.id }}', 1)">+</button>
-                            </div>
-                            <strong id="mini-item-total-{{ product.id }}">R$ {{ item.total_price }}</strong>
-                        </div>
-                    </div>
-                    <a href="{% url 'cart_remove' product.id %}" class="btn-remove-item" title="Remover">🗑️</a>
-                </div>
-                {% endwith %}
-                {% endfor %}
-            </div>
-            {% else %}
-            <div class="cart-empty">
-                <span class="icon">🛒</span>
-                <p>Seu carrinho está vazio</p>
-                <button class="btn-buy" onclick="toggleCart()">Começar a comprar</button>
-            </div>
-            {% endif %}
+        <div id="cart-flyout-inner">
+            {% include 'partials/cart_flyout_content.html' %}
         </div>
-
-        {% if cart %}
-        <div class="cart-flyout-footer">
-            <div class="cart-summary">
-                <div class="summary-row">
-                    <span>Subtotal</span>
-                    <span class="cart-total-value">R$ {{ cart.get_total_price }}</span>
-                </div>
-                <!-- Delivery info or discounts could go here -->
-                <div class="summary-row total">
-                    <span>Total</span>
-                    <strong class="cart-total-value">R$ {{ cart.get_total_price }}</strong>
-                </div>
-            </div>
-            <div class="cart-actions">
-                <a href="{% url 'cart_detail' %}" class="btn-view-cart">Ver Carrinho</a>
-                <a href="{% url 'checkout' %}" class="btn-checkout">Finalizar Compra</a>
-            </div>
-        </div>
-        {% endif %}
     </div>
 </div>
 

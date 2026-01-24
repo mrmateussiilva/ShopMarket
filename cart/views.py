@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
+from django.template.loader import render_to_string
 from catalog.models import Product
 from .cart import Cart
 
@@ -17,6 +18,18 @@ def cart_add(request, product_id):
     cart = Cart(request)
     quantity = int(request.POST.get('quantity', 1))
     cart.add(product, quantity)
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        flyout_html = render_to_string(
+            'partials/cart_flyout_content.html',
+            {'cart': cart},
+            request=request,
+        )
+        return JsonResponse({
+            'success': True,
+            'flyout_html': flyout_html,
+            'cart_total': f"{cart.get_total_price():.2f}".replace('.', ','),
+            'cart_count': len(cart),
+        })
     messages.success(request, f'{product.name} adicionado ao carrinho!')
     
     # Redirect back to previous page or product detail

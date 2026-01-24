@@ -643,6 +643,25 @@ header {
     font-size: 1.1rem;
 }
 
+.btn-added {
+    animation: cart-added 0.8s ease;
+}
+
+@keyframes cart-added {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 2px 4px rgba(11, 93, 30, 0.2);
+    }
+    50% {
+        transform: scale(1.03);
+        box-shadow: 0 6px 14px rgba(11, 93, 30, 0.35);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 2px 4px rgba(11, 93, 30, 0.2);
+    }
+}
+
 /* --- SECONDARY BANNERS --- */
 .secondary-banners {
     display: grid;
