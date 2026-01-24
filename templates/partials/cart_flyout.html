@@ -130,6 +130,11 @@
                     document.querySelectorAll('.cart-count').forEach(el => {
                         el.innerText = data.cart_count;
                     });
+
+                    // Contagem no resumo do carrinho
+                    document.querySelectorAll('.cart-summary-count').forEach(el => {
+                        el.innerText = data.cart_count;
+                    });
                 }
             })
             .catch(error => console.error('Error:', error));

@@ -32,14 +32,23 @@
                             <div style="font-size: 0.9rem; font-weight: 700; color: var(--secondary); margin-top: 5px;">
                                 R$ {{ item.price }}</div>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <input type="number" name="quantity_{{ item.product.id }}" value="{{ item.quantity }}"
-                                min="1" max="99" class="input-qty-ajax" data-product-id="{{ item.product.id }}"
-                                style="width: 60px; padding: 8px; border: 1px solid var(--border); border-radius: 4px; text-align: center;">
+                        <div class="quantity-controls"
+                            style="display: flex; align-items: center; border: 1px solid var(--border); border-radius: 4px; overflow: hidden;">
+                            <button type="button" class="btn-qty"
+                                style="width: 30px; height: 35px; border: none; background: #f8f9fa; cursor: pointer; font-weight: bold; color: var(--secondary);"
+                                onclick="updateQtyMain('{{ item.product.id }}', -1)">-</button>
+                            <input type="number" id="qty-main-{{ item.product.id }}"
+                                name="quantity_{{ item.product.id }}" value="{{ item.quantity }}" min="1" max="99"
+                                class="input-qty-ajax" data-product-id="{{ item.product.id }}" readonly
+                                style="width: 40px; border: none; border-left: 1px solid var(--border); border-right: 1px solid var(--border); text-align: center; height: 35px; -moz-appearance: textfield; appearance: textfield;">
+                            <button type="button" class="btn-qty"
+                                style="width: 30px; height: 35px; border: none; background: #f8f9fa; cursor: pointer; font-weight: bold; color: var(--secondary);"
+                                onclick="updateQtyMain('{{ item.product.id }}', 1)">+</button>
                         </div>
                         <div style="text-align: right;">
                             <div id="item-total-{{ item.product.id }}"
-                                style="font-weight: 800; font-size: 1.1rem; color: var(--secondary);">R$ {{ item.total_price }}</div>
+                                style="font-weight: 800; font-size: 1.1rem; color: var(--secondary);">R$ {{
+                                item.total_price }}</div>
                             <a href="{% url 'cart_remove' item.product.id %}"
                                 style="color: var(--primary); font-size: 0.8rem; font-weight: 600;">Remover</a>
                         </div>
@@ -48,7 +57,8 @@
                 </div>
 
                 <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-                    <button type="submit" class="btn-outline" style="padding: 10px 20px;">Atualizar Quantidades</button>
+                    <button type="submit" class="btn-outline visible-no-js" style="padding: 10px 20px;">Atualizar
+                        Quantidades</button>
                     <a href="{% url 'cart_clear' %}" style="color: var(--text-muted); font-size: 0.9rem;"
                         onclick="return confirm('Limpar carrinho?')">Limpar Carrinho</a>
                 </div>
@@ -84,18 +94,27 @@
 
 {% block extra_js %}
 <script>
-    document.querySelectorAll('.input-qty-ajax').forEach(input => {
-        input.addEventListener('change', function () {
-            const productId = this.dataset.productId;
-            const newQty = this.value;
+    // Hide native update button if JS is enabled
+    document.querySelector('.visible-no-js').style.display = 'none';
 
-            // Sincroniza com o mini cart (se aberto)
-            const miniInput = document.getElementById(`qty-mini-${productId}`);
-            if (miniInput) miniInput.value = newQty;
+    function updateQtyMain(productId, delta) {
+        const input = document.getElementById(`qty-main-${productId}`);
+        if (!input) return;
 
+        let newQty = parseInt(input.value) + delta;
+        if (newQty < 1) return;
+
+        input.value = newQty;
+
+        // Sincroniza com o mini cart (flyout)
+        const miniInput = document.getElementById(`qty-mini-${productId}`);
+        if (miniInput) miniInput.value = newQty;
+
+        // Chama a função global definida no base/flyout
+        if (typeof performCartUpdate === 'function') {
             performCartUpdate(productId, newQty);
-        });
-    });
+        }
+    }
 </script>
 {% endblock %}
 {% endblock %}
