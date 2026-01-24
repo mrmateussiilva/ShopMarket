@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'base.html" %}
 
 {% block title %}Busca: "{{ query }}" - {{ shop.name }}{% endblock %}
 
 {% block content %}
 <div class="container catalog-layout">
     <nav class="breadcrumbs">
-        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'home" %}">Home</a>
         <span>Busca por "{{ query }}"</span>
     </nav>
 
@@ -20,12 +20,12 @@
             <form method="get">
                 <input type="hidden" name="q" value="{{ query }}">
                 <select name="sort" onchange="this.form.submit()">
-                    <option value="relevancia" {% if sort == 'relevancia' %}selected{% endif %}>Relevância</option>
-                    <option value="menor_preco" {% if sort == 'menor_preco' %}selected{% endif %}>Menor Preço</option>
-                    <option value="maior_preco" {% if sort == 'maior_preco' %}selected{% endif %}>Maior Preço</option>
-                    <option value="maior_desconto" {% if sort == 'maior_desconto' %}selected{% endif %}>Maior Desconto
+                    <option value="relevancia" {% if sort == "relevancia" %}selected{% endif %}>Relevância</option>
+                    <option value="menor_preco" {% if sort == "menor_preco" %}selected{% endif %}>Menor Preço</option>
+                    <option value="maior_preco" {% if sort == "maior_preco" %}selected{% endif %}>Maior Preço</option>
+                    <option value="maior_desconto" {% if sort == "maior_desconto" %}selected{% endif %}>Maior Desconto
                     </option>
-                    <option value="mais_novos" {% if sort == 'mais_novos' %}selected{% endif %}>Novidades</option>
+                    <option value="mais_novos" {% if sort == "mais_novos" %}selected{% endif %}>Novidades</option>
                 </select>
             </form>
         </div>
@@ -37,7 +37,7 @@
         {% empty %}
         <div class="no-results" style="grid-column: 1/-1; text-align: center; padding: 50px;">
             <p style="margin-bottom: 20px;">Nenhum produto encontrado para "{{ query }}".</p>
-            <a href="{% url 'home' %}" class="btn-buy"
+            <a href="{% url 'home" %}" class="btn-buy"
                 style="display:inline-block; width:auto; padding: 10px 30px;">Voltar para Home</a>
         </div>
         {% endfor %}
