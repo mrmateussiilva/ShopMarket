@@ -6,19 +6,19 @@
 <div class="container catalog-layout">
     <h1 class="section-title">Finalizar Compra</h1>
 
-    <div style="display: grid; grid-template-columns: 2fr 1.2fr; gap: 40px; margin-top: 30px;">
+    <div class="checkout-grid" style="display: grid; grid-template-columns: 2fr 1.2fr; gap: 40px; margin-top: 30px;">
         <div class="checkout-form-wrapper">
             <form method="post" style="display: flex; flex-direction: column; gap: 30px;">
                 {% csrf_token %}
 
                 <!-- Método de Entrega -->
-                <div
+                <div class="checkout-section"
                     style="background: white; padding: 25px; border-radius: var(--border-radius); border: 1px solid var(--border);">
                     <h3
                         style="margin-bottom: 20px; color: var(--secondary); font-size: 1.1rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 10px;">
                         1. Método de Recebimento</h3>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                        <label
+                    <div class="delivery-options" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <label class="delivery-option"
                             style="display: block; padding: 20px; border: 2px solid var(--bg-light); border-radius: 8px; cursor: pointer; text-align: center;">
                             <input type="radio" name="delivery_method" value="delivery" required
                                 style="margin-bottom: 10px;"><br>
@@ -34,7 +34,7 @@
                 </div>
 
                 <!-- Endereço -->
-                <div
+                <div class="checkout-section"
                     style="background: white; padding: 25px; border-radius: var(--border-radius); border: 1px solid var(--border);">
                     <h3
                         style="margin-bottom: 20px; color: var(--secondary); font-size: 1.1rem; border-bottom: 2px solid var(--bg-light); padding-bottom: 10px;">
@@ -54,7 +54,7 @@
                         <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 10px;">
                             O pagamento será realizado no momento da entrega ou retirada.
                         </p>
-                        <label
+                        <label class="payment-option"
                             style="display: flex; align-items: center; gap: 10px; padding: 15px; background: var(--bg-light); border-radius: 4px; cursor: pointer;">
                             <input type="radio" name="payment_method" value="pix" required
                                 onchange="toggleChangeInput(this)">
@@ -98,7 +98,8 @@
                         style="width: 100%; padding: 15px; border: 1px solid var(--border); border-radius: 4px; font-family: inherit; font-size: 1rem;"></textarea>
                 </div>
 
-                <button type="submit" class="btn-buy" style="padding: 20px; font-size: 1.3rem;">Confirmar e Finalizar
+                <button type="submit" class="btn-buy btn-checkout-submit"
+                    style="padding: 20px; font-size: 1.3rem;">Confirmar e Finalizar
                     Pedido</button>
             </form>
         </div>

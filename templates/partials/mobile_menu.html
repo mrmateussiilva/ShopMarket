@@ -1,0 +1,63 @@
+{% load static %}
+<!-- Mobile Menu Drawer -->
+<div id="mobile-menu" class="mobile-menu">
+    <div class="mobile-menu-header">
+        <h3>Menu</h3>
+        <button class="btn-close-menu" onclick="toggleMobileMenu()" aria-label="Fechar menu">✕</button>
+    </div>
+    <nav class="mobile-menu-nav">
+        <a href="{% url 'offers' %}" class="menu-item highlight">
+            <span class="icon">🔥</span>
+            <span>Ofertas</span>
+        </a>
+        {% for cat in main_categories %}
+        <a href="{% url 'category_list' cat.slug %}" class="menu-item">
+            <span class="icon">
+                {% if cat.slug == 'hortifruti' %}🍎
+                {% elif cat.slug == 'padaria' %}🥖
+                {% elif cat.slug == 'bebidas' %}🥤
+                {% elif cat.slug == 'laticinios' %}🧀
+                {% elif cat.slug == 'limpeza' %}🧹
+                {% elif cat.slug == 'carnes' %}🥩
+                {% elif cat.slug == 'congelados' %}❄️
+                {% elif cat.slug == 'mercearia' %}🛒
+                {% else %}📦{% endif %}
+            </span>
+            <span>{{ cat.name }}</span>
+        </a>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+        <a href="#" class="menu-item">
+            <span class="icon">👤</span>
+            <span>Minha Conta</span>
+        </a>
+        <a href="{% url 'logout' %}" class="menu-item">
+            <span class="icon">🚪</span>
+            <span>Sair</span>
+        </a>
+        {% else %}
+        <a href="{% url 'login' %}" class="menu-item">
+            <span class="icon">👤</span>
+            <span>Entrar / Cadastrar</span>
+        </a>
+        {% endif %}
+    </nav>
+</div>
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu-overlay" class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+
+<script>
+    if (typeof toggleMobileMenu === 'undefined') {
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            const body = document.body;
+
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            body.classList.toggle('menu-open');
+        }
+    }
+</script>

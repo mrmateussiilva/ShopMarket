@@ -7,14 +7,14 @@
     <h1 class="section-title">Meu Carrinho</h1>
 
     {% if cart %}
-    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: start;">
+    <div class="cart-detail-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: start;">
         <div class="cart-items-wrapper">
             <form method="post" action="{% url 'cart_update' %}">
                 {% csrf_token %}
                 <div
                     style="background: white; border-radius: var(--border-radius); border: 1px solid var(--border); overflow: hidden;">
                     {% for item in cart %}
-                    <div
+                    <div class="cart-item-row"
                         style="padding: 20px; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 100px 1fr auto auto; gap: 20px; align-items: center;">
                         <div
                             style="width: 100px; height: 100px; background: white; border-radius: 4px; border: 1px solid var(--border); padding: 5px;">
@@ -30,7 +30,8 @@
                             <h3 style="font-size: 1rem; margin-bottom: 5px;">{{ item.name }}</h3>
                             <div style="font-size: 0.8rem; color: var(--text-muted);">Cod: {{ item.code }}</div>
                             <div style="font-size: 0.9rem; font-weight: 700; color: var(--secondary); margin-top: 5px;">
-                                R$ {{ item.price }}</div> </div>
+                                R$ {{ item.price }}</div>
+                        </div>
                         <div class="quantity-controls"
                             style="display: flex; align-items: center; border: 1px solid var(--border); border-radius: 4px; overflow: hidden;">
                             <button type="button" class="btn-qty"
@@ -46,7 +47,8 @@
                         </div>
                         <div style="text-align: right;">
                             <div id="item-total-{{ item.product.id }}"
-                                style="font-weight: 800; font-size: 1.1rem; color: var(--secondary);">R$ {{ item.total_price }}</div>
+                                style="font-weight: 800; font-size: 1.1rem; color: var(--secondary);">R$ {{
+                                item.total_price }}</div>
                             <a href="{% url 'cart_remove' item.product.id %}"
                                 style="color: var(--primary); font-size: 0.8rem; font-weight: 600;">Remover</a>
                         </div>

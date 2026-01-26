@@ -1,5 +1,30 @@
 {% load static %}
 <header>
+    <!-- Mobile Header -->
+    <div class="header-mobile">
+        <button class="btn-menu-toggle" onclick="toggleMobileMenu()" aria-label="Abrir menu">
+            ☰
+        </button>
+        <a href="{% url 'home' %}" class="logo-mobile">
+            <img src="{% static 'img/logo.png' %}" alt="Lima Supermercado">
+        </a>
+        <a href="{% url 'cart_detail' %}" class="cart-mobile">
+            🛒
+            {% if cart %}
+            <span class="badge">{{ cart|length }}</span>
+            {% endif %}
+        </a>
+    </div>
+
+    <!-- Mobile Search -->
+    <div class="search-mobile">
+        <form action="{% url 'search' %}" method="get">
+            <input type="text" name="q" placeholder="Buscar produtos..." value="{{ query }}">
+            <button type="submit" aria-label="Buscar">🔍</button>
+        </form>
+    </div>
+
+    <!-- Desktop Header (hidden on mobile) -->
     <!-- Top Bar (Professional & Informative) -->
     <div class="header-top-bar">
         <div class="container flex-justify">

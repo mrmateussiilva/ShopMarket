@@ -1,0 +1,74 @@
+/* Ajustes adicionais para melhor espaçamento no mobile */
+
+/* Aumentar espaçamento entre seções */
+.vitrine {
+    padding: 24px 0 32px;
+}
+
+.section-header {
+    margin-bottom: 20px;
+}
+
+/* Melhorar espaçamento do container no mobile */
+@media (max-width: 767px) {
+    .container {
+        padding: 0 16px;
+    }
+
+    /* Ajustar espaçamento do hero */
+    .hero-swiper {
+        margin-bottom: 20px;
+        border-radius: 8px;
+    }
+
+    /* Melhorar seção "Como Funciona" */
+    .how-it-works {
+        padding: 32px 0;
+        margin-bottom: 32px;
+    }
+
+    .how-grid {
+        gap: 24px;
+    }
+
+    /* Ajustar seção de categorias */
+    .featured-categories {
+        margin-bottom: 32px;
+    }
+
+    /* Melhorar espaçamento dos banners secundários */
+    .secondary-banners {
+        margin-bottom: 24px;
+    }
+
+    /* Ajustar seção de receitas */
+    .recipes-section {
+        margin-bottom: 40px;
+    }
+}
+
+/* Melhorar responsividade em telas muito pequenas (< 360px) */
+@media (max-width: 359px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .category-card {
+        padding: 16px 10px;
+    }
+
+    .category-card .icon {
+        font-size: 2rem;
+    }
+
+    /* Ajustar botão para telas muito pequenas */
+    .btn-buy {
+        font-size: 0.85rem;
+        padding: 12px 10px;
+    }
+
+    .btn-buy .icon {
+        font-size: 1rem;
+    }
+}

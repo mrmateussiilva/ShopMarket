@@ -9,6 +9,8 @@
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="{% static 'css/theme.css' %}?v=2.0">
+    <link rel="stylesheet" href="{% static 'css/mobile.css' %}?v=1.5">
+    <link rel="stylesheet" href="{% static 'css/mobile-spacing.css' %}?v=1.1">
     {% block extra_css %}{% endblock %}
 </head>
 
@@ -17,6 +19,7 @@
         {% csrf_token %}
     </form>
     {% include 'partials/header.html' %}
+    {% include 'partials/mobile_menu.html' %}
     {% include 'partials/cart_flyout.html' %}
 
     <main id="main-content">
