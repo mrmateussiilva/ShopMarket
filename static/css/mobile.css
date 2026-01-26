@@ -542,6 +542,10 @@ body.menu-open {
     max-height: 320px;
 }
 
+.pdp-gallery-swiper .swiper-slide img {
+    max-height: 280px;
+}
+
 .product-gallery .thumbnails {
     gap: 10px;
 }

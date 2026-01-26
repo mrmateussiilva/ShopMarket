@@ -504,6 +504,7 @@ footer {
     padding: 30px;
     border-radius: var(--border-radius);
     border: 1px solid var(--border);
+    overflow: hidden;
 }
 
 .pdp-gallery img {
@@ -513,12 +514,29 @@ footer {
 
 .pdp-gallery-swiper {
     width: 100%;
+    overflow: hidden;
 }
 
 .pdp-gallery-swiper .swiper-slide img {
     width: 100%;
     height: auto;
     display: block;
+    max-height: 420px;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.pdp-gallery-swiper .swiper-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.pdp-gallery-swiper .swiper-slide {
+    width: 100%;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
 }
 
 .product-gallery .main-image {
