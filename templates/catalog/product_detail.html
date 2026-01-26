@@ -175,9 +175,12 @@
         const galleryEl = document.querySelector('.pdp-gallery-swiper');
         if (!galleryEl) return;
 
+        if (typeof Swiper === 'undefined') return;
+
         const gallerySwiper = new Swiper(galleryEl, {
             slidesPerView: 1,
             spaceBetween: 10,
+            loop: false,
             pagination: {
                 el: '.pdp-gallery-swiper .swiper-pagination',
                 clickable: true,
