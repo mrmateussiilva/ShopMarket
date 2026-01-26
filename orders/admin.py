@@ -15,6 +15,7 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ['user__username', 'user__email']
     readonly_fields = ['products_total', 'discount_total', 'subtotal', 'created_at', 'updated_at']
     inlines = [OrderItemInline]
+    actions = ['mark_as_confirmed', 'mark_as_preparing', 'mark_as_ready', 'mark_as_delivered', 'mark_as_cancelled']
     
     fieldsets = (
         ('Informações do Pedido', {
@@ -30,6 +31,26 @@ class OrderAdmin(admin.ModelAdmin):
             'fields': ('created_at', 'updated_at')
         }),
     )
+
+    @admin.action(description='Confirmar selecionados')
+    def mark_as_confirmed(self, request, queryset):
+        queryset.update(status='confirmed')
+
+    @admin.action(description='Marcar como Em Preparação')
+    def mark_as_preparing(self, request, queryset):
+        queryset.update(status='preparing')
+
+    @admin.action(description='Marcar como Pronto')
+    def mark_as_ready(self, request, queryset):
+        queryset.update(status='ready')
+
+    @admin.action(description='Marcar como Entregue')
+    def mark_as_delivered(self, request, queryset):
+        queryset.update(status='delivered')
+
+    @admin.action(description='Cancelar selecionados')
+    def mark_as_cancelled(self, request, queryset):
+        queryset.update(status='cancelled')
 
 
 @admin.register(OrderItem)
