@@ -53,21 +53,21 @@
         <!-- Ofertas da Semana (Horizontal Carousel) -->
         {% if sale_products %}
         <section class="vitrine section-offers">
-        <div class="section-header">
-            <h2 class="section-title"><span>🔥</span> Ofertas da Semana</h2>
-            <a href="{% url 'offers' %}" class="view-all">Ver todas as ofertas &raquo;</a>
-        </div>
-        <div class="swiper offers-swiper">
-            <div class="swiper-wrapper">
-                {% for product in sale_products|slice:":12" %}
-                <div class="swiper-slide">
-                    {% include 'components/product_card.html' with product=product price=product.price %}
-                </div>
-                {% endfor %}
+            <div class="section-header">
+                <h2 class="section-title"><span>🔥</span> Ofertas da Semana</h2>
+                <a href="{% url 'offers' %}" class="view-all">Ver todas as ofertas &raquo;</a>
             </div>
-            <div class="swiper-button-next" style="color: var(--brand-green);"></div>
-            <div class="swiper-button-prev" style="color: var(--brand-green);"></div>
-        </div>
+            <div class="swiper offers-swiper">
+                <div class="swiper-wrapper">
+                    {% for product in sale_products|slice:":12" %}
+                    <div class="swiper-slide">
+                        {% include 'components/product_card.html' with product=product price=product.price %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-next" style="color: var(--brand-green);"></div>
+                <div class="swiper-button-prev" style="color: var(--brand-green);"></div>
+            </div>
         </section>
         {% endif %}
 
@@ -124,65 +124,65 @@
             </div>
         </section>
 
-    <!-- Secondary Banners -->
-    <section class="secondary-banners">
-        <a href="{% url 'category_list' 'bebidas' %}" class="banner-item">
-            <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=2070&auto=format&fit=crop"
-                alt="Vinhos">
-            <div class="banner-text">
-                <h4>Festival de Vinhos</h4>
-                <p>Confira nossa seleção exclusiva</p>
-            </div>
-        </a>
-        <a href="{% url 'category_list' 'padaria' %}" class="banner-item">
-            <img src="https://images.unsplash.com/photo-1556228578-8c7c2f22ba55?q=80&w=2070&auto=format&fit=crop"
-                alt="Padaria">
-            <div class="banner-text">
-                <h4>Padaria Artesanal</h4>
-                <p>Pães quentinhos toda hora</p>
-            </div>
-        </a>
-    </section>
+        <!-- Secondary Banners -->
+        <section class="secondary-banners">
+            <a href="{% url 'category_list' 'bebidas' %}" class="banner-item">
+                <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=2070&auto=format&fit=crop"
+                    alt="Vinhos">
+                <div class="banner-text">
+                    <h4>Festival de Vinhos</h4>
+                    <p>Confira nossa seleção exclusiva</p>
+                </div>
+            </a>
+            <a href="{% url 'category_list' 'padaria' %}" class="banner-item">
+                <img src="https://images.unsplash.com/photo-1556228578-8c7c2f22ba55?q=80&w=2070&auto=format&fit=crop"
+                    alt="Padaria">
+                <div class="banner-text">
+                    <h4>Padaria Artesanal</h4>
+                    <p>Pães quentinhos toda hora</p>
+                </div>
+            </a>
+        </section>
 
-    <!-- Recipes / Blog Section -->
-    <section class="recipes-section">
-        <div class="section-header">
-            <h3 class="section-title">👨‍🍳 Receitas & Dicas do Chef</h3>
-            <a href="#" class="view-all">Ver todas as receitas &raquo;</a>
-        </div>
-        <div class="recipes-grid">
-            <div class="recipe-card">
-                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=2000&auto=format&fit=crop"
-                    alt="Salada">
-                <div class="recipe-content">
-                    <span class="recipe-tag">Saúde</span>
-                    <h4>Salada Detox Tropical</h4>
-                    <p>Aprenda a fazer uma salada refrescante para o verão...</p>
+        <!-- Recipes / Blog Section -->
+        <section class="recipes-section">
+            <div class="section-header">
+                <h3 class="section-title">👨‍🍳 Receitas & Dicas do Chef</h3>
+                <a href="#" class="view-all">Ver todas as receitas &raquo;</a>
+            </div>
+            <div class="recipes-grid">
+                <div class="recipe-card">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=2000&auto=format&fit=crop"
+                        alt="Salada">
+                    <div class="recipe-content">
+                        <span class="recipe-tag">Saúde</span>
+                        <h4>Salada Detox Tropical</h4>
+                        <p>Aprenda a fazer uma salada refrescante para o verão...</p>
+                    </div>
+                </div>
+                <div class="recipe-card">
+                    <img src="https://images.unsplash.com/photo-1473093226795-af9932fe5856?q=80&w=2000&auto=format&fit=crop"
+                        alt="Pasta">
+                    <div class="recipe-content">
+                        <span class="recipe-tag">Massas</span>
+                        <h4>Penne ao Molho Pesto Caseiro</h4>
+                        <p>O segredo do pesto perfeito com manjericão fresco...</p>
+                    </div>
+                </div>
+                <div class="recipe-card">
+                    <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=1964&auto=format&fit=crop"
+                        alt="Sobremesa">
+                    <div class="recipe-content">
+                        <span class="recipe-tag">Sobremesas</span>
+                        <h4>Donuts Recheados de Chocolate</h4>
+                        <p>Uma receita fácil para alegrar a tarde da família...</p>
+                    </div>
                 </div>
             </div>
-            <div class="recipe-card">
-                <img src="https://images.unsplash.com/photo-1473093226795-af9932fe5856?q=80&w=2000&auto=format&fit=crop"
-                    alt="Pasta">
-                <div class="recipe-content">
-                    <span class="recipe-tag">Massas</span>
-                    <h4>Penne ao Molho Pesto Caseiro</h4>
-                    <p>O segredo do pesto perfeito com manjericão fresco...</p>
-                </div>
-            </div>
-            <div class="recipe-card">
-                <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=1964&auto=format&fit=crop"
-                    alt="Sobremesa">
-                <div class="recipe-content">
-                    <span class="recipe-tag">Sobremesas</span>
-                    <h4>Donuts Recheados de Chocolate</h4>
-                    <p>Uma receita fácil para alegrar a tarde da família...</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Trust Badges (Relocated to bottom or kept as is) -->
-    <!-- (I'll keep the previous trust badges but style them as secondary banners if needed, or just let them stay below) -->
+        <!-- Trust Badges (Relocated to bottom or kept as is) -->
+        <!-- (I'll keep the previous trust badges but style them as secondary banners if needed, or just let them stay below) -->
     </div>
 </div>
 {% endblock %}
@@ -207,16 +207,15 @@
         });
 
         const offersSwiper = new Swiper('.offers-swiper', {
-            slidesPerView: 1,
-            spaceBetween: 20,
+            slidesPerView: 1.3,
+            spaceBetween: 12,
             loop: false,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
             breakpoints: {
-                320: { slidesPerView: 1, spaceBetween: 10 },
-                480: { slidesPerView: 1, spaceBetween: 15 },
+                480: { slidesPerView: 2.3, spaceBetween: 15 },
                 768: { slidesPerView: 4, spaceBetween: 20 },
                 1024: { slidesPerView: 5, spaceBetween: 20 },
             }
