@@ -79,28 +79,31 @@
 
 {% block extra_js %}
 <script>
-    // Hide native update button if JS is enabled
-    const updateBtn = document.querySelector('.visible-no-js');
-    if (updateBtn) updateBtn.style.display = 'none';
+    (function () {
+        // Hide native update button if JS is enabled
+        const cartUpdateBtn = document.querySelector('.visible-no-js');
+        if (cartUpdateBtn) cartUpdateBtn.style.display = 'none';
 
-    function updateQtyMain(productId, delta) {
-        const input = document.getElementById(`qty-main-${productId}`);
-        if (!input) return;
+        // Define global functions on window to ensure accessibility
+        window.updateQtyMain = function (productId, delta) {
+            const input = document.getElementById(`qty-main-${productId}`);
+            if (!input) return;
 
-        let newQty = parseInt(input.value) + delta;
-        if (newQty < 1) return;
+            let newQty = parseInt(input.value) + delta;
+            if (newQty < 1) return;
 
-        input.value = newQty;
+            input.value = newQty;
 
-        // Sincroniza com o mini cart (flyout)
-        const miniInput = document.getElementById(`qty-mini-${productId}`);
-        if (miniInput) miniInput.value = newQty;
+            // Sincroniza com o mini cart (flyout)
+            const miniInput = document.getElementById(`qty-mini-${productId}`);
+            if (miniInput) miniInput.value = newQty;
 
-        // Chama a função global definida no base/flyout
-        if (typeof performCartUpdate === 'function') {
-            performCartUpdate(productId, newQty);
-        }
-    }
+            // Chama a função global definida no base/flyout
+            if (typeof performCartUpdate === 'function') {
+                performCartUpdate(productId, newQty);
+            }
+        };
+    })();
 </script>
 {% endblock %}
 {% endblock %}
