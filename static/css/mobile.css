@@ -226,6 +226,17 @@ body.menu-open {
 .hero-swiper {
     height: 200px;
     margin-bottom: 24px;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.hero-swiper .swiper-wrapper {
+    width: 100% !important;
+}
+
+.hero-swiper .swiper-slide {
+    width: 100% !important;
+    max-width: 100% !important;
 }
 
 .hero-content {
@@ -587,10 +598,16 @@ body.menu-open {
 }
 
 .pdp-gallery-swiper {
-    width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
     background: #F9FAFB;
     border-radius: 12px;
     overflow: hidden;
+}
+
+.pdp-gallery-swiper .swiper-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
 }
 
 .pdp-gallery-swiper .swiper-slide {
@@ -599,7 +616,9 @@ body.menu-open {
     justify-content: center;
     background: white;
     height: 300px;
-    /* Altura fixa para estabilidade */
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-shrink: 0;
 }
 
 .pdp-gallery-swiper .swiper-slide img {

@@ -181,12 +181,19 @@
             spaceBetween: 10,
             loop: false,
             watchSlidesProgress: true,
+            updateOnWindowResize: true,
+            resistTouch: true,
+            width: null, // Deixar o Swiper calcular automaticamente
             pagination: {
                 el: '.pdp-gallery-swiper .swiper-pagination',
                 clickable: true,
             },
             on: {
-                init: function () { console.log('PDP Swiper inicializado'); },
+                init: function () {
+                    console.log('PDP Swiper inicializado');
+                    // Forçar recálculo após inicialização
+                    this.update();
+                },
                 slideChange: function () { console.log('PDP Slide mudou para:', this.activeIndex); }
             }
         });
