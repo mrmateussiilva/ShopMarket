@@ -4,16 +4,15 @@
 {% block title %}Meu Carrinho - {{ shop.name }}{% endblock %}
 
 {% block content %}
-<div class="container catalog-layout">
+<div class="container cart-page-container">
     <h1 class="section-title">Meu Carrinho</h1>
 
     {% if cart %}
-    <div class="cart-detail-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: start;">
+    <div class="cart-detail-grid">
         <div class="cart-items-wrapper">
             <form method="post" action="{% url 'cart_update' %}">
                 {% csrf_token %}
-                <div
-                    style="background: white; border-radius: var(--border-radius); border: 1px solid var(--border); overflow: hidden;">
+                <div class="cart-items-list-container">
                     {% for item in cart %}
                     <div class="cart-item-row">
                         <div class="cart-item-image-container">
@@ -28,10 +27,9 @@
                             {% endif %}
                         </div>
                         <div class="cart-item-info">
-                            <h3 style="font-size: 1rem; margin-bottom: 5px;">{{ item.name }}</h3>
-                            <div style="font-size: 0.8rem; color: var(--text-muted);">Cod: {{ item.code }}</div>
-                            <div class="cart-item-price-unit">
-                                R$ {{ item.price|format_price }}</div>
+                            <h3 class="cart-item-name">{{ item.name }}</h3>
+                            <div class="cart-item-code">Cod: {{ item.code }}</div>
+                            <div class="cart-item-price-unit">R$ {{ item.price|format_price }}</div>
                         </div>
                         <div class="quantity-controls cart-item-qty">
                             <button type="button" class="btn-qty"
@@ -51,38 +49,30 @@
                     {% endfor %}
                 </div>
 
-                <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-                    <button type="submit" class="btn-outline visible-no-js" style="padding: 10px 20px;">Atualizar
-                        Quantidades</button>
-                    <a href="{% url 'cart_clear' %}" style="color: var(--text-muted); font-size: 0.9rem;"
+                <div class="cart-footer-actions">
+                    <button type="submit" class="btn-outline visible-no-js">Atualizar Quantidades</button>
+                    <a href="{% url 'cart_clear' %}" class="btn-clear-cart"
                         onclick="return confirm('Limpar carrinho?')">Limpar Carrinho</a>
                 </div>
             </form>
         </div>
 
         <div class="cart-summary-wrapper">
-            <div
-                style="background: white; border-radius: var(--border-radius); border: 1px solid var(--border); padding: 25px;">
-                <h3 style="margin-bottom: 20px; font-weight: 700; color: var(--secondary);">Resumo do Pedido</h3>
+            <div class="cart-summary-card">
+                <h3 class="summary-title">Resumo do Pedido</h3>
                 {% include 'components/cart_summary.html' %}
 
-                <a href="{% url 'checkout' %}" class="btn-buy cart-checkout-cta"
-                    style="display: block; text-align: center; margin-top: 25px; font-size: 1.1rem;">Finalizar
-                    Compra</a>
-                <a href="{% url 'home' %}"
-                    style="display: block; text-align: center; margin-top: 15px; font-size: 0.9rem; font-weight: 600; color: var(--secondary);">Continuar
-                    Comprando</a>
+                <a href="{% url 'checkout' %}" class="btn-buy cart-checkout-cta">Finalizar Compra</a>
+                <a href="{% url 'home' %}" class="btn-continue-shopping">Continuar Comprando</a>
             </div>
         </div>
     </div>
     {% else %}
-    <div style="text-align: center; padding: 80px 20px;">
-        <div style="font-size: 4rem; margin-bottom: 20px;">🛒</div>
+    <div class="cart-empty-state">
+        <div class="empty-icon">🛒</div>
         <h2>Seu carrinho está vazio</h2>
-        <p style="color: var(--text-muted); margin-bottom: 30px;">Que tal dar uma olhada em nossas ofertas e escolher
-            algo para você?</p>
-        <a href="{% url 'home' %}" class="btn-buy" style="display: inline-block; width: auto; padding: 15px 40px;">Ver
-            Ofertas</a>
+        <p>Que tal dar uma olhada em nossas ofertas e escolher algo para você?</p>
+        <a href="{% url 'home' %}" class="btn-buy empty-cta">Ver Ofertas</a>
     </div>
     {% endif %}
 </div>
@@ -90,7 +80,8 @@
 {% block extra_js %}
 <script>
     // Hide native update button if JS is enabled
-    document.querySelector('.visible-no-js').style.display = 'none';
+    const updateBtn = document.querySelector('.visible-no-js');
+    if (updateBtn) updateBtn.style.display = 'none';
 
     function updateQtyMain(productId, delta) {
         const input = document.getElementById(`qty-main-${productId}`);
