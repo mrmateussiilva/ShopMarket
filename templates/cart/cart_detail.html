@@ -33,7 +33,7 @@
                             <h3 style="font-size: 1rem; margin-bottom: 5px;">{{ item.name }}</h3>
                             <div style="font-size: 0.8rem; color: var(--text-muted);">Cod: {{ item.code }}</div>
                             <div style="font-size: 0.9rem; font-weight: 700; color: var(--secondary); margin-top: 5px;">
-                                R$ {{ item.price }}</div>
+                                R$ {{ item.price|floatformat:2|replace:".","|"|replace:",","."|replace:"|","," }}</div>
                         </div>
                         <div class="quantity-controls"
                             style="display: flex; align-items: center; border: 1px solid var(--border); border-radius: 4px; overflow: hidden;">
@@ -51,7 +51,7 @@
                         <div style="text-align: right;">
                             <div id="item-total-{{ item.product.id }}"
                                 style="font-weight: 800; font-size: 1.1rem; color: var(--secondary);">R$ {{
-                                item.total_price }}</div>
+                                item.total_price|floatformat:2|replace:".","|"|replace:",","."|replace:"|","," }}</div>
                             <a href="{% url 'cart_remove' item.product.id %}"
                                 style="color: var(--primary); font-size: 0.8rem; font-weight: 600;">Remover</a>
                         </div>
