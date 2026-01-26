@@ -5,19 +5,19 @@
         {% with product=item.product %}
         <div class="cart-item">
             <div class="cart-item-img">
-                {% if product.images.first %}
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% elif product.images.first %}
                 <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
                 {% else %}
-                <img src="https://via.placeholder.com/60x60?text={{ product.name|urlencode }}"
-                    alt="{{ product.name }}">
+                <img src="https://via.placeholder.com/60x60?text={{ product.name|urlencode }}" alt="{{ product.name }}">
                 {% endif %}
             </div>
             <div class="cart-item-details">
                 <h4 class="cart-item-name">{{ product.name }}</h4>
                 <div class="cart-item-price-qty">
                     <div class="quantity-controls miniature">
-                        <button type="button" class="btn-qty"
-                            onclick="updateQtyMini('{{ product.id }}', -1)">-</button>
+                        <button type="button" class="btn-qty" onclick="updateQtyMini('{{ product.id }}', -1)">-</button>
                         <input type="number" id="qty-mini-{{ product.id }}" value="{{ item.quantity }}" readonly
                             class="input-qty-mini">
                         <button type="button" class="btn-qty" onclick="updateQtyMini('{{ product.id }}', 1)">+</button>
