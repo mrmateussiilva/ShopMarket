@@ -17,27 +17,38 @@
     <div class="pdp-wrapper">
         <div class="product-pdp">
             <div class="product-gallery">
-                <div class="main-image">
-                    {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" id="mainImage">
-                    {% elif product.images.first %}
-                    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" id="mainImage">
-                    {% else %}
-                    <img src="https://via.placeholder.com/500x500?text={{ product.name|urlencode }}"
-                        alt="{{ product.name }}" id="mainImage">
-                    {% endif %}
+                <div class="swiper pdp-gallery-swiper">
+                    <div class="swiper-wrapper">
+                        {% if product.image %}
+                        <div class="swiper-slide">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        </div>
+                        {% endif %}
+                        {% for img in product.images.all %}
+                        <div class="swiper-slide">
+                            <img src="{{ img.image.url }}" alt="{{ product.name }}">
+                        </div>
+                        {% endfor %}
+                        {% if not product.image and not product.images.first %}
+                        <div class="swiper-slide">
+                            <img src="https://via.placeholder.com/500x500?text={{ product.name|urlencode }}"
+                                alt="{{ product.name }}">
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="swiper-pagination"></div>
                 </div>
                 <div class="thumbnails">
                     {% if product.image %}
-                    <div class="thumb active" onclick="changeImage(this, '{{ product.image.url }}')">
+                    <button type="button" class="thumb active" data-slide="0">
                         <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                    </div>
+                    </button>
                     {% endif %}
                     {% for img in product.images.all %}
-                    <div class="thumb {% if not product.image and forloop.first %}active{% endif %}"
-                        onclick="changeImage(this, '{{ img.image.url }}')">
+                    <button type="button" class="thumb {% if not product.image and forloop.first %}active{% endif %}"
+                        data-slide="{% if product.image %}{{ forloop.counter }}{% else %}{{ forloop.counter0 }}{% endif %}">
                         <img src="{{ img.image.url }}" alt="{{ product.name }}">
-                    </div>
+                    </button>
                     {% endfor %}
                 </div>
             </div>
@@ -156,4 +167,44 @@
     </section>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const galleryEl = document.querySelector('.pdp-gallery-swiper');
+        if (!galleryEl) return;
+
+        const gallerySwiper = new Swiper(galleryEl, {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            pagination: {
+                el: '.pdp-gallery-swiper .swiper-pagination',
+                clickable: true,
+            },
+        });
+
+        const thumbs = Array.from(document.querySelectorAll('.product-gallery .thumb'));
+        if (!thumbs.length) return;
+
+        thumbs.forEach((thumb) => {
+            thumb.addEventListener('click', () => {
+                const index = parseInt(thumb.dataset.slide, 10);
+                if (!Number.isNaN(index)) {
+                    gallerySwiper.slideTo(index);
+                }
+                thumbs.forEach(item => item.classList.remove('active'));
+                thumb.classList.add('active');
+            });
+        });
+
+        gallerySwiper.on('slideChange', () => {
+            const index = gallerySwiper.realIndex;
+            thumbs.forEach((thumb) => {
+                const slideIndex = parseInt(thumb.dataset.slide, 10);
+                thumb.classList.toggle('active', slideIndex === index);
+            });
+        });
+    });
+</script>
 {% endblock %}

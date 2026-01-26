@@ -538,6 +538,19 @@ body.menu-open {
     padding: 16px;
 }
 
+.product-gallery .main-image img {
+    max-height: 320px;
+}
+
+.product-gallery .thumbnails {
+    gap: 10px;
+}
+
+.product-gallery .thumb {
+    width: 64px;
+    height: 64px;
+}
+
 .pdp-info h1 {
     font-size: 1.4rem;
     margin-bottom: 8px;
@@ -767,6 +780,10 @@ body.menu-open {
     }
 
     .hero-swiper.hero-empty {
+        display: none;
+    }
+
+    .product-gallery .thumbnails {
         display: none;
     }
 

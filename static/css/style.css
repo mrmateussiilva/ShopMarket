@@ -511,6 +511,52 @@ footer {
     object-fit: contain;
 }
 
+.pdp-gallery-swiper {
+    width: 100%;
+}
+
+.pdp-gallery-swiper .swiper-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.product-gallery .main-image {
+    width: 100%;
+}
+
+.product-gallery .thumbnails {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.product-gallery .thumb {
+    width: 72px;
+    height: 72px;
+    flex: 0 0 auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px;
+    background: #fff;
+    cursor: pointer;
+    appearance: none;
+    border-color: var(--border);
+}
+
+.product-gallery .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.product-gallery .thumb.active {
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 2px rgba(0, 72, 153, 0.2);
+}
+
 .pdp-info h1 {
     font-size: 2rem;
     margin-bottom: 10px;
