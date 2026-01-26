@@ -198,6 +198,38 @@
             }
         });
 
+        // Recalcular Swiper após todas as imagens carregarem
+        const images = galleryEl.querySelectorAll('img');
+        let loadedImages = 0;
+        const totalImages = images.length;
+
+        if (totalImages > 0) {
+            images.forEach(img => {
+                if (img.complete) {
+                    loadedImages++;
+                    if (loadedImages === totalImages) {
+                        gallerySwiper.update();
+                        console.log('Todas as imagens carregadas, Swiper atualizado');
+                    }
+                } else {
+                    img.addEventListener('load', () => {
+                        loadedImages++;
+                        if (loadedImages === totalImages) {
+                            gallerySwiper.update();
+                            console.log('Todas as imagens carregadas, Swiper atualizado');
+                        }
+                    });
+                    img.addEventListener('error', () => {
+                        loadedImages++;
+                        if (loadedImages === totalImages) {
+                            gallerySwiper.update();
+                            console.log('Imagens processadas (com erros), Swiper atualizado');
+                        }
+                    });
+                }
+            });
+        }
+
         const thumbs = Array.from(document.querySelectorAll('.product-gallery .thumb'));
         if (!thumbs.length) return;
 
