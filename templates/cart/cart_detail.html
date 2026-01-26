@@ -29,52 +29,54 @@
                         <div class="cart-item-info">
                             <h3 class="cart-item-name">{{ item.name }}</h3>
                             <div class="cart-item-code">Cod: {{ item.code }}</div>
-                            <div class="cart-item-price-unit">R$ {{ item.price|format_price }}</div>
-                        </div>
-                        <div class="quantity-controls cart-item-qty">
-                            <button type="button" class="btn-qty"
-                                onclick="updateQtyMain('{{ item.product.id }}', -1)">-</button>
-                            <input type="number" id="qty-main-{{ item.product.id }}"
-                                name="quantity_{{ item.product.id }}" value="{{ item.quantity }}" min="1" max="99"
-                                class="input-qty-ajax" data-product-id="{{ item.product.id }}" readonly>
-                            <button type="button" class="btn-qty"
-                                onclick="updateQtyMain('{{ item.product.id }}', 1)">+</button>
-                        </div>
-                        <div class="cart-item-total-wrapper">
-                            <div id="item-total-{{ item.product.id }}" class="cart-item-total-val">R$ {{
-                                item.total_price|format_price }}</div>
-                            <a href="{% url 'cart_remove' item.product.id %}" class="cart-item-remove-link">Remover</a>
+                            <div class="cart-item-price-unit">R$ {{ item.total_price|format_price }}</div>
+                            item.price|format_price }}
                         </div>
                     </div>
-                    {% endfor %}
+                    <div class="quantity-controls cart-item-qty">
+                        <button type="button" class="btn-qty"
+                            onclick="updateQtyMain('{{ item.product.id }}', -1)">-</button>
+                        <input type="number" id="qty-main-{{ item.product.id }}" name="quantity_{{ item.product.id }}"
+                            value="{{ item.quantity }}" min="1" max="99" class="input-qty-ajax"
+                            data-product-id="{{ item.product.id }}" readonly>
+                        <button type="button" class="btn-qty"
+                            onclick="updateQtyMain('{{ item.product.id }}', 1)">+</button>
+                    </div>
+                    <div class="cart-item-total-wrapper">
+                        <div id="item-total-{{ item.product.id }}" class="cart-item-total-val">R$ {{
+                            item.total_price|format_price }}</div>
+                        <a href="{% url 'cart_remove' item.product.id %}" class="cart-item-remove-link">Remover</a>
+                    </div>
                 </div>
-
-                <div class="cart-footer-actions">
-                    <button type="submit" class="btn-outline visible-no-js">Atualizar Quantidades</button>
-                    <a href="{% url 'cart_clear' %}" class="btn-clear-cart"
-                        onclick="return confirm('Limpar carrinho?')">Limpar Carrinho</a>
-                </div>
-            </form>
+                {% endfor %}
         </div>
 
-        <div class="cart-summary-wrapper">
-            <div class="cart-summary-card">
-                <h3 class="summary-title">Resumo do Pedido</h3>
-                {% include 'components/cart_summary.html' %}
+        <div class="cart-footer-actions">
+            <button type="submit" class="btn-outline visible-no-js">Atualizar Quantidades</button>
+            <a href="{% url 'cart_clear' %}" class="btn-clear-cart" onclick="return confirm('Limpar carrinho?')">Limpar
+                Carrinho</a>
+        </div>
+        </form>
+    </div>
 
-                <a href="{% url 'checkout' %}" class="btn-buy cart-checkout-cta">Finalizar Compra</a>
-                <a href="{% url 'home' %}" class="btn-continue-shopping">Continuar Comprando</a>
-            </div>
+    <div class="cart-summary-wrapper">
+        <div class="cart-summary-card">
+            <h3 class="summary-title">Resumo do Pedido</h3>
+            {% include 'components/cart_summary.html' %}
+
+            <a href="{% url 'checkout' %}" class="btn-buy cart-checkout-cta">Finalizar Compra</a>
+            <a href="{% url 'home' %}" class="btn-continue-shopping">Continuar Comprando</a>
         </div>
     </div>
-    {% else %}
-    <div class="cart-empty-state">
-        <div class="empty-icon">🛒</div>
-        <h2>Seu carrinho está vazio</h2>
-        <p>Que tal dar uma olhada em nossas ofertas e escolher algo para você?</p>
-        <a href="{% url 'home' %}" class="btn-buy empty-cta">Ver Ofertas</a>
-    </div>
-    {% endif %}
+</div>
+{% else %}
+<div class="cart-empty-state">
+    <div class="empty-icon">🛒</div>
+    <h2>Seu carrinho está vazio</h2>
+    <p>Que tal dar uma olhada em nossas ofertas e escolher algo para você?</p>
+    <a href="{% url 'home' %}" class="btn-buy empty-cta">Ver Ofertas</a>
+</div>
+{% endif %}
 </div>
 
 {% block extra_js %}
