@@ -467,6 +467,17 @@ body.menu-open {
     outline: none;
 }
 
+/* Prevenir scroll horizontal indesejado no mobile */
+body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.container {
+    overflow-x: hidden;
+}
+
 .btn-buy {
     padding: 10px;
     font-size: 0.9rem;
@@ -476,7 +487,10 @@ body.menu-open {
     align-items: center;
     justify-content: center;
     gap: 4px;
-    white-space: nowrap;
+    white-space: normal;
+    /* Permitir quebra se necessário para não transbordar */
+    text-align: center;
+    line-height: 1.2;
     border-radius: 8px;
     font-weight: 700;
     text-transform: uppercase;
