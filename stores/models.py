@@ -53,7 +53,8 @@ class ShopConfig(models.Model):
             pk=1,
             defaults={
                 'name': 'ShopMarket',
-                'address': 'Rua Exemplo, 123 - São Paulo/SP',
+                'address': 'R. Lindinalva Bassette Magioni, 1012 - Ayrton Senna, Colatina - ES, 29705-565',
+                'phone': '(27) 3711-7356',
                 'business_hours': 'Seg-Sex: 8h-20h | Sáb: 8h-18h | Dom: 8h-14h',
                 'about': 'Seu supermercado online de confiança!',
             }

@@ -18,8 +18,9 @@ class Command(BaseCommand):
         # Create ShopConfig
         self.stdout.write('Creating ShopConfig...')
         shop = ShopConfig.get_config()
-        shop.whatsapp = '(11) 99999-9999'
-        shop.phone = '(11) 3456-7890'
+        shop.address = 'R. Lindinalva Bassette Magioni, 1012 - Ayrton Senna, Colatina - ES, 29705-565'
+        shop.phone = '(27) 3711-7356'
+        shop.whatsapp = '(27) 3711-7356'
         shop.email = 'contato@shopmarket.com'
         shop.save()
         

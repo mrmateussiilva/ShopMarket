@@ -37,9 +37,9 @@
             <div class="footer-col">
                 <h4>Atendimento</h4>
                 <div style="margin-bottom: 20px;">
-                    <p style="font-weight: 700; font-size: 1.1rem; color: var(--brand-yellow);">📞 (11) 3711-7356</p>
+                    <p style="font-weight: 700; font-size: 1.1rem; color: var(--brand-yellow);">📞 {{ shop.phone|default:"(27) 3711-7356" }}</p>
                     <p style="font-weight: 700; font-size: 1.1rem; color: #4CAF50; margin-top: 4px;">
-                        💬 (11) 99281-1554
+                        💬 {{ shop.whatsapp|default:"(27) 3711-7356" }}
                     </p>
                 </div>
                 <p style="font-size: 0.85rem; line-height: 1.6;">
