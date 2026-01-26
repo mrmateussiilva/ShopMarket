@@ -181,10 +181,15 @@
             slidesPerView: 1,
             spaceBetween: 10,
             loop: false,
+            watchSlidesProgress: true,
             pagination: {
                 el: '.pdp-gallery-swiper .swiper-pagination',
                 clickable: true,
             },
+            on: {
+                init: function () { console.log('PDP Swiper inicializado'); },
+                slideChange: function () { console.log('PDP Slide mudou para:', this.activeIndex); }
+            }
         });
 
         const thumbs = Array.from(document.querySelectorAll('.product-gallery .thumb'));

@@ -204,16 +204,7 @@
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
-            watchSlidesProgress: true,
-            on: {
-                init: function () { console.log('Hero Swiper inicializado'); },
-                slideChange: function () { console.log('Hero Slide mudou para:', this.activeIndex); },
-                autoplayStop: function () { console.log('Hero Autoplay parou'); },
-                autoplayStart: function () { console.log('Hero Autoplay iniciou'); },
-                observerUpdate: function () { console.log('Hero Swiper observado mudança'); }
-            },
-            observer: true,
-            observeParents: true
+            watchSlidesProgress: true
         });
 
         const offersSwiper = new Swiper('.offers-swiper', {
@@ -229,14 +220,7 @@
                 480: { slidesPerView: 2.3, spaceBetween: 15 },
                 768: { slidesPerView: 4, spaceBetween: 20 },
                 1024: { slidesPerView: 5, spaceBetween: 20 },
-            },
-            on: {
-                init: function () { console.log('Offers Swiper inicializado'); },
-                slideChange: function () { console.log('Offers Slide mudou para:', this.activeIndex); },
-                touchStart: function () { console.log('Touch iniciado no Offers Swiper'); }
-            },
-            observer: true,
-            observeParents: true
+            }
         });
     });
 </script>
