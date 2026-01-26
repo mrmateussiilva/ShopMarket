@@ -8,7 +8,7 @@
 <div class="container" style="padding-top: 24px;">
     <!-- Hero Slider -->
     <!-- Hero Slider -->
-    <div class="swiper hero-swiper">
+    <div class="swiper hero-swiper{% if not banners %} hero-empty{% endif %}">
         <div class="swiper-wrapper">
             {% if banners %}
             {% for banner in banners %}
@@ -49,62 +49,10 @@
         <div class="swiper-button-prev"></div>
     </div>
 
-    <!-- How it Works -->
-    <section class="how-it-works">
-        <div class="container">
-            <div class="how-grid">
-                <div class="how-item">
-                    <span class="icon">🛒</span>
-                    <h4>1. Escolha</h4>
-                    <p>Adicione produtos fresquinhos ao seu carrinho.</p>
-                </div>
-                <div class="how-item">
-                    <span class="icon">💳</span>
-                    <h4>2. Pague</h4>
-                    <p>Pague com segurança via PIX ou Cartão.</p>
-                </div>
-                <div class="how-item">
-                    <span class="icon">🚚</span>
-                    <h4>3. Receba</h4>
-                    <p>Entregamos com todo cuidado na sua casa.</p>
-                </div>
-                <div class="how-item">
-                    <span class="icon">✅</span>
-                    <h4>4. Aproveite</h4>
-                    <p>Sua compra garantida e você economizando tempo.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Categories Grid -->
-    <section class="featured-categories">
-        <div class="section-header">
-            <h3 class="section-title">📦 Compre por Categoria</h3>
-        </div>
-        <div class="category-grid">
-            {% for cat in categories_grid %}
-            <a href="{% url 'category_list' cat.slug %}" class="category-card">
-                <span class="icon">
-                    {% if cat.slug == 'hortifruti' %}🍎
-                    {% elif cat.slug == 'padaria' %}🥖
-                    {% elif cat.slug == 'bebidas' %}🥤
-                    {% elif cat.slug == 'laticinios' %}🧀
-                    {% elif cat.slug == 'limpeza' %}🧹
-                    {% elif cat.slug == 'carnes' %}🥩
-                    {% elif cat.slug == 'congelados' %}❄️
-                    {% elif cat.slug == 'mercearia' %}🛒
-                    {% else %}📦{% endif %}
-                </span>
-                <span>{{ cat.name }}</span>
-            </a>
-            {% endfor %}
-        </div>
-    </section>
-
-    <!-- Ofertas da Semana (Horizontal Carousel) -->
-    {% if sale_products %}
-    <section class="vitrine">
+    <div class="home-sections">
+        <!-- Ofertas da Semana (Horizontal Carousel) -->
+        {% if sale_products %}
+        <section class="vitrine section-offers">
         <div class="section-header">
             <h2 class="section-title"><span>🔥</span> Ofertas da Semana</h2>
             <a href="{% url 'offers' %}" class="view-all">Ver todas as ofertas &raquo;</a>
@@ -120,8 +68,61 @@
             <div class="swiper-button-next" style="color: var(--brand-green);"></div>
             <div class="swiper-button-prev" style="color: var(--brand-green);"></div>
         </div>
-    </section>
-    {% endif %}
+        </section>
+        {% endif %}
+
+        <!-- How it Works -->
+        <section class="how-it-works section-how">
+            <div class="container">
+                <div class="how-grid">
+                    <div class="how-item">
+                        <span class="icon">🛒</span>
+                        <h4>1. Escolha</h4>
+                        <p>Adicione produtos fresquinhos ao seu carrinho.</p>
+                    </div>
+                    <div class="how-item">
+                        <span class="icon">💳</span>
+                        <h4>2. Pague</h4>
+                        <p>Pague com segurança via PIX ou Cartão.</p>
+                    </div>
+                    <div class="how-item">
+                        <span class="icon">🚚</span>
+                        <h4>3. Receba</h4>
+                        <p>Entregamos com todo cuidado na sua casa.</p>
+                    </div>
+                    <div class="how-item">
+                        <span class="icon">✅</span>
+                        <h4>4. Aproveite</h4>
+                        <p>Sua compra garantida e você economizando tempo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Categories Grid -->
+        <section class="featured-categories section-categories">
+            <div class="section-header">
+                <h3 class="section-title">📦 Compre por Categoria</h3>
+            </div>
+            <div class="category-grid">
+                {% for cat in categories_grid %}
+                <a href="{% url 'category_list' cat.slug %}" class="category-card">
+                    <span class="icon">
+                        {% if cat.slug == 'hortifruti' %}🍎
+                        {% elif cat.slug == 'padaria' %}🥖
+                        {% elif cat.slug == 'bebidas' %}🥤
+                        {% elif cat.slug == 'laticinios' %}🧀
+                        {% elif cat.slug == 'limpeza' %}🧹
+                        {% elif cat.slug == 'carnes' %}🥩
+                        {% elif cat.slug == 'congelados' %}❄️
+                        {% elif cat.slug == 'mercearia' %}🛒
+                        {% else %}📦{% endif %}
+                    </span>
+                    <span>{{ cat.name }}</span>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
 
     <!-- Secondary Banners -->
     <section class="secondary-banners">
@@ -182,6 +183,7 @@
 
     <!-- Trust Badges (Relocated to bottom or kept as is) -->
     <!-- (I'll keep the previous trust badges but style them as secondary banners if needed, or just let them stay below) -->
+    </div>
 </div>
 {% endblock %}
 
@@ -213,8 +215,8 @@
                 prevEl: '.swiper-button-prev',
             },
             breakpoints: {
-                320: { slidesPerView: 2, spaceBetween: 10 },
-                480: { slidesPerView: 2, spaceBetween: 15 },
+                320: { slidesPerView: 1, spaceBetween: 10 },
+                480: { slidesPerView: 1, spaceBetween: 15 },
                 768: { slidesPerView: 4, spaceBetween: 20 },
                 1024: { slidesPerView: 5, spaceBetween: 20 },
             }

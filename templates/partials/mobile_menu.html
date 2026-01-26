@@ -60,4 +60,13 @@
             body.classList.toggle('menu-open');
         }
     }
+
+    document.querySelectorAll('.mobile-menu-nav a').forEach((link) => {
+        link.addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            if (menu && menu.classList.contains('active')) {
+                toggleMobileMenu();
+            }
+        });
+    });
 </script>
