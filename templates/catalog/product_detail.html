@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load cart_filters %}
 
 {% block title %}{{ product.name }} - {{ shop.name }}{% endblock %}
 
@@ -65,16 +66,16 @@
                     {% if product.price %}
                     <div class="pdp-price-box">
                         {% if product.price.has_discount %}
-                        <div class="price-old">De: R$ {{ product.price.regular_price }}</div>
+                        <div class="price-old">De: R$ {{ product.price.regular_price|format_price }}</div>
                         {% endif %}
 
                         <div class="price-main">
-                            <span class="price-prefix">R$</span> {{ product.price.get_best_price }}
+                            <span class="price-prefix">R$</span> {{ product.price.get_best_price|format_price }}
                         </div>
 
                         {% if product.price.has_discount %}
                         <div class="pdp-savings">
-                            Economize R$ {{ product.price.regular_price|add:product.price.get_best_price }}
+                            Economize R$ {{ product.price.get_savings|format_price }}
                         </div>
                         {% endif %}
                     </div>

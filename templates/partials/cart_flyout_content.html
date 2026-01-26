@@ -1,3 +1,4 @@
+{% load cart_filters %}
 <div class="cart-flyout-body">
     {% if cart %}
     <div class="cart-items-list">
@@ -22,7 +23,7 @@
                             class="input-qty-mini">
                         <button type="button" class="btn-qty" onclick="updateQtyMini('{{ product.id }}', 1)">+</button>
                     </div>
-                    <strong id="mini-item-total-{{ product.id }}">R$ {{ item.total_price }}</strong>
+                    <strong id="mini-item-total-{{ product.id }}">R$ {{ item.total_price|format_price }}</strong>
                 </div>
             </div>
             <a href="{% url 'cart_remove' product.id %}" class="btn-remove-item" title="Remover">🗑️</a>
@@ -44,12 +45,12 @@
     <div class="cart-summary">
         <div class="summary-row">
             <span>Subtotal</span>
-            <span class="cart-total-value">R$ {{ cart.get_total_price }}</span>
+            <span class="cart-total-value">R$ {{ cart.get_total_price|format_price }}</span>
         </div>
         <!-- Delivery info or discounts could go here -->
         <div class="summary-row total">
             <span>Total</span>
-            <strong class="cart-total-value">R$ {{ cart.get_total_price }}</strong>
+            <strong class="cart-total-value">R$ {{ cart.get_total_price|format_price }}</strong>
         </div>
     </div>
     <div class="cart-actions">

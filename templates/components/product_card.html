@@ -1,3 +1,4 @@
+{% load cart_filters %}
 <div class="product-card">
     {% if price.has_discount %}
     <div class="product-badge">-{{ price.get_discount_percentage }}%</div>
@@ -21,14 +22,14 @@
 
             <div class="product-price-block">
                 {% if price.has_discount %}
-                <span class="price-old">De: R$ {{ price.regular_price }}</span>
+                <span class="price-old">De: R$ {{ price.regular_price|format_price }}</span>
                 {% endif %}
                 <div class="price-main">
                     {% if price.has_discount %}
                     <span
                         style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal; align-self: center; margin-right: 4px;">Por:</span>
                     {% endif %}
-                    <span class="price-prefix">R$</span>{{ price.get_best_price }}
+                    <span class="price-prefix">R$</span>{{ price.get_best_price|format_price }}
                 </div>
             </div>
         </div>

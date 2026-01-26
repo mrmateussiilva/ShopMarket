@@ -60,3 +60,9 @@ class ProductPrice(models.Model):
     def has_discount(self):
         """Verifica se há desconto"""
         return self.get_discount_percentage() > 0
+
+    def get_savings(self):
+        """Retorna o valor economizado em reais"""
+        if self.has_discount():
+            return self.regular_price - self.get_best_price()
+        return Decimal('0.00')

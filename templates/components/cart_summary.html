@@ -1,14 +1,18 @@
+{% load cart_filters %}
 <div class="cart-summary-inner">
     {% if cart %}
     <div style="border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 15px;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-            <span style="color: var(--text-muted);">Produtos (<span class="cart-summary-count">{{ cart|length}}</span>):</span>
-            <span class="cart-total-value" style="font-weight: 600;">R$ {{ cart.get_total_price }}</span> </div>
+            <span style="color: var(--text-muted);">Produtos (<span class="cart-summary-count">{{
+                    cart|length}}</span>):</span>
+            <span class="cart-total-value" style="font-weight: 600;">R$ {{ cart.get_total_price|format_price }}</span>
+        </div>
 
         {% if cart.get_discount > 0 %}
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--primary);">
             <span>Desconto:</span>
-            <span>- R$ {{ cart.get_discount }}</span> </div>
+            <span>- R$ {{ cart.get_discount|format_price }}</span>
+        </div>
         {% endif %}
 
         <div style="display: flex; justify-content: space-between; color: var(--text-muted); font-size: 0.9rem;">
@@ -19,7 +23,8 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <span style="font-size: 1.1rem; font-weight: 700; color: var(--secondary);">Total:</span>
-        <span class="cart-total-value" style="font-size: 1.5rem; font-weight: 800; color: var(--secondary);">R$ {{ cart.get_total_price }}</span>
+        <span class="cart-total-value" style="font-size: 1.5rem; font-weight: 800; color: var(--secondary);">R$ {{
+            cart.get_total_price|format_price }}</span>
     </div>
 
     <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 10px; text-align: right;">
