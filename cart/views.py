@@ -2,14 +2,21 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.views.decorators.cache import never_cache
 from catalog.models import Product
+from stores.models import ShopConfig
 from .cart import Cart
 
 
+@never_cache
 def cart_detail(request):
     """Cart detail page"""
     cart = Cart(request)
-    return render(request, 'cart/cart_detail.html', {'cart': cart})
+    shop = ShopConfig.get_config()
+    response = render(request, 'cart/cart_detail.html', {'cart': cart, 'shop': shop})
+    response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response['Pragma'] = 'no-cache'
+    return response
 
 
 def cart_add(request, product_id):

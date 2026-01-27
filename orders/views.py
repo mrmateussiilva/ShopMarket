@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.views.decorators.cache import never_cache
 from .models import Order, OrderItem
 from cart.cart import Cart
 
 
+@never_cache
 @login_required
 def checkout(request):
     """Checkout page"""
@@ -68,7 +70,10 @@ def checkout(request):
         
         return redirect('order_success', order_id=order.id)
     
-    return render(request, 'orders/checkout.html')
+    response = render(request, 'orders/checkout.html')
+    response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response['Pragma'] = 'no-cache'
+    return response
 
 
 @login_required

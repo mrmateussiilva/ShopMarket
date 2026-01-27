@@ -1,3 +1,5 @@
+<!-- TEMPLATE: cart.html / versão 2026-01-27 -->
+
 {% extends 'base.html' %}
 {% load cart_filters %}
 
@@ -5,6 +7,7 @@
 
 {% block content %}
 <div class="container cart-page-container">
+
     <h1 class="section-title">Meu Carrinho</h1>
 
     {% if cart %}
@@ -42,32 +45,30 @@
                             onclick="updateQtyMain('{{ item.product.id }}', 1)">+</button>
                     </div>
                     <div class="cart-item-total-wrapper">
-                        <div id="item-total-{{ item.product.id }}" class="cart-item-total-val">R$ {{
-                            item.total_price|format_price }}</div>
+                        <div id="item-total-{{ item.product.id }}" class="cart-item-total-val">R$ {{ item.total_price|format_price }}</div>
                         <a href="{% url 'cart_remove' item.product.id %}" class="cart-item-remove-link">Remover</a>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
+                <div class="cart-footer-actions">
+                    <button type="submit" class="btn-outline visible-no-js">Atualizar Quantidades</button>
+                    <a href="{% url 'cart_clear' %}" class="btn-clear-cart"
+                        onclick="return confirm('Limpar carrinho?')">Limpar
+                        Carrinho</a>
+                </div>
+            </form>
         </div>
     </div>
 
-    <div class="cart-footer-actions">
-        <button type="submit" class="btn-outline visible-no-js">Atualizar Quantidades</button>
-        <a href="{% url 'cart_clear' %}" class="btn-clear-cart" onclick="return confirm('Limpar carrinho?')">Limpar
-            Carrinho</a>
-    </div>
-    </form>
-</div>
+    <div class="cart-summary-wrapper">
+        <div class="cart-summary-card">
+            <h3 class="summary-title">Resumo do Pedido</h3>
+            {% include 'components/cart_summary.html' %}
 
-<div class="cart-summary-wrapper">
-    <div class="cart-summary-card">
-        <h3 class="summary-title">Resumo do Pedido</h3>
-        {% include 'components/cart_summary.html' %}
-
-        <a href="{% url 'checkout' %}" class="btn-buy cart-checkout-cta">Finalizar Compra</a>
-        <a href="{% url 'home' %}" class="btn-continue-shopping">Continuar Comprando</a>
+            <a href="{% url 'checkout' %}" class="btn-buy cart-checkout-cta">Finalizar Compra</a>
+            <a href="{% url 'home' %}" class="btn-continue-shopping">Continuar Comprando</a>
+        </div>
     </div>
-</div>
 </div>
 {% else %}
 <div class="cart-empty-state">
