@@ -29,8 +29,7 @@
                         <div class="cart-item-info">
                             <h3 class="cart-item-name">{{ item.name }}</h3>
                             <div class="cart-item-code">Cod: {{ item.code }}</div>
-                            <div class="cart-item-price-unit">R$ {{ item.total_price|format_price }}</div>
-                            item.price|format_price }}
+                            <div class="cart-item-price-unit">R$ {{ item.price|format_price }}</div>
                         </div>
                     </div>
                     <div class="quantity-controls cart-item-qty">
@@ -50,24 +49,25 @@
                 </div>
                 {% endfor %}
         </div>
-
-        <div class="cart-footer-actions">
-            <button type="submit" class="btn-outline visible-no-js">Atualizar Quantidades</button>
-            <a href="{% url 'cart_clear' %}" class="btn-clear-cart" onclick="return confirm('Limpar carrinho?')">Limpar
-                Carrinho</a>
-        </div>
-        </form>
     </div>
 
-    <div class="cart-summary-wrapper">
-        <div class="cart-summary-card">
-            <h3 class="summary-title">Resumo do Pedido</h3>
-            {% include 'components/cart_summary.html' %}
-
-            <a href="{% url 'checkout' %}" class="btn-buy cart-checkout-cta">Finalizar Compra</a>
-            <a href="{% url 'home' %}" class="btn-continue-shopping">Continuar Comprando</a>
-        </div>
+    <div class="cart-footer-actions">
+        <button type="submit" class="btn-outline visible-no-js">Atualizar Quantidades</button>
+        <a href="{% url 'cart_clear' %}" class="btn-clear-cart" onclick="return confirm('Limpar carrinho?')">Limpar
+            Carrinho</a>
     </div>
+    </form>
+</div>
+
+<div class="cart-summary-wrapper">
+    <div class="cart-summary-card">
+        <h3 class="summary-title">Resumo do Pedido</h3>
+        {% include 'components/cart_summary.html' %}
+
+        <a href="{% url 'checkout' %}" class="btn-buy cart-checkout-cta">Finalizar Compra</a>
+        <a href="{% url 'home' %}" class="btn-continue-shopping">Continuar Comprando</a>
+    </div>
+</div>
 </div>
 {% else %}
 <div class="cart-empty-state">
@@ -91,7 +91,10 @@
             const input = document.getElementById(`qty-main-${productId}`);
             if (!input) return;
 
-            let newQty = parseInt(input.value) + delta;
+            let currentQty = parseInt(input.value);
+            if (isNaN(currentQty)) currentQty = 1;
+
+            let newQty = currentQty + delta;
             if (newQty < 1) return;
 
             input.value = newQty;

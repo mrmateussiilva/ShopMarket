@@ -5,7 +5,7 @@
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
             <span style="color: var(--text-muted);">Produtos (<span class="cart-summary-count">{{
                     cart|length}}</span>):</span>
-            <span class="cart-total-value" style="font-weight: 600;">R$ {{ cart.get_total_price|format_price }}</span>
+            <span class="cart-total-value" style="font-weight: 600;">R$ {{ cart.get_total_price_display }}</span>
         </div>
 
         {% if cart.get_discount > 0 %}

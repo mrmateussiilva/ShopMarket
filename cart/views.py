@@ -77,7 +77,10 @@ def cart_update_ajax(request):
     if request.method == 'POST':
         cart = Cart(request)
         product_id = request.POST.get('product_id')
-        quantity = int(request.POST.get('quantity', 1))
+        try:
+            quantity = int(request.POST.get('quantity', 1))
+        except (ValueError, TypeError):
+            quantity = 1
         
         if product_id:
             cart.update_quantity(product_id, quantity)

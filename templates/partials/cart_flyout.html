@@ -41,7 +41,10 @@
         const input = document.getElementById(`qty-mini-${productId}`);
         if (!input) return;
 
-        let newQty = parseInt(input.value) + delta;
+        let currentQty = parseInt(input.value);
+        if (isNaN(currentQty)) currentQty = 1;
+
+        let newQty = currentQty + delta;
         if (newQty < 1) return;
 
         input.value = newQty;
@@ -56,6 +59,10 @@
     }
 
     function performCartUpdate(productId, quantity) {
+        if (isNaN(parseInt(quantity))) {
+            console.error('Invalid quantity:', quantity);
+            return;
+        }
         const csrftoken = getCookie('csrftoken');
         const formData = new FormData();
         formData.append('product_id', productId);

@@ -100,3 +100,9 @@ class Cart:
     def get_subtotal(self):
         """Get subtotal (total - discount)"""
         return self.get_total_price() - self.get_discount()
+
+    def get_total_price_display(self):
+        """Retorna o total já formatado como R$ X,XX."""
+        total = self.get_total_price()
+        formatted = f"{float(total):.2f}".replace('.', ',')
+        return formatted
